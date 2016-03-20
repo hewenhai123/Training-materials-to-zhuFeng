@@ -1,0 +1,40 @@
+->使用gitHub发布我们的"静态资源页面" :可以把自己写的个人简历和作品发布到gitHub上,让别人通过一个地址可以访问到
+
+1、在gitHub上创建一个新的仓库
+
+2、把我们的仓库作为一个项目在gitHub中发布
+  ->Settings ->Options(GitHub Pages) ->Launch Automatic page generator ->Continue to layouts -> 对于上面的模板可选可不选 ->Publish page
+
+  ->在我们原来的仓库中新增加了一个叫做 gh-pages 的分支,这个分支才是我们以后真正去管理发布项目的分支,而不是master
+
+3、为了以后的方便管理,把我们的默认分支修改为 gh-pages
+  ->Settings ->Branches ->Default branch ->
+
+->以上三步完成后,我们可以到Settings中找我们的地址：->Settings ->Options(GitHub Pages) ->Your site is published at "http://zhouxiaotian.github.io/myBanner".
+
+
+4、把自己的代码上传到 gh-pages 这个分支下
+  1)先通过gitHub上仓库的地址,把仓库克隆到本地一份 $ git clone https://github.com/zhouxiaotian/myBanner.git
+
+  2)我们把默认的那些文件(除了.git)以外的都删除掉
+
+  3)把我们自己的默认文件拷贝到这个目录下
+
+  4)上传到gh-pages这个分支下
+  $ git add -A
+  $ git commit -m""
+  $ git push origin gh-pages (重点我们是推送到gh-pages这个分支下)
+
+  ->以后通过 http://zhouxiaotian.github.io/myBanner/ 地址就可以看到我的页面了(其实地址的全称是：http://zhouxiaotian.github.io/myBanner/index.html 我的首页名就是"index.html") 如果首页是index.html的话,我们可以省略,但是如果你的首页名不是index.html,必须在后面给它补全名称
+
+
+5、我们还可以把我们的页面地址生成一个二维码,让别人通过扫描二维码来看到我们的页面
+  http://cli.im/ (草料二维码)
+
+
+
+
+
+
+
+

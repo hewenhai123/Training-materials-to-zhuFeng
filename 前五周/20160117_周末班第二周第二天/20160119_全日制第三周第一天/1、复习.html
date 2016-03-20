@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script charset="utf-8" type="text/javascript" src="js/utils.js"></script>
+<script charset="utf-8" type="text/javascript">
+    //    var str = '[{"name":"张三","age":25},{"name":"李四","age":18},{"name":"王五","age":32},{"name":"赵六","age":23}]';
+    //    var ary = utils.toJSON(str);
+    //    ary.sort(function (a, b) {
+    //        return parseFloat(a.age) - parseFloat(b.age);
+    //    });
+    //    console.log(ary);
+    //typeof instanceof constructor Object.prototype.toString.call()
+
+
+    //    Function.prototype.call = function (context) {
+    //        //this->call方法执行"."前面的东西,也是我们当前要操作的那个函数
+    //        //1、把当前要操作的那个函数this,中的this关键字变为第一个参数值context
+    //        //2、让当前要操作的那个函数this执行
+    //        this();
+    //    };
+    //    function fn1() {
+    //        alert(1)
+    //    }
+    //    function fn2() {
+    //        alert(2)
+    //    }
+    //    fn2.call(fn1);//->执行的是fn2->2  一个call是让call左边的执行
+    //    fn2.call.call(fn1);//->执行的是fn1->1 两个及以上call是让第一个传递进来的形参执行
+
+    //    var str = "54389";
+    //    var ary = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    //    str = str.replace(/\d/g, function () {
+    //        //第一次执行:arguments[0]->"5"  ary["5"]->"伍" 相当于让"伍"把字符串中"5"进行了替换
+    //        //第二次执行:arguments[0]->"4"  ary["5"]->"肆" 相当于让"肆"把字符串中"4"进行了替换
+    //        //...
+    //        //console.log(this);//->window
+    //        return ary[arguments[0]];
+    //    });
+    //    console.log(str);
+
+    //    var str = "my    name is lei feng , i love  china";
+    //    var reg = /\b([a-zA-Z]+)\b/g;
+    //    str = str.replace(reg, function () {
+    //        var val = arguments[0];//->"name"
+    //        var fir = val.substr(0, 1);//->"n"
+    //        var last = val.substr(1);//->"ame"
+    //        return fir.toUpperCase() + last;//->"Name"
+    //    });
+    //    console.log(str);
+
+    //    console.log(reg.exec(str));//->["my", "my"...]
+    //    console.log(reg.exec(str));//->["name", "name"...]
+    //    console.log(reg.exec(str));//->["is", "is"...]
+    //var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?$/;
+
+</script>
+</body>
+</html>

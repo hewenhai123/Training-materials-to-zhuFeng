@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="old" id="old"></div>
+<script type="text/javascript">
+    //Node节点 ->页面中的所有东西都是节点
+    //元素标签:元素节点
+    //文字:文本节点
+    //注释:注释节点
+    //document
+
+    //1、childNodes ->获取当前元素的所有子节点
+    //2、children ->获取当前元素的所有元素子节点
+    //3、parentNode ->获取当前元素的父亲节点
+    //4、previousSibling ->获取上一个哥哥节点
+    //5、nextSibling ->获取下一个弟弟节点
+    //6、firstChild ->大儿子
+    //7、lastChild ->小儿子
+
+
+    //1、createElement ->创建一个元素标签
+    var oDiv = document.createElement("div");//->创建一个div标签
+    oDiv.id = "div1";
+
+    //2、添加到页面中
+    //appendChild ->把元素标签添加到容器的末尾
+    //document.body.appendChild(oDiv);
+
+    //insertBefore ->把元素标签添加到指定元素之前
+    var old = document.getElementById("old");
+    document.body.insertBefore(oDiv,old);
+</script>
+
+</body>
+</html>

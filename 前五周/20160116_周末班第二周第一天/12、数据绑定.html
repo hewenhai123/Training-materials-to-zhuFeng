@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数据绑定</title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 10px auto;
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #008000;
+        }
+
+        #ul1 li {
+            position: relative;
+            padding-left: 28px;
+            height: 35px;
+            line-height: 35px;
+
+            /*一行文字超出后自动进行截取*/
+            text-overflow: ellipsis; /*ellipsis:截取后以...作为省略 clip:没有省略号*/
+            white-space: nowrap; /*强制不换行*/
+            overflow: hidden; /*溢出隐藏*/
+        }
+
+        #ul1 li span {
+            display: block;
+            position: absolute;
+            top: 6px;
+            left: 0;
+            width: 21px;
+            height: 21px;
+            line-height: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            border-radius: 50%;
+        }
+
+        #ul1 li span.bg {
+            background: #ff3333;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li><span class="bg">01</span>从习近平讲话看下一步反腐倡廉工作着力点</li>
+    <li><span class="bg">02</span>李克强主持国务院常务会议再推简政放权</li>
+    <li><span class="bg">03</span>从习近平讲话看下一步反腐倡廉工作着力点</li>
+</ul>
+
+<script type="text/javascript" src="json/json-bind.js"></script>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1"), oLis = oUl.getElementsByTagName("li");
+    //给默认的三个li绑定鼠标滑过变颜色事件
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].onmouseover = function () {
+            this.style.backgroundColor = "yellow";
+        };
+        oLis[i].onmouseout = function () {
+            this.style.backgroundColor = "";
+        };
+    }
+
+    //把json-bind.js中的7条数据绑定到#ul1中
+    //1、动态创建DOM的方式
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var cur = ary[i];//->cur存储的是数组中当前循环对应的对象
+    //        var n = i + 4, num = n < 10 ? "0" + n : n;
+    //
+    //        var oLi = document.createElement("li");
+    //        oLi.innerHTML = "<span>" + num + "</span>" + cur["title"];
+    //        oUl.appendChild(oLi);
+    //    }
+    //优势:我们是向容器的末尾追加新元素,对之前的三个元素没有任何的影响;
+    //弊端:我们循环多少次就引发了多少次回流
+
+    //2、字符串拼接:把需要的HTML标签都先以字符串拼接的方式拼接好,在添加到页面中(在项目中最常用的一种方式)
+    //    var str = "";
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        var n = i + 4, num = n < 10 ? "0" + n : n;
+    //
+    //        str += "<li>";
+    //        str += "<span>" + num + "</span>" + cur["title"];
+    //        str += "</li>";
+    //    }
+    //    oUl.innerHTML += str;//->oUl.innerHTML=oUl.innerHTML+str;
+    //优势:只在最后统一添加的时候引发一次回流
+    //弊端:用字符串添加完成后,之前给原有三个li绑定的事件都消失了;因为,我们是先把之前的三个li当做字符串获取出来,然后个我们的str进行字符串拼接,最后把在整体的字符串添加到页面中,浏览器进行重新的渲染,所以之前的三个li绑定的事件都消失了;
+
+    //3、文档碎片->临时存储我们创建的元素标签的一个容器
+    var frg = document.createDocumentFragment();
+    for (var i = 0; i < ary.length; i++) {
+        var cur = ary[i];
+        var n = i + 4, num = n < 10 ? "0" + n : n;
+
+        var oLi = document.createElement("li");
+        oLi.innerHTML = "<span>" + num + "</span>" + cur["title"];
+        frg.appendChild(oLi);//->每一次创建的li先增加到文档碎片中,然后当都创建完成,在把文档碎片统一增加到oUl中即可
+    }
+    oUl.appendChild(frg);
+    frg = null;
+
+    //DOM的回流和重绘
+    //回流(reflow):当页面中DOM结构发生改变(删除、增加、位置移动了...),浏览器需要从新的计算整个页面的最新DOM结构
+    //重绘:当前页面中的某一个元素的样式(背景颜色...)发生了改变,浏览器需要把这个元素从新的渲染一遍
+</script>
+</body>
+</html>

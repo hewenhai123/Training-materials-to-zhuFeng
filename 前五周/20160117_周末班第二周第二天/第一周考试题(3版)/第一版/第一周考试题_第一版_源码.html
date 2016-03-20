@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<input type="button"/>
+<input type="button"/>
+<input type="button"/>
+<script type="text/javascript">
+    var inpList = document.getElementsByTagName("input");
+    var ary = ["red", "green", "orange"];
+    for (var i = 0; i < inpList.length; i++) {
+        var cur = inpList[i];
+        cur.onmouseover = function () {
+            document.body.style.backgroundColor = ary[i];
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    ////第1题:
+    //console.log(num);
+    //if (!("num" in window)) {
+    //    var num = 100;
+    //}
+    //console.log(num);
+
+    //第2题：
+    //var name = "中国";
+    //var age = 5000;
+    //name = (function (name, age) {
+    //    arguments[0] = "珠峰";
+    //    age = age || this.age;
+    //    console.log(name, age);
+    //})(name);
+    //console.log(name, age);
+
+    //第3题:
+    //var ary = [100, 200];
+    //~function (ary) {
+    //    ary.length--;
+    //    ary = [];
+    //    ary[ary.length] = 300;
+    //    alert(ary);
+    //}(ary);
+    //alert(ary);
+
+    ////第4题:
+    //function fn(i) {
+    //    return function (n) {
+    //        console.log(n * (++i));
+    //    }
+    //}
+    //var f = fn(2);
+    //f(3);
+    //f(4);
+    //fn(5)(6);
+    //fn(7)(8);
+
+    ////第5题:
+    //var num = 1;  var obj = {num: 2};
+    //obj.fn = (function (num) {
+    //    this.num = num * 2;
+    //    num++;
+    //    return function (n) {
+    //        this.num += n;
+    //        num++;
+    //        console.log(num);
+    //    }
+    //})(obj.num);
+    //var fn = obj.fn;  fn(10);  obj.fn(20);
+    //console.log(num, obj.num);
+
+    //    //第6题:
+    //    function Fn(num) {
+    //        this.x = this.y = num;
+    //    }
+    //    Fn.prototype = {
+    //        x: 20,
+    //        sum: function () {
+    //            console.log(this.x + this.y);
+    //        }
+    //    };
+    //    var f = new Fn(10);
+    //    console.log(f.sum === Fn.prototype.sum);
+    //    f.sum();
+    //    Fn.prototype.sum();
+    //    console.log(f.constructor);
+</script>
+</body>
+</html>

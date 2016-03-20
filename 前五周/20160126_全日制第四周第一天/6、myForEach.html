@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->自己在内置类的原型上扩展一个myForEach来处理forEach不兼容的问题
+    //callBack:回调函数,遍历数组中的一项,就要执行一次callBack
+    //context:改变callBack方法中的this指向
+    Array.prototype.myForEach = function myForEach(callBack, context) {
+        typeof context === "undefined" ? context = window : null;
+
+        if ("forEach" in Array.prototype) {
+            this.forEach(callBack, context);
+            return;
+        }
+
+        //->不兼容处理
+        for (var i = 0; i < this.length; i++) {
+            typeof callBack === "function" ? callBack.call(context, this[i], i, this) : null;
+        }
+    };
+
+    var ary = [12, 23, 34, 45, 56];
+    ary.myForEach(function (item, index, input) {
+        console.log(item, index, this);
+    }, 0);
+
+    //思考题:回去后模拟myForEach实现一个和map方法一样的myMap方法
+</script>
+</body>
+</html>

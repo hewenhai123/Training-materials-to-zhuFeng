@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            margin: 1000px auto;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+
+</div>
+
+<script type="text/javascript">
+    //1、什么是事件?
+    //->浏览器天生自带的一些行为:onclick、onmouseover(onmouseenter)、onmouseout(onmouseleave)、onmousemove、onmousedown、onmouseup、onmousewheel(鼠标滚轮滚动行为)、onscroll、onload、键盘相关的行为onkeydown、onkeyup、文本框的一些行为onblur(失去焦点)、onfocus(获取焦点)...
+    //->以上行为是天生就有的,不管有没有给这些行为绑定方法,当触发对应操作的时候,行为都会发生
+    //->如果想在行为触发的时候做一些事情，我们只需要给行为绑定对应的方法即可"事件绑定"
+    //    var outer = document.getElementById("outer");
+    //    outer.onclick = function () {
+    //        alert("我给元素的点击行为绑定了一个方法，当行为触发的时候，会执行对应的函数");
+    //    };
+
+    //->总结：事件包含两部分：第一部分是天生自带的行为本身，第二部分是给对应的行为绑定方法
+
+    //2、下述我们常用的这种事件绑定的方式称之为"DOM0级事件绑定"
+    //->除了DOM0级以外还有DOM2级事件绑定
+    var outer = document.getElementById("outer");
+    //    outer.onclick = function () {
+    //        console.log(arguments[0]);
+    //        //->输出浏览器默认给这个方法传递的形参
+    //        //->MouseEvent->UIEvent->Event->Object
+    //        //->MouseEvent 鼠标事件对象,是由多组键值对组成的
+    //        //->在事件对象中存储了我们当前操作鼠标的相关信息
+    //        //type:事件行为类型"click"  srcElement:事件源 clientX/clientY...
+    //    };
+    //->当我们点击行为触发的时候,不仅仅把对应的函数执行了,而且浏览器还默认的给这个函数传递了一个参数值
+    outer.onclick = function (e) {
+        //->关于事件对象MouseEvent的兼容性总结
+        //1)事件对象本身
+        //->标准浏览器中是浏览器默认给传递的一个参数的值,我们设置一个形参变量e就可以获取到事件对象了
+        //->但是在IE6~8中,我们输出e的值是undefined,也就是浏览器没有给传递参数值,虽然没传值,但是事件对象是存在的:在全局下的event属性中呢
+        e = e || window.event;
+
+        //->如果window.event存在的话,说明是IE6~8浏览器
+        if (window.event) {
+            //2)pageX/pageY 在IE6~8下没有这个属性
+            //->我们使用距离屏幕的坐标加上浏览器滚动条卷去的宽高来处理兼容
+            e.pageX = e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+            e.pageY = e.clientY + (document.documentElement.scrollTop || document.body.scrollTop);
+
+            //3)关于事件源的
+            //->谷歌是target和srcElement都存在,火狐只有target,IE6~8只有srcElement
+            e.target = e.srcElement;
+
+            //4)阻止默认行为的
+            //->标准使用e.preventDefault() IE6~8使用e.returnValue = false
+            e.preventDefault = function () {
+                e.returnValue = false;
+            };
+
+            //5)阻止冒泡传播的
+            //->标准使用e.stopPropagation() IE6~8使用e.cancelBubble = true
+            e.stopPropagation = function () {
+                e.cancelBubble = true;
+            };
+        }
+
+        //e.type ->行为类型->"click"
+        //e.clientX/ e.clientY ->鼠标触发点距离当前屏幕左上角的x/y轴的坐标
+        //e.pageX/ e.pageY ->鼠标触发点距离body(第一屏幕)左上角的x/y轴的坐标
+        //e.target ->当前行为触发的事件源:在哪个元素上触发的,当前的事件源就是这个元素
+
+        console.log(e.preventDefault());
+    };
+    //    document.body.onclick = function (e) {
+    //        console.log(e);
+    //    };
+    //->我们获取的MouseEvent是存储的鼠标的信息,和当前的元素没有关系,不管是outer还是body,点击一次获取的e都是相同的内容
+</script>
+</body>
+</html>

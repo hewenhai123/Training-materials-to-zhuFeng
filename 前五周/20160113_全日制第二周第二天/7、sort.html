@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //一维数组:数组中的每一项的值都是基本数据类型的
+    //->var ary = [100, 2, 3, 4, 5, 6, 7, "", null];
+
+    //多维数组:数组中的每一项不是一个简单的值,而是一个对象、数组...,这样的话数组存在很多级,这就是多维数组
+    //二维数组
+    //    var ary = [
+    //        {
+    //            name: "张三",
+    //            age: 26
+    //        },
+    //        {
+    //            name: "张三",
+    //            age: 26
+    //        }
+    //    ];
+
+    var ary = [{name: "何殿杰", age: 36}, {name: "王彦珍", age: 19}, {name: "于双霞", age: 15}, {name: "左经贺", age: 35}];
+    //我想按照数组中每一项的age的大小(小->大)给整个数组进行排序
+
+    //    ary.sort(function (a, b) {
+    //        return parseFloat(a.age) - parseFloat(b.age);
+    //    });
+
+    //    ary.sort(function (a, b) {
+    //        return (parseFloat(a.age) - parseFloat(b.age)) * -1;
+    //    });
+
+    //姓名 ->"何殿杰".localeCompare("王彦珍")
+    //localeCompare:按照字母在26个字母表中的顺序进行比较,"a".localeCompare("b") ->-1  "b".localeCompare("a") ->1  "a".localeCompare("a") ->0 如果第一个字母相等则继续比较第二个字母...
+    ary.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+    });
+    console.log(ary);
+
+    //1、sort中传递一个匿名函数,匿名函数执行ary.length-1次:因为只需要把ary.length-1最大的值分别的放在数组的末尾就可以了 ->冒泡思想
+
+    //2、每一次执行匿名函数,都传递了两个形参a/b
+    //a:数组中的当前项 例如:{name: "何殿杰", age: 36}
+    //b:数组中的当前项的后一项 例如:{name: "王彦珍", age: 19}
+
+    //3、return a-b;(实现的升序)
+    //每一次的返回值，不是非必须写a-b的,只要返回一个大于0或者<=0的数字即可;返回一个>0的数,a和b交换位置;返回一个<=0的数,a和b的位置不变;
+    //例如：return 1 ->返回的是一个恒>0的数,每一次都交换位置,这样的排序后的结果和排序前正好倒过来排列了,相当于reverse;
+</script>
+</body>
+</html>

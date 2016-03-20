@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训照片墙</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .box {
+            margin: 50px auto;
+            padding: 0 10px 10px 0;
+            width: 480px;
+            height: 480px;
+            background: #ffe470;
+        }
+
+        .box li {
+            float: left;
+            margin: 10px 0 0 10px;
+            width: 150px;
+            height: 150px;
+            background: lightblue;
+            cursor: move;
+        }
+
+        .box li img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<ul class="box" id="box">
+    <li><img src="img/1.png" alt=""></li>
+    <li><img src="img/2.png" alt=""></li>
+    <li><img src="img/3.png" alt=""></li>
+    <li><img src="img/4.png" alt=""></li>
+    <li><img src="img/5.png" alt=""></li>
+    <li><img src="img/6.png" alt=""></li>
+    <li><img src="img/7.png" alt=""></li>
+    <li><img src="img/8.png" alt=""></li>
+    <li><img src="img/9.png" alt=""></li>
+</ul>
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript" src="js/zhufengAnimate.js"></script>
+<script type="text/javascript" src="js/drag.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById("box"), boxList = box.getElementsByTagName("li");
+
+    for (var i = boxList.length - 1; i >= 0; i--) {
+        var curLi = boxList[i];
+
+        //->重新设置元素的样式,让其定位显示,并且把位置信息保存下来
+        curLi.originLeft = curLi.offsetLeft;
+        curLi.originTop = curLi.offsetTop;
+        zhufengAnimate.setGroupCss(curLi, {
+            position: "absolute",
+            margin: 0,
+            top: curLi.originTop,
+            left: curLi.originLeft
+        });
+
+        //->开始绑定各种事件
+        zhufengEvent.on(curLi, "mousedown", down);
+        zhufengEvent.on(curLi, "zhufengDragStart", increaseIndex);
+        zhufengEvent.on(curLi, "zhufengDragStart", preventDefault);
+        zhufengEvent.on(curLi, "zhufengDragMove", boxMove);
+        zhufengEvent.on(curLi, "zhufengDragMove", preventDefault);
+        zhufengEvent.on(curLi, "zhufengDragEnd", changePos);
+        zhufengEvent.on(curLi, "zhufengDragEnd", preventDefault);
+    }
+
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
+    //->实现和所有碰撞盒子中最近的那个盒子进行交换
+    function changePos() {
+        //->交换前先把下一次的down阻止
+        zhufengEvent.off(this, "mousedown", down);
+
+        var ary = this["crashBox"];
+        if (ary && ary.length > 0) {
+            var distanceAry = [];
+            for (var i = 0; i < ary.length; i++) {
+                var cur = ary[i];
+                var distance = Math.sqrt(Math.pow(this.offsetLeft - cur.offsetLeft, 2) + Math.pow(this.offsetTop - cur.offsetTop, 2));
+                distanceAry.push({
+                    ele: cur,
+                    distance: distance
+                });
+            }
+
+            distanceAry.sort(function (a, b) {
+                return a.distance - b.distance;
+            });
+
+            var minLi = distanceAry[0].ele;
+            zhufengAnimate(this, {
+                top: minLi.originTop,
+                left: minLi.originLeft
+            }, 500, 3);
+
+            zhufengAnimate(minLi, {
+                top: this.originTop,
+                left: this.originLeft
+            }, 500, 3);
+
+            //->交换需要时间,在交换完成后重新开启
+            zhufengEvent.on(this, "zhufengAnimateEnd", function () {
+                zhufengEvent.on(this, "mousedown", down);
+            });
+
+            var tempLeft = this.originLeft, tempTop = this.originTop;
+            this.originLeft = minLi.originLeft;
+            this.originTop = minLi.originTop;
+            minLi.originLeft = tempLeft;
+            minLi.originTop = tempTop;
+
+        } else {
+            goHome.call(this);
+            //->没交换在开启
+            zhufengEvent.on(this, "mousedown", down);
+        }
+
+        for (i = 0; i < boxList.length; i++) {
+            boxList[i].style.backgroundColor = "lightBlue";
+        }
+    }
+
+    //->在移动的过程中把所有碰撞的元素保存下来
+    function boxMove() {
+        this["crashBox"] = [];
+        for (var i = 0; i < boxList.length; i++) {
+            var curLi = boxList[i];
+            if (this === curLi) {
+                continue;
+            }
+            if (test(this, curLi)) {
+                curLi.style.backgroundColor = "red";
+                this["crashBox"].push(curLi);
+            } else {
+                curLi.style.backgroundColor = "lightBlue";
+            }
+        }
+    }
+
+    //->检测是否发生了碰撞
+    function test(a, b) {
+        if ((a.offsetLeft + a.offsetWidth) < b.offsetLeft || (a.offsetTop + a.offsetHeight) < b.offsetTop || a.offsetLeft > (b.offsetLeft + b.offsetWidth) || a.offsetTop > (b.offsetTop + b.offsetHeight)) {
+            return false;
+        }
+        return true;
+    }
+
+    //->没有碰撞,回到自己之前的位置
+    function goHome() {
+        zhufengAnimate(this, {
+            left: this.originLeft,
+            top: this.originTop
+        }, 300, 3);
+        this.style.backgroundColor = "lightBlue";
+    }
+
+    //->拖拽谁,谁在上面
+    var zIndex = 0;
+    function increaseIndex() {
+        zhufengAnimate.setGroupCss(this, {
+            zIndex: ++zIndex,
+            backgroundColor: "darkBlue"
+        });
+    }
+</script>
+</body>
+</html>

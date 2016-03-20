@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、什么叫做正则?
+    //->正则是RegExp这个内置类的一个实例,dir(RegExp.prototype)在原型上定义的公共的方法就是我们接下来要学习的正则常用方法
+    //->它就是一个规则,用来处理(匹配->test 和 捕获->exec)字符串的规则 ->正则只能用来处理字符串
+
+    //2、匹配和捕获?
+    //匹配:test ->验证当前的字符串是否符合我们制定的规则
+    //    var reg = /\d+/;//->当前的字符串中必须包含一个到多个0-9之间的数字
+    //    console.log(reg.test("珠峰培训2016"));//->true
+    //    console.log(reg.test("welcome to bei jing~~"));//->false
+
+    //捕获:exec ->把当前字符串中所有和正则相匹配的字符都获取出来
+    //    var reg = /\d+/;
+    //    console.log(reg.exec("zhufeng2016"));//->["2016", index: 7, input: "zhufeng2016"] 捕获到的是一个数组,第一项存储的是我们和正则匹配的内容,index是我们捕获的字符在字符串中开始的索引位置,input原始的字符串
+
+
+    //3、一个正则是由什么组成的?
+    //修饰符
+    //元字符
+    //->使用字面量方式创建正则,在我们的两个斜杠之间包起来的所有的字符都是当前正则的元字符
+    //1)具有特殊意义的元字符
+    //2)代表出现次数的量词元字符
+    //3)代表本身意思的普通的元字符 ->除了特殊的和量词的,在正则中出现的所有其他的字符都是代表本身意思的量词元字符
+    //var reg = /^zhufeng$/;//->这里的每一个字母都是普通的元字符,代表的是自己的本身的意思 ->只能是“zhufeng”这个字符串
+
+
+    //4、创建一个正则有两种方式:字面量、实例创建
+    //和数组对象都不一样,正则中的两种方式是有区别的
+    //->实例创建:我们的元字符都是以字符串的方式传递进来的
+
+    //1)对于转译字符\来说,在实例创建中只能代表一个\字符,所以遇到\我们都在给它前面加一个\即可
+    //    var reg = /^\d+$/;
+    //    console.log(reg.test("2016"));//->true
+    //
+    //    reg = new RegExp("^\d+$");
+    //    console.log(reg.test("2016"));//->false
+    //    console.log(reg.test("\ddddd"));//->true ->因为实例创建我们传递进来的是字符串,所以写的\d不是代表一个0-9的数字,而是一个字符\和一个字符d,+是让d出现一到多次
+    //
+    //    reg = new RegExp("^\\d+$");
+    //    console.log(reg.test("2016"));//->true
+
+    //2)在字面量创建中出现的所有的字符都是元字符
+    //    var name = "zhufeng";
+    //    var reg = /^2015"+name+"2016$/;//->以2开头,以6结尾,左边是2015,右边是2016,"+name+"不是拼接字符串->"出现一到多次nam,e出现一到多次,"
+    //    console.log(reg.test("2015zhufeng2016"));//->false
+    //
+    //    //如果想拼接字符串只能用实例创建的方式
+    //    reg = new RegExp("^2015" + name + "2016$");
+    //    console.log(reg.test("2015zhufeng2016"));//->true
+
+
+    //5、关于元字符的一些细节的知识
+
+    //1)关于^、$的用法
+    //var reg = /\d+/;//->包含一个或者多个0-9之间的数字
+    //console.log(reg.test("zhufeng2016"));//->true
+    //console.log(reg.test("20zhufeng16"));//->true
+
+    //reg = /^\d+$/;//->只能是一个或者多个0-9之间的数字
+    //console.log(reg.test("zhufeng2016"));//->false
+    //console.log(reg.test("2016"));//->true
+    //console.log(reg.test("2"));//->true ->^、$只代表的是以xxx开头或者结尾,但是在字符串中它是不占任何的位置的
+    //console.log(reg.test("20zhufeng16"));//->false
+
+    //2)关于.、\的知识
+    //var reg = /^0.\d$/;//->以0开头,以一个0-9数字结尾,0和结尾的数字间可以是除了\n以外的任意字符
+    //console.log(reg.test("0.9"));//->true
+    //console.log(reg.test("0|9"));//->true
+
+    //reg = /^0\\.\d$/;//->\.把具有特殊意义的.转换为只能代表一个小数点的意思
+    //console.log(reg.test("0.9"));//->true
+    //console.log(reg.test("0|9"));//->false
+
+    //reg = /^http:\/\/www$/; ->"http://www"
+
+    //3)x|y ->它在真实正则中的可能会出现很多情况,优先级的顺序是混乱的
+    //    var reg = /^1|8$/;
+    //    console.log(reg.test("1"));//->true
+    //    console.log(reg.test("8"));//->true
+    //    console.log(reg.test("18"));//->true
+
+    //    reg = /^10|89$/;
+    //    console.log(reg.test("10"));//->true
+    //    console.log(reg.test("89"));//->true
+    //    console.log(reg.test("1089"));//->true
+    //    console.log(reg.test("189"));//->true
+    //    console.log(reg.test("109"));//->true
+    //    console.log(reg.test("108"));//->true
+    //    console.log(reg.test("089"));//->true
+    //    console.log(reg.test("19"));//->false
+
+    //如果只想是默认我们认为的10或者89中的一个,需要改变默认的优先级->分组
+    //分组：相当于给一个大正则划分成几个小正则
+    //分组的第一个作用:改变正则表达式中默认的优先级
+    //    reg = /^(10|89)$/;
+    //    console.log(reg.test("10"));//->true
+    //    console.log(reg.test("89"));//->true
+    //    console.log(reg.test("1089"));//->false
+    //    console.log(reg.test("189"));//->false
+    //    console.log(reg.test("109"));//->false
+    //    console.log(reg.test("108"));//->false
+    //    console.log(reg.test("089"));//->false
+    //    console.log(reg.test("19"));//->false
+
+    //4)[]
+    //a、在中括号中出现的字符都是代表本身意思的,例如:[.]不是任意字符,而是只代表.
+    //    var reg = /^[0-9a-zA-Z]+$/;//->0-9或者a-z或者A-Z三个范围中的一个出现一到多次
+    //    reg = /^[.]+$/;
+    //    console.log(reg.test("@@"));//->false
+    //    console.log(reg.test("..."));//->true
+    //
+    //    reg = /^[+-]$/;
+    //    console.log(reg.test("+"));//->true
+    //    console.log(reg.test("-"));//->true
+    //
+    //    reg = /^[\d]$/;//->出现\d、\n、\s...代表的还是本身的特殊意义
+    //    console.log(reg.test("d"));//->false
+    //    console.log(reg.test("9"));//->true
+
+    //b、在中括号中写一个两位及以上的数,不是代表两位数,而是或者的意思,例如:/^[10]$/,代表的不是10而是1或者0
+    //    var reg = /^[10-65]$/;
+    //    //1或者0-6或者5
+    //    console.log(reg.test("12"));//->false 说明代表的不是10-65之间的一个数
+</script>
+</body>
+</html>

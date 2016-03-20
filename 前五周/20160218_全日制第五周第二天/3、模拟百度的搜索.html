@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li, input, a {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+        }
+
+        a:hover, a:active, a:target {
+            text-decoration: none;
+            color: #000;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body{
+            border-top: 1px solid transparent;
+        }
+
+        .box {
+            margin: 100px auto;
+            width: 400px;
+            overflow: hidden;
+        }
+
+        .box input {
+            padding: 0 10px;
+            width: 300px;
+            height: 35px;
+            border: 1px solid #ccc;
+        }
+
+        .box ul {
+            display: none;
+            position: relative;
+            top: -1px;
+            left: 0;
+            border: 1px solid #ccc;
+        }
+
+        .box ul li {
+            height: 35px;
+            line-height: 35px;
+            cursor: pointer;
+        }
+
+        .box ul li a {
+            padding: 0 10px;
+        }
+
+        .box ul li a:hover {
+            background: #FFF38F;
+        }
+
+        /*.box ul li:hover {
+            /!*只有a标签的hover伪类兼容所有的浏览器*!/
+            background: #FFF38F;
+        }*/
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text" id="searchInp"/>
+    <ul id="searchList">
+        <li><a href="javascript:;">珠峰培训</a></li>
+        <li><a href="javascript:;">珠峰培训javascript</a></li>
+        <li><a href="javascript:;">珠峰培训nodejs</a></li>
+        <li><a href="javascript:;">珠峰培训学员都很漂亮</a></li>
+        <li><a href="javascript:;">珠峰培训好吗?</a></li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    var searchList = document.getElementById("searchList"), searchInp = document.getElementById("searchInp");
+
+    //->文本框获取焦点事件：判断文本框中是否存在内容，存在的话让searchList显示，不存在的话让searchList隐藏
+    //->文本框中键盘抬起(输入了内容)事件：操作和上述一样
+    searchInp.onfocus = searchInp.onkeyup = function () {
+        var val = this.value.replace(/(^ +| +$)/g, "");//->获取文本框中的内容并且去除字符串的首尾空格
+        searchList.style.display = val.length === 0 ? "none" : "block";
+    };
+
+    //->使用事件委托给body绑定点击事件，通过事件源做不同的处理
+    document.body.onclick = function (e) {
+        e = e || window.event;
+        var tar = e.target || e.srcElement;
+
+        //->如果点击的是searchList下的li标签:把点击li中的第一个a标签中的内容添加到文本框中，并且让列表消失
+        if (tar.tagName.toLowerCase() === "li" && tar.parentNode.id === "searchList") {
+            searchInp.value = tar.getElementsByTagName("a")[0].innerHTML;
+            searchList.style.display = "none";
+            return;
+        }
+
+        //->如果点击的是searchList下的a标签:
+        if (tar.tagName.toLowerCase() === "a" && tar.parentNode.parentNode.id === "searchList") {
+            searchInp.value = tar.innerHTML;
+            searchList.style.display = "none";
+            return;
+        }
+
+        //->如果点击的是文本框：我们啥都不处理
+        if (tar.id === "searchInp") {
+            return;
+        }
+
+        //->其他的情况直接消失隐藏即可
+        searchList.style.display = "none";
+    };
+</script>
+</body>
+</html>

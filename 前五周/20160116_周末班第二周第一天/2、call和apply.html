@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、call/apply是定义在Function.prototype上的方法,每一个函数都是Function的一个实例,所以都可以使用call/apply方法
+
+    //    Function.prototype.call = function () {//->浏览器天生自带的方法
+    //
+    //    };//->xxxfff999  ->Function.prototype.call=xxxfff999
+    //
+    //    var obj = {name: "珠峰"};
+    //    function fn() {
+    //        console.log(this);
+    //    }
+    //fn.call ->fn.__proto__.call ->Function.prototype.call fn通过原型链的机制找到Function原型上的call方法
+    //fn.call(); ->是让Function原型上的call方法执行 xxxfff999()
+
+    //2、call方法执行它的作用是什么? 例如:fn.call(obj,100,200);
+    //1)首先让fn中的this关键字变为第一个传递进来的参数值->让fn这个方法中的this关键字变为了obj
+    //2)再让fn这个方法执行,把100和200两个值当做形参传递给fn->fn(100,200)
+
+    //->call/apply方法执行的时候,就是用来改变某一个函数中的this关键字的
+
+    Function.prototype.call = function call() {
+        //call方法中的this->fn 因为call执行前面有".","."前面是fn
+
+        //1、让fn方法中的this关键字变为obj ->让this方法中的this关键字变为arguments[0]
+        //2、让fn这个方法执行 ->让 this 执行
+        this();
+    };
+    //fn.call(obj);
+    function fn1() {
+        alert(1)
+    }
+    function fn2() {
+        alert(2)
+    }
+    fn1.call(fn2);//->fn1中的this关键字变为fn2,再让fn1执行->1
+    fn1.call.call(fn2);//->让最后一个call方法执行,方法中的this->fn1.call;让fn1.call方法中的this变为fn2  function(){
+    //    this()->fn2()
+    // } ,让fn1.call方法执行,其实就是在让fn2执行 ->2
+
+    //http://www.zhufengpeixun.com/kecheng/detail_859485
+    //http://www.zhufengpeixun.com/kecheng/detail_955223 课件6
+</script>
+</body>
+</html>

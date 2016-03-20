@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //"JSON类型的数据"这句话是错误的->"JSON格式的数据" JSON只是一种数据格式,它属于对象数据类型的
+    var ary = [{"name": "张三", "age": 12}, {"name": "李四", "age": 15}];
+    //JSON格式的:属性名不加""是普通格式的对象,加上""就是JSON格式的对象
+
+    //在浏览器器对象(window)中提供了一个属性名JSON,它是一个对象数据类型的,里面包含了两个操作JSON格式数据的方法
+    //parse:把JSON格式的字符串转换为JSON格式的对象
+    //stringify:把JSON格式的对象/普通格式的对象,转换为JSON格式的字符串
+
+    //var str = JSON.stringify(ary);
+    //str->'[{"name":"张三","age":12},{"name":"李四","age":15}]' JSON格式的字符串
+    //var obj=JSON.parse(str);
+
+    //2、在IE6、7中不支持window.JSON
+    //console.log(window.JSON);
+    //在IE6~7中输出的结果是undefined,说明window中没有JSON这个属性名
+    //1)如果想把JSON格式的字符串转化为JSON格式的对象，不使用JSON.parse,我们该如何的处理?
+    var str = '[{"name":"张三","age":12},{"name":"李四","age":15}]';
+    console.log(eval("(" + str + ")"));//->更严谨的写法,需要把转换的字符串用一个小括号包起来在转换
+</script>
+</body>
+</html>

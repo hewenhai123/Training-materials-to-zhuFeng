@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        img {
+            display: inline-block;
+            border: none;
+        }
+
+        html, body {
+            width: 100%;
+        }
+
+        .box {
+            margin: 10px auto;
+            width: 90%;
+            border: 1px solid #008000;
+        }
+
+        .box .calendar {
+            overflow: hidden;
+        }
+
+        .box .calendar li {
+            float: left;
+            margin: 10px 12px 0 12px;
+            width: 80px;
+            height: 70px;
+            background: #98E0E6;
+            cursor: pointer;
+        }
+
+        .box .calendar li:hover {
+            background: #456f9a;
+        }
+
+        .box .calendar li.bg {
+            background: #F9AF2A;
+        }
+
+        .box .calendar li span {
+            display: block;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .box .dataList {
+            margin: 12px;
+        }
+
+        .box .dataList h2 {
+            height: 35px;
+            line-height: 35px;
+            font-size: 18px;
+        }
+
+        .box .dataList ul li {
+            height: 80px;
+            background: #eee;
+            overflow: hidden;
+        }
+
+        .box .dataList ul li:nth-child(even) {
+            background: #FFF38F;
+        }
+
+        .box .dataList ul li > div {
+            float: left;
+            line-height: 80px;
+        }
+
+        .time {
+            padding-left: 18px;
+            width: 80px;
+        }
+
+        .type {
+            width: 140px;
+        }
+
+        .icon {
+            width: 125px;
+            text-align: right;
+        }
+
+        .team {
+            width: 400px;
+            overflow: hidden;
+        }
+
+        .team .home, .team .away, .team .score {
+            float: left;
+        }
+
+        .team .home, .team .away {
+            width: 145px;
+        }
+
+        .team .away {
+            text-align: right;
+        }
+
+        .team .home img, .team .away img {
+            margin-top: 17.5px;
+            width: 48px;
+            height: 45px;
+        }
+
+        .team .home span, .team .away span {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .team .score {
+            width: 110px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <ul class="calendar">
+
+    </ul>
+
+    <div class="dataList">
+        <h2>03-04</h2>
+        <ul>
+            <li>
+                <div class="time">19:35</div>
+                <div class="type">NBA常规赛</div>
+                <div class="team">
+                    <div class="home"><img src="http://mat1.gtimg.com/sports/nba/logo/1602/3.png"/><span>鹈鹕</span></div>
+                    <div class="score">113-122</div>
+                    <div class="away"><span>黄蜂</span><img src="http://mat1.gtimg.com/sports/nba/logo/1602/30.png"/>
+                    </div>
+                </div>
+                <div class="icon">图文直播</div>
+            </li>
+            <li>
+                <div class="time">19:35</div>
+                <div class="type">NBA常规赛</div>
+                <div class="team">
+                    <div class="home"><img src="http://mat1.gtimg.com/sports/nba/logo/1602/3.png"/><span>鹈鹕</span></div>
+                    <div class="score">113-122</div>
+                    <div class="away"><span>黄蜂</span><img src="http://mat1.gtimg.com/sports/nba/logo/1602/30.png"/>
+                    </div>
+                </div>
+                <div class="icon">图文直播</div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    String.prototype.myFormatTime = function myFormatTime() {
+        var reg = /^(\d{4})(?:-|\/|\.|:)(\d{1,2})(?:-|\/|\.|:)(\d{1,2})(?:\s+)?(\d{1,2})?(?:-|\/|\.|:)?(\d{1,2})?(?:-|\/|\.|:)?(\d{1,2})?$/g, ary = [];
+        this.replace(reg, function () {
+            ary = [].slice.call(arguments, 1, 7);
+        });
+        var format = arguments[0] || "{0}-{1}-{2} {3}:{4}:{5}";
+        return format.replace(/{(\d+)}/g, function () {
+            var val = ary[arguments[1]];
+            return val && val.length === 1 ? "0" + val : val;
+        });
+    };
+
+
+    var today = null;
+
+    //->请求API接口地址获取需要的时间数据
+    $.ajax({
+        url: "http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&_=" + Math.random(),
+        type: "get",
+        dataType: "jsonp",
+        jsonpCallback: "calendar" //->我们的jsonpCallback名字指定成为calendar,自己就会把calendar这个函数执行了,不需要再写success了
+    });
+    function calendar(dataJSON) {
+        if (dataJSON && dataJSON.code == 0) {
+            //->解析出我们想要的数据
+            var data = dataJSON.data;
+            today = data.today;
+            var aryList = data.data;
+
+            //->字符串拼接和数据绑定
+            var str = "";
+            for (var i = 0; i < aryList.length; i++) {
+                var cur = aryList[i];
+                str += "<li date='" + cur.date + "'>";
+                str += "<span>" + cur.weekday + "</span>";
+                str += "<span>" + cur.date.myFormatTime("{1}-{2}") + "</span>";
+                str += "</li>";
+            }
+            $(".calendar").html(str);
+
+            //->让当前这个日期高亮显示
+            $(".calendar>li").each(function () {
+                var date = $(this).attr("date");
+                if (date === today) {
+                    $(this).addClass("bg");
+                } else {
+                    $(this).removeClass("bg");
+                }
+            }).click(function () {
+                //->给每一个LI绑定点击事件,当点击的时候：首先通过一个新的接口地址,获取想要的数据,然后把其绑定在页面中
+
+
+            });
+        }
+    }
+</script>
+</body>
+</html>

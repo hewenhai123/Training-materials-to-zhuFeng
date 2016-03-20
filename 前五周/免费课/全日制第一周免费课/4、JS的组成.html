@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、JS是由三部分组成的
+    //ECMAScript(4.0~5.0):定义了JS中的基本语法、命名规范、变量、数据类型、操作语句等最为核心基础的知识
+
+    //DOM:document object model 文档对象模型  (document文档对象) 文档对象模型提供了,我们操作当前页面中元素标签所有的属性和方法
+
+    //BOM:browser object model 浏览器对象模型  提供了JS操作浏览器的所有的属性和方法  (window浏览器对象)
+
+
+    //2、
+    //变量(可变的量)->一个名字,用来存储值的名字
+    //常量(不可变的量)->固定的值
+
+    //1)JS中定义变量非常的简单
+    //var 名字(变量名)=值
+    //var num = 12;//->我们定义了一个变量叫做num,并且给它存储了一个值12
+    //num = 13;//->我们把num变量存储的值改变为13
+
+
+    //3、关于JS中的命名规范
+    //1)JS中严格区分大小写
+    //var num = 12;
+    //console.log(Num);//Uncaught ReferenceError: Num is not defined  Num这个名字没有定义
+
+    //2)命名遵循"驼峰命名法"
+    //一个名字由多个单词组成的话,第一个单词首字母小写,其余以后每一个有意义的单词的首字母都要大写
+    //var studentInfo = "";
+    //xueshengXinxi   xueshengInfo  xsXx (都不建议写)
+    //我们一般约定俗称一些简写的方式:
+    //Info ->information
+    //Import ->important
+    //add/create ->增加
+    //remove/delete/del ->移除
+    //update/replace ->替换更新
+    //select/get/query ->获取查询
+
+    //我们起名字的时候可以使用我们的 数字、字母、下划线、$，但是数字不能作为开头
+    //studentInfo2
+    //2studentInfo(不可以的)
+    //$num ->以$开头的一般都代表是引用的其他类库或者框架(jQuery)
+    //_num ->以_开头的一般都代表可以在很多的地方使用(全局变量)
+
+
+    //3、不能使用关键字和保留字
+    //关键字:在JS中有特殊的用法的词(例如 var)
+    //保留字:未来可能会成为关键字的
+</script>
+</body>
+</html>

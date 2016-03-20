@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //原型链模式
+    function Fn(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    Fn.prototype.writeJs = function () {
+        console.log("my name is " + this.name + ",my age is " + this.age + ",i can write js la~~~");
+    };
+    var f1 = new Fn("王浩宇", 16);
+    var f2 = new Fn("张宏逸", 61);
+
+    //console.log(f1.writeJs === f2.writeJs);//->true
+    //console.log(f1.hasOwnProperty("writeJs"));//->false
+
+    //一：基础概念
+    //1、(每一个类都是函数数据类型的)每一个函数都天生自带一个属性prototype(原型),并且这个属性的值是一个对象数据类型的,浏览器为其开辟了一个堆内存(在这里存储的所有的属性和方法都是公有的属性和方法);
+    //2、在函数的prototype属性的堆内存中,浏览器为其增加了一个属性constructor(构造函数),指向当前函数本身;
+    //3、(每一个实例都是对象数据类型的、函数的prototype也是对象数据类型的)每一个对象数据类型也有一个天生自带的属性__proto__,指向当前所属类的原型
+
+    //console.log(Fn.prototype.constructor === Fn);//->true
+    //console.log(f1.__proto__ === Fn.prototype);//->true
+
+    //二：原型链模式
+    //f1.writeJs->找到f1这个对象的writeJs属性
+    //首先先查找自己的私有的属性,私有中有,用的就是私有的；私有的没有,则继续通过__proto__找到所属类的prototype上的公有属性和方法,如果公有上有,使用的是公有的；如果公有在没有,则继续通过__proto__向上查找,一直找到Object.prototype为止...-->我们把这套查找的机制称之为"原型链模式"
+
+    //f1.__proto__.writeJs->忽略查找私有的过程,直接通过__proto__找公有的(在IE浏览器中为了防止我们对内置类的原型方法进行修改,IE浏览器屏蔽了我们使用__proto__)
+
+    console.log(f1.writeJs === f2.writeJs);//->true
+    console.log(f1.__proto__.writeJs === f1.writeJs);//->true
+    console.log(Fn.prototype.writeJs === f1.writeJs);//->true
+
+    //f1.hasOwnProperty === Object.prototype.hasOwnProperty === f1.__proto__.__proto__.hasOwnProperty;
+
+    console.log(f1.hasOwnProperty === f2.hasOwnProperty);//->true
+</script>
+</body>
+</html>

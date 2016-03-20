@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #ff6600;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div class="box" style="left: 200px; top:50px; background: red;"></div>
+<div class="box" style="left: 400px; top:100px; background: green;"></div>
+<div class="box" style="left: 300px; top:20px; background: pink;"></div>
+<div class="box" style="left: 600px; top:200px; background: black;"></div>
+
+<!--JS的引入是存在依赖关系的:我们的drag中使用了zhufengEvent的on/off实现时间的绑定,所以先引入zhufengEvent.js在引入drag.js-->
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript" src="js/drag.js"></script>
+<script type="text/javascript">
+    var box = document.getElementsByTagName("div");
+    for (var i = 0; i < 1; i++) {
+        var curBox = box[i];
+        zhufengEvent.on(curBox, "mousedown", down);
+        on(curBox, "zhufengDragStart", setIndex);
+        on(curBox, "zhufengDragStart", clearMove);
+        on(curBox, "zhufengDragMove", getSpeed);
+        on(curBox, "zhufengDragEnd", fly);
+        on(curBox, "zhufengDragEnd", drop);
+    }
+
+    var zIndex = 0;
+    function setIndex() {
+        this.style.zIndex = ++zIndex;
+    }
+    function clearMove() {
+        window.clearTimeout(this.flyTimer);
+        window.clearInterval(this.dropTimer);
+    }
+
+    function getSpeed() {
+        if (!this["pre"]) {
+            this["pre"] = this.offsetLeft;
+        } else {
+            this["speedFly"] = this.offsetLeft - this["pre"];
+            this["pre"] = this.offsetLeft;
+        }
+    }
+
+    var n = 0;
+    function fly() {
+        n++;
+        if (n == 2) {
+            off(this, "zhufengDragMove", getSpeed);
+            off(this, "zhufengDragEnd", fly);
+            return;
+        }
+
+        var _this = this;
+        _this.flyTimer = window.setInterval(function () {
+            _this["speedFly"] *= 0.98;
+            var curL = _this.offsetLeft + _this["speedFly"];
+            var minL = 0, maxL = (document.documentElement.clientWidth || document.body.clientWidth) - _this.offsetWidth;
+            if (curL >= maxL) {
+                _this.style.left = maxL + "px";
+                _this["speedFly"] *= -1;
+            } else if (curL <= minL) {
+                _this.style.left = minL + "px";
+                _this["speedFly"] *= -1;
+            } else {
+                _this.style.left = curL + "px";
+            }
+            if (Math.abs(_this["speedFly"]) < 0.5) {
+                window.clearInterval(_this.flyTimer);
+            }
+        }, 13);
+    }
+    var dropFlag = 0;
+    function drop() {
+        var _this = this;
+        _this.dropTimer = window.setInterval(function () {
+            !_this["speedDrop"] ? _this["speedDrop"] = 9.8 : _this["speedDrop"] += 9.8;
+            _this["speedDrop"] *= 0.98;
+
+            var curT = _this.offsetTop + _this["speedDrop"];
+            var maxT = (document.documentElement.clientHeight || document.body.clientHeight) - _this.offsetHeight;
+            if (curT >= maxT) {
+                _this.style.top = maxT + "px";
+                _this["speedDrop"] *= -1;
+                dropFlag++;
+            } else {
+                _this.style.top = curT + "px";
+                dropFlag = 0;
+            }
+
+            if (dropFlag > 1) {
+                window.clearInterval(_this.dropTimer);
+            }
+        }, 13);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+    (1)基本
+     #id
+     element
+     .class
+     *
+     selector1,selector2,selectorN
+
+     (2)层次选择器：
+     ancestor descendant ->后代选择器 $("#div1 a")获取#div1子子孙孙辈分的a
+     parent > child ->子代选择器 $("#div1>a")获取#div1儿子辈分的a
+     prev + next ->$("#div1+a")获取#div1所有弟弟中的a标签第一个
+     prev ~ siblings ->$("#div1~a")获取#div1所有弟弟中的a标签
+
+     (3)基本过滤器选择器
+     :first
+     :last
+     :not
+     :even
+     :odd
+     :eq ->指定索引的 $("div:eq(1)") 获取所有div中的第二个
+     :gt ->大于指定索引的 $("div:gt(2)") 获取所有div中大于第三个
+     :lt ->小于指定索引的
+     :header
+     :animated
+
+     (4)内容过滤器选择器
+     :contains ->内容包含xxx的 $("div:contains('珠峰')") 内容包含珠峰的
+     :empty
+     :has
+     :parent
+
+     (5)可见性过滤器选择器
+     :hidden
+     :visible
+
+     (6)属性过滤器选择器
+     [attribute] ->拥有某个属性的 ->$("div[name]")拥有name属性的
+     [attribute=value]
+     [attribute!=value]
+     [attribute^=value]
+     [attribute$=value]
+     [attribute*=value]
+     [attrSel1][attrSel2][attrSelN]
+
+     (7)子元素过滤器选择器
+     :nth-child ->获取第几个 $("div:nth-child(1)")获取第一个
+     :first-child
+     :last-child
+     :only-child
+
+     (8)表单选择器
+     :input
+     :text
+     :password
+     :radio
+     :checkbox
+     :submit
+     :image
+     :reset
+     :button
+     :file
+     :hidden
+
+     (9)表单过滤器选择器
+     :enabled
+     :disabled
+     :checked
+     :selected

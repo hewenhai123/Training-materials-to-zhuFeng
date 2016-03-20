@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="lib/myAJAX.js"></script>
+    <script>
+        x.ajax({
+            url:'info.txt',
+            type:'get',
+            data:{name:'zyr'},
+            async:true,
+            success:function(data){
+                console.log(data)
+            },
+            error:function(){
+                console.error('失败')
+            },
+            dataType:'text',
+            cache:false,
+            username:'xiaoqiang',
+            password:123456
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

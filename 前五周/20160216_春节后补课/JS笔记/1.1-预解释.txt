@@ -1,0 +1,47 @@
+预解释：在当前作用域下，JS代码执行之前，首先把所有带var和function关键字的进行提前声明或者定义
+var只是提前声明，function是提前的声明+定义都完成了
+
+1)不管条件是否成立里面的都要进行预解释
+  if(!("a" in window)){
+     var a=12;
+  }
+  console.log(a);//->undefined
+
+2)只对=左边的进行预解释，右边的是赋的值，是不进行预解释的
+  fn1();
+  function fn1(){}
+  fn1();
+
+  var fn2=function(){};
+  fn2();
+  ->在项目中我们一般用函数表达式的方式定义函数：就是想让它在上面定义只能在下面执行
+
+3)自执行函数不进行预解释(window下预解释的时候不声明和定义move了)
+  (function move(){
+     //执行的时候需要在形成的私有作用域中进行预解释
+     window.setTimeout(move,10);
+     //window.setTimeout(arguments.callee,10);//->一般情况下不用arguments.callee,因为在严格模式("use strict")下屏蔽了它的使用
+  })();
+
+  var fn=function(num){
+      arguments[0]=12;//->把第一个传递进来的参数值修改为了12,在非严格模式下可以映射到我们的num形参变量->num=12;在严格模式下不会和形参产生映射
+  };
+
+  严格模式在代码最顶端的位置，我们写上 "use strict" 这样的话我们接下来的JS代码都要使用严格模式了 (高级程序设计三，最后面的章节->严格模式和非严格模式)
+
+4)函数执行形成一个私有的作用域,在里面预解释还有一些细节的问题
+  var fn=function(){
+      //给形参赋值
+      //预解释 ->形参和预解释的是私有的变量
+      return function(){};//->会返回值,但是这个函数不进行预解释,当遇到return的时候开辟一个堆内存返回一个地址
+      var num=12;//->这句话不执行但是会把num提前的声明
+  };
+  fn();
+
+5)函数的名字和变量的名字相同了就算重复，一但重复了，不会重新的声明但是会重新的定义，后面定义的会把前面的覆盖掉
+  fn();//->2
+  function fn(){alert(1);};
+  fn();//->2
+  var fn=13;//->fn=13
+  fn();//->13() ->fn is not a function
+  function fn(){alert(2);};

@@ -1,0 +1,39 @@
+1、思考题
+   (1)
+    function fn(i) {
+        return function (n) {
+            console.log(n + (i++));
+        }
+    }
+    var f = fn(10);
+    f(20);
+    fn(20)(40);
+    fn(30)(50);
+    f(30);
+
+   (2)
+    var i = 10;
+    function fn() {
+        return function (n) {
+            console.log(n + (++i));
+        }
+    }
+    var f = fn();
+    f(20);
+    fn()(20);
+    fn()(30);
+    f(30);
+
+2、思考题：回去后把免费课的选项卡循环绑定事件用闭包的原理实现了(我们之前使用的是自定义属性的原理)
+
+
+2015年JS第九期正式群 188659839
+先安装git->有时间的话把群文件中的"git操作.zip"中的下载老师讲义ppt看了,对照着操作一遍
+2015年第九期课堂讲义地址：
+https://github.com/zhufengpeixun/Nodes201509.git
+
+2015年第九期课后作业和代码贡献提交地址：
+https://github.com/zhufengpeixun/Share201509.git
+
+以后都采用git操作，大家不要在往群文件中传了，发现一次狠狠的罚；不会的看我们的视频中 序-git/github操作，或者参考我们群文件中的git讲义...
+

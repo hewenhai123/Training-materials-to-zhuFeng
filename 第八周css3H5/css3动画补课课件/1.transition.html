@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>transition</title>
+    <style type="text/css">
+        .container{
+            width:100%;
+            background: #2192bc;
+            height: 400px;
+            text-align: center;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left:50%;
+            margin-left: -50px;
+            top:20%;
+            border-radius: 50%;
+            background:#2c9dc4 url(images/img1.png) no-repeat center center;
+            box-shadow: 0 0 0 30px transparent;
+
+        }
+        .box:hover{
+            box-shadow: 0 0 0 0 rgba(255,255,255,0.2);
+            transition:box-shadow 1s ease-in-out ;
+            -webkit-transition:box-shadow 1s ease-in-out;
+            -moz-transition: box-shadow 1s ease-in-out;
+            -ms-transition :box-shadow 1s ease-in-out;
+            -o-transition:box-shadow 1s ease-in-out;
+            -webkit-transform: translate3d(0,0,0);/*利用硬件,来开启GPU加速,解决在终端设备上闪烁,卡顿,有条纹等问题*/
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="box"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #008000;
+
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var tarL = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth;
+
+    //->不设定时间,规定一个具体的步长,然后每隔10ms累加一次步长,一直到边界位置
+    var timer = null;
+    function move() {
+        window.clearTimeout(timer);
+        var curL = utils.getCss(oDiv, "left");
+        if (curL >= tarL) {
+            utils.setCss(oDiv, "left", tarL);
+            fadeIn();
+            return;
+        }
+        utils.setCss(oDiv, "left", curL + 10);
+        timer = window.setTimeout(move, 10);
+    }
+    move();
+
+    //->设定具体的时间,我们根据 (总距离/总时间)*时间因子 计算出步长,然后每隔10ms执行一次方法,最后到边界为止...
+    var timer2 = null;
+    var step = (1 / 1000) * 10;
+    function fadeIn() {
+        window.clearTimeout(timer2);
+        var curP = utils.getCss(oDiv, "opacity");
+        if (curP <= 0) {
+            utils.setCss(oDiv, "opacity", 0);
+            return;
+        }
+        utils.setCss(oDiv, "opacity", curP - step);
+        timer2 = window.setTimeout(fadeIn, 10);
+    }
+</script>
+</body>
+</html>

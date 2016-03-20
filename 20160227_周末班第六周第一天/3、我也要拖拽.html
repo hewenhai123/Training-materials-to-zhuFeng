@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute;
+            top: 200px;
+            left: 300px;
+            width: 150px;
+            height: 150px;
+            cursor: move;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="box"></div>
+
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript" src="js/drag.js"></script>
+<script type="text/javascript">
+    //周慧琼也要实现拖拽,不需要自己从新写了,只需要把静怡写的drag.js引入进来即可，但是老板难为她，需要她在原有拖拽的基础上加上弹性动画
+
+    var box = document.getElementById("box");
+    zhufengEvent.on(box, "mousedown", down);
+
+    on(box, "zhufengDragStart", clearMove);
+    on(box, "zhufengDragMove", getSpeed);
+    on(box, "zhufengDragEnd", fly);
+    on(box, "zhufengDragEnd", drop);
+
+    function clearMove(e) {
+        //->周慧琼需要在开始拖拽的时候把弹性势能动画结束
+        window.clearInterval(this.flyTimer);
+        window.clearInterval(this.dropTimer);
+    }
+
+    function getSpeed(e) {
+        //->周慧琼开始计算水平方向的速度
+        if (!this.pre) {
+            this.pre = this.offsetLeft;
+        } else {
+            this.speedFly = this.offsetLeft - this.pre;
+            this.pre = this.offsetLeft;
+        }
+    }
+
+    function fly() {
+        var _this = this;
+        _this.flyTimer = window.setInterval(function () {
+            if (Math.abs(_this.speedFly) < 0.5) {
+                window.clearInterval(_this.flyTimer);
+                return;
+            }
+            _this.speedFly *= 0.98;
+            var curL = _this.offsetLeft + _this.speedFly;
+            var minL = 0, maxL = (document.documentElement.clientWidth || document.body.clientWidth) - _this.offsetWidth;
+            if (curL >= maxL) {
+                _this.style.left = maxL + "px";
+                _this.speedFly *= -1;
+            } else if (curL <= minL) {
+                _this.style.left = minL + "px";
+                _this.speedFly *= -1;
+            } else {
+                _this.style.left = curL + "px";
+            }
+        }, 10);
+    }
+
+    function drop() {
+        var _this = this;
+        _this.dragFlag = 0;
+        _this.dropTimer = window.setInterval(function () {
+            if (_this.dragFlag > 1) {
+                window.clearInterval(_this.dropTimer);
+                return;
+            }
+            _this.dropSpeed = !_this.dropSpeed ? 10 : _this.dropSpeed + 10;
+            _this.dropSpeed *= 0.98;
+            var curT = _this.offsetTop + _this.dropSpeed;
+            var maxT = (document.documentElement.clientHeight || document.body.clientHeight) - _this.offsetHeight;
+            if (curT >= maxT) {
+                _this.style.top = maxT + "px";
+                _this.dropSpeed *= -1;
+                _this.dragFlag++;
+            } else {
+                _this.style.top = curT + "px";
+                _this.dragFlag = 0;
+            }
+        }, 10);
+    }
+
+    //->问题：周慧琼把之前静怡写的代码改了,静怡在用的时候就报错了
+    //->以后在项目中,如果你认为你是一个"前端开发工程师",就不能单独为了实现某个功能而写代码了,还需要把当前这些代码实现模块化,以后不仅自己可以重复的使用,而且其他人也可以用；如果遇到其它人需求有不一样的地方，还要给其他人提供可扩展性(不能修改原来的代码)；
+    //->JS代码模块化重构(低耦合高内聚 , 开发效率也高了)
+</script>
+</body>
+</html>

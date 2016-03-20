@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function fn() {
+        var i = 10;
+        return function (n) {
+            console.log(n + (++i));
+        }
+    }
+    var f = fn();
+    f(15);//->26
+    f(20);//->32
+    fn()(15);//->先让fn执行,返回一个小的函数地址,紧接着让小的函数执行,传递15 ->26
+    fn()(20);//->31
+    fn()(30);//->41
+    f(30);//->43
+</script>
+</body>
+</html>

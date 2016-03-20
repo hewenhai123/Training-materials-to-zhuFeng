@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、exec:正则的捕获方法 ->先匹配,然后把匹配的内容进行捕获
+    //1)如果字符串没有匹配这个正则,捕获的结果是null
+    //2)如果和正则匹配,返回的结果是一个数组
+    //["2015", index: 7, input: "zhufeng2015peixun2016"]
+    //第一项是我们捕获的内容
+    //index:捕获的内容在元字符串中开始的索引位置
+    //input:捕获的原始字符串
+
+    //2、正则的捕获是懒惰的
+    //原理:正则的每一次捕获都从lastIndex值开始,第一次捕获的时候,lastIndex=0,从原始字符串索引为0的位置开始查找捕获;而默认的情况下,第一次捕获完成,lastIndex的值并没有发生改变,还是0,所以第二次捕获还是从原始字符串索引为0处开始查找,这样找到的还是第一次捕获的内容...
+    //解决办法:添加全局修饰符g ->加上g后,第一捕获完成后,lastIndex值发生了改变,变为第一次捕获内容后的第一个字符的开始索引,第二次捕获是继续向后查找的...
+    //疑问:我不用全局修饰符g,每一次捕获完成手动的修改lastIndex值行吗? ->不行,虽然手动的修改lastIndex,确实把lastIndex进行改变了,但是正则查找的时候还是从索引0开始的
+    //var str = "zhufeng2015peixun2016";
+    //var reg = /\d+/g;
+
+    //为了防止没有加全局修饰符g导致的死循环,我们在处理之前,对于没有添加g的手动给添加一个g
+    RegExp.prototype.myExecAll = function myExecAll() {
+        var _this = this, str = arguments[0], ary = [], res = null;
+        !_this.global ? _this = eval(_this.toString() + "g") : null;
+        res = _this.exec(str);
+        while (res) {
+            ary[ary.length] = res[0];
+            res = _this.exec(str);
+        }
+        return ary;
+    };
+    //    console.log(reg.lastIndex);//->0
+    //    var res = reg.exec(str);
+    //    console.log(res);
+    //
+    //    console.log(reg.lastIndex);//->11
+    //    res = reg.exec(str);
+    //    console.log(res);
+    //
+    //    console.log(reg.lastIndex);//->21
+    //    res = reg.exec(str);
+    //    console.log(res);//->null
+
+    //3、字符串中存在一个叫做match的方法也可以实现捕获,而且只要我们取消了正则的懒惰型,执行一次match方法就可以捕获到所有的内容了
+    //var str = "zhufeng2015peixun2016";
+    //var reg = /\d+/g;
+    //console.log(str.match(reg));
+    //疑问:那我们都用match来替换exec多好啊?
+
+    //4、正则的分组捕获
+    //每一次捕获的时候,不仅仅可以把大正则匹配的内容捕获到,而且还可以把每一个小分组(子正则)匹配的内容单独的捕获到
+    //    var str = "zhufeng[2015]peixun[2016]";
+    //    var reg = /\[(\d)(\d+)\]/g;
+    //    var res = reg.exec(str);
+    //    console.log(res);
+    //    //["[2015]", "2", "015", index: 7, input: "zhufeng[2015]peixun[2016]"]
+    //    //数组中的第一项是大正则捕获的内容 res[0]
+    //    //数组中的第二项是第一个分组捕获的内容 res[1]
+    //    //数组中的第三项是第二个分组捕获的内容 res[2]
+    //    //....
+
+    //分组的只匹配不捕获:我们如果执行把分组内容进行匹配但是不进行捕获的话,只需要在分组的前面加上?:即可
+    //    var str = "zhufeng[2015]peixun[2016]";
+    //    var reg = /\[(?:\d)(\d+)\]/g;
+    //    var res = reg.exec(str);
+    //    console.log(res);
+    //    //["[2015]", "015"...]
+    //    //数组中的第一项是大正则捕获的内容 res[0]
+    //    //数组中的第二项是第二个分组捕获的内容 res[1]
+    //    //第一个分组添加了?:,所以只匹配不捕获
+
+    //5、match和exec的区别：
+    //match只能捕获到大正则匹配的内容,对于有分组的情况下,不能捕获分组的内容;所以,如果捕获的时候不需要捕获分组的内容,我们直接的使用match更加的方便,如果需要捕获分组的内容,我们只能使用exec来一个个的捕获
+    //    var str = "zhufeng[2015]peixun[2016]";
+    //    var reg = /\[(\d+)\]/g;
+    //    //console.log(str.match(reg));//->["[2015]", "[2016]"]
+    //    var ary = [];
+    //    var res = reg.exec(str);
+    //    while (res) {
+    //        //ary.push(res[1]);
+    //        ary.push(RegExp.$1);//RegExp.$1获取当前正则第一个分组捕获的内容(可能在部分IE浏览器中获取不到值)
+    //        res = reg.exec(str);
+    //    }
+    //    console.log(ary);
+
+    //6、正则的贪婪性:在每一次捕获的时候,总是按照正则匹配的最长结果捕获
+    //    var str = "zhufeng2015peixun2016";
+    //    var reg = /\d+/g;
+    //    console.log(reg.myExecAll(str));//-->["2015","2016"]
+    //var str = "zhufeng2015peixun2016";
+    //var reg = /\d+?/g;
+    //console.log(reg.myExecAll(str));//-->["2", "0", "1", "5", "2", "0", "1", "6"]
+
+    //7、分组引用
+    //\2代表出现和第二个分组一模一样的内容
+    //\1代表出现和第一个分组一幕一样的内容
+    //var reg=/^(\w)(\w)\2\1$/;
+    //"woow"、"1221"...
+
+    //8、字符串方法->replace:把一个字符串中的某个字符串替换成新的内容
+    //[在不使用正则的情况下]
+    //每一次执行只能替换一个,需要替换多个,同样需要执行多次
+    //var str = "zhufeng2015 zhufeng2016";
+    //"zhufeng" -> "珠峰"
+    //str = str.replace("zhufeng", "珠峰").replace("zhufeng", "珠峰");
+
+    //有些时候即使执行多次,也实现不了替换
+    //"zhufeng" -> "zhufengpeixun"
+    //str = str.replace("zhufeng", "zhufengpeixun").replace("zhufeng", "zhufengpeixun");
+
+    //[第一个参数可以是一个正则] 把所有和正则匹配的内容进行替换(但是和捕获一样默认是懒惰的,只有加上全局修饰符g才可以)
+    //    var str = "zhufeng2015 zhufeng2016";
+    //    str = str.replace(/zhufeng/g, "zhufengpeixun");
+    //    console.log(str);
+
+    //1)执行和执行次数问题
+    //其实和exec捕获的原理是一模一样的
+    //例如：我们第二个参数如果传递的是一个函数,每当正则在字符串中捕获一次当前的这个函数就执行一次 ->本题中一共捕获了两次,所以函数执行了两次
+    var str = "zhufeng2015 zhufeng2016";
+    str = str.replace(/zhufeng/g, function () {
+        //2)参数问题
+        //console.dir(arguments);
+        //不仅仅是执行function,而且还给我们的函数传递了参数,并且传递的参数和每一次exec捕获的内容是一模一样的
+        //如果是第一次exec捕获->["zhufeng",index:0,input:"原始字符串"]
+        //第一次执行函数里面的参数
+        //arguments[0] -> "zhufeng"/**/
+        //arguments[1] -> 0  相当于exec中的index 开始捕获的索引位置
+        //arguments[2] -> "原始字符串" 相当于exec中的input
+
+        //3)返回值问题
+        //return返回的是什么,就相当于把当前捕获的内容替换成什么
+        return "zhufengpeixun";
+    });
+    //console.log(str);
+</script>
+</body>
+</html>

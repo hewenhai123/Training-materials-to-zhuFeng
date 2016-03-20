@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+    //console.dir(oLis);//->HTMLCollection元素集合类的一个实例 oLis instanceof HTMLCollection ->true
+    var ary = utils.listToArray(oLis);
+    console.log(ary);
+
+
+    //var ary = Array.prototype.slice.call(oLis, 0);
+
+    //在IE6~8下不兼容上述的操作(arguments这个类数组是兼容的,只有DOM元素集合才不兼容) ->报错:Array.prototype.slice: 'this' 不是 JavaScript 对象
+    //    var ary = [];
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        ary[ary.length] = oLis[i];
+    //    }
+    //    console.dir(ary);
+
+    //    var ary = [];
+    //    try {
+    //        //->我们借用slice实现的将类数组转换为数组
+    //        ary = Array.prototype.slice.call(oLis, 0);
+    //    } catch (e) {
+    //        //->在IE6~8下,try中的代码会报错,执行catch中的代码,不能用slice的话,我们自己写for循环,实现把类数组转换为数组
+    //        for (var i = 0; i < oLis.length; i++) {
+    //            ary[ary.length] = oLis[i];
+    //        }
+    //    }
+    //    console.log(ary);
+</script>
+</body>
+</html>

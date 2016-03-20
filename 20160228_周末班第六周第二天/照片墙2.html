@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训照片墙</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .box {
+            margin: 50px auto;
+            padding: 0 10px 10px 0;
+            width: 480px;
+            height: 480px;
+            background: #ffe470;
+        }
+
+        .box li {
+            float: left;
+            margin: 10px 0 0 10px;
+            width: 150px;
+            height: 150px;
+            background: lightblue;
+            cursor: move;
+        }
+
+        .box li img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<ul class="box" id="box">
+    <li><img src="img/1.png" alt=""></li>
+    <li><img src="img/2.png" alt=""></li>
+    <li><img src="img/3.png" alt=""></li>
+    <li><img src="img/4.png" alt=""></li>
+    <li><img src="img/5.png" alt=""></li>
+    <li><img src="img/6.png" alt=""></li>
+    <li><img src="img/7.png" alt=""></li>
+    <li><img src="img/8.png" alt=""></li>
+    <li><img src="img/9.png" alt=""></li>
+</ul>
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript" src="js/zhufengAnimate.js"></script>
+<script type="text/javascript" src="js/drag.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById("box"), boxList = box.getElementsByTagName("li");
+
+    for (var i = boxList.length - 1; i >= 0; i--) {
+        var curLi = boxList[i];
+
+        //->让每一个li定位到具体的位置
+        curLi.originLeft = curLi.offsetLeft;
+        curLi.originTop = curLi.offsetTop;//->除了获取原来的位置信息,并且把它记录在自己的自定义属性上,以后想用就可以获取到使用了
+
+        zhufengAnimate.setGroupCss(curLi, {
+            position: "absolute",
+            margin: 0,
+            top: curLi.originTop,
+            left: curLi.originLeft
+        });
+
+        //->让每一个li可以拖拽
+        zhufengEvent.on(curLi, "mousedown", down);
+        //->问题：拖拽过程中,我们拖一点之后,出现里面的图片单独的出现了一个阴影出来,接下来鼠标在移动移动的是图片的阴影而不是我们的li(浏览器自己天生对于图片自带的行为) ->我们想要实现拖拽的话需要把默认的这个行为阻止掉
+        zhufengEvent.on(curLi, "zhufengDragStart", function (e) {
+            e.preventDefault();
+        });
+        zhufengEvent.on(curLi, "zhufengDragStart", increaseIndex);
+        zhufengEvent.on(curLi, "zhufengDragEnd", goHome);
+    }
+
+    //->拖拽结束回到原来的位置(事先需要记录一下原来的位置),并且让颜色变为浅蓝色
+    function goHome() {
+        zhufengAnimate(this, {
+            left: this.originLeft,
+            top: this.originTop
+        }, 300, 3);
+        this.style.backgroundColor = "lightBlue";
+    }
+
+    //->拖拽谁,谁在上面,并且让其颜色变为深蓝色
+    var zIndex = 0;
+    function increaseIndex() {
+        zhufengAnimate.setGroupCss(this, {
+            zIndex: ++zIndex,
+            backgroundColor: "darkBlue"
+        });
+    }
+</script>
+</body>
+</html>

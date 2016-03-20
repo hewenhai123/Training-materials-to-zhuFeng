@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #box {
+            /*position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -171px 0 0 -171px;*/
+            position: absolute;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <!--我们都是LI-->
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    //    document.getElementById()
+    //    document.getElementsByTagName()
+    //    document.getElementsByName()//->IE只对表单元素起作用
+    //    document.getElementsByClassName()//->IE6~8不兼容
+    //    document.documentElement / document.body
+    //    document.querySelector() / document.querySelectorAll()//->IE6~8不兼容
+
+
+    //1、JS实现让我们的#box在屏幕的正中间
+    //获取当前浏览器可视窗口的宽高
+    var curW = document.documentElement.clientWidth || document.body.clientWidth;
+    var curH = document.documentElement.clientHeight || document.body.clientHeight;
+
+    //浏览器可视窗口的一半-当前盒子本身宽高的一半
+    var l = (curW - 342) / 2;
+    var t = (curH - 342) / 2;
+
+    var box = document.getElementById("box");
+    box.style.left = l + "px";
+    box.style.top = t + "px";
+
+
+</script>
+</body>
+</html>

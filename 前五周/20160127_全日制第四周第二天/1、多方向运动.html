@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            /* top: 50%;
+             left: 50%;
+             margin: -150px 0 0 -150px;*/
+            width: 10px;
+            height: 10px;
+            background: #008000;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript">
+    function getCss(curEle, attr) {
+        var val = reg = null;
+        if ("getComputedStyle"in window) {
+            val = window.getComputedStyle(curEle, null)[attr];
+        } else {
+            if (attr === "opacity") {
+                val = curEle.currentStyle["filter"]
+                reg = /^alpha\(opacity=(\d+(?:\.\d+)?)\)$/;
+                val = reg.test(val) ? reg.exec(val)[1] / 100 : 1;
+            } else {
+                val = curEle.currentStyle[attr];
+            }
+        }
+        reg = /^-?\d+(\.\d+)?(px|pt|em|rem)?$/;
+        return reg.test(val) ? parseFloat(val) : val;
+    }
+
+    function setCss(curEle, attr, value) {
+        if (attr === "float") {
+            curEle["style"]["cssFloat"] = value;
+            curEle["style"]["styleFloat"] = value;
+            return;
+        }
+        if (attr === "opacity") {
+            value > 1 ? value = 1 : null;
+            value < 0 ? value = 0 : null;
+            curEle["style"]["opacity"] = value;
+            curEle["style"]["filter"] = "alpha(opacity=" + value * 100 + ")";
+            return;
+        }
+        var reg = /^(width|height|(padding|margin(Top|Left|Right|Bottom))|top|left|right|bottom)$/;
+        if (reg.test(attr)) {
+            reg = /^-?\d+(\.\d+)?$/;
+            if (reg.test(value)) {
+                curEle["style"][attr] = value + "px";
+                return;
+            }
+        }
+        curEle["style"][attr] = value;
+    }
+
+
+    //1、使用JS将当前的盒子定位到屏幕的正中间
+    var oDiv = document.getElementById("div1");
+    var navW = document.documentElement.clientWidth || document.body.clientWidth, navH = document.documentElement.clientHeight || document.body.clientHeight;
+    oDiv.style.left = (navW - oDiv.offsetWidth) / 2 + "px";
+    oDiv.style.top = (navH - oDiv.offsetHeight) / 2 + "px";
+
+    //2、实现多方向运动
+
+    //->t:当前已经走了多长时间  b:开始的位置值 c:总距离(目标位置值)  d:总运动时间
+    var zhufengEffect = {
+        //匀速
+        Linear: function (t, b, c, d) {
+            return c * t / d + b;
+        }
+    };
+
+    //->设置我们的总时间
+    var duration = 1000;
+
+    //->记录当前已经运动多长时间了
+    var time = 0;
+
+    //->设置目标值
+    var targetObj = {width: 300, height: 300, top: (navH - 300) / 2, left: (navW - 300) / 2};
+
+    //->根据目标值,把对应的样式属性的开始值也分别的获取到
+    //->根据目标值和起始值计算出我们的总距离
+    var changeObj = {};
+    var beginObj = {};
+    for (var key in targetObj) {
+        if (targetObj.hasOwnProperty(key)) {
+            beginObj[key] = getCss(oDiv, key);
+            changeObj[key] = targetObj[key] - beginObj[key];
+        }
+    }
+    console.log(targetObj, beginObj);
+
+    function move() {
+        window.clearTimeout(oDiv.timer);
+        time += 10;
+
+        if (time >= duration) {
+            for (var key in targetObj) {
+                if (targetObj.hasOwnProperty(key)) {
+                    setCss(oDiv, key, targetObj[key]);
+                }
+            }
+            return;
+        }
+
+        for (key in targetObj) {
+            if (targetObj.hasOwnProperty(key)) {
+                var curPos = zhufengEffect.Linear(time, beginObj[key], changeObj[key], duration);
+                setCss(oDiv, key, curPos);
+            }
+        }
+
+        oDiv.timer = window.setTimeout(move, 10);
+    }
+    move();
+</script>
+</body>
+</html>

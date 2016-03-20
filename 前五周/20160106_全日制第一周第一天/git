@@ -1,0 +1,104 @@
+svn / git
+作用：在多人协作开发过程中，我们使用git负责项目源代码的版本管理，所有的开发人员操作的是同一个仓库中的源码
+
+1、创建一个远程的仓库(在gitHub上)
+   远程仓库的访问地址：https://github.com/zhouxiaotian/test.git
+
+2、创建一个本地的仓库
+   新建文件夹 -> 右键 git bash here -> $ git init (创建一个本地仓库)
+
+3、让本地的仓库和远程的仓库保持连接
+   $ git remote add 名字(一般叫做origin) 远程仓库的地址   例如: $ git remote add origin https://github.com/zhouxiaotian/test.git
+
+   扩展：$ git remote -v  查看当前本地都和哪些仓库保持了连接
+        $ git remote rm 名字  把名字对应的仓库和本地取消连接
+        $ git remote update 名字  把名字对应的远程仓库和本地仓库的连接通道进行更新,更新完成后我们就可以随时获取最新的项目源码了(在后期更新老师讲义的时候我们会操作演示)
+
+[重要的：如果你已经创建了远程的仓库，我们直接的通过 $ git clone 远程地址，这样的话我们的第二步和第三部默认的电脑都自己完成了]
+
+4、实现提交
+   $ git add -A  先把本地的提交到暂存区
+   $ git commit -m"备注"  在把本地暂存区的内容提交到本地的历史区
+
+   [对于一个空的文件夹我们是实现不了提交的，必须里面有内容]
+
+   建议每一次把本地的提交到远程仓库的时候都先拉取一遍
+   $ git pull 名字 master   [如果遇到了一个黑框，说明本地的和远程的冲突了，我们目前先简单的让远程把本地的覆盖掉 按Esc这个键->输入 :wq 在按回车键确认即可退出黑框]
+
+   $ git push 名字 master   ->输入gitHub的用户名和密码
+
+
+
+-----------------------------------------------------
+老师仓库的网址 https://github.com/zhufengpeixun/Nodes201509
+老师仓库的地址 https://github.com/zhufengpeixun/Nodes201509.git
+
+[更新老师的讲义]
+1、fork老师的仓库 ->把老师在gitHub上的远程仓库赋值一份一模一样的到自己的gitHub中
+
+2、记住自己的远程仓库的地址(https://github.com/zhouxiaotian/Nodes201509.git),然后把“自己的”远程仓库克隆到本地
+   $ git clone https://github.com/zhouxiaotian/Nodes201509.git
+
+   $ git remote -v
+   origin  https://github.com/zhouxiaotian/Nodes201509.git (fetch)
+   origin  https://github.com/zhouxiaotian/Nodes201509.git (push)
+   "origin"这个名字代表的是本地和自己远程仓库的连接
+
+3、但是我们以后要更新的是讲师的讲义，所以还需要让本地个讲师的远程仓库保持连接
+   $ git remote add zhufeng https://github.com/zhufengpeixun/Nodes201509.git  重点记住此时是老师的远程仓库地址
+   "zhufeng"这个名字代表的是本地个老师的远程仓库的连接
+
+4、把讲师的讲义随时的更新到自己的本地
+   $ git remote update zhufeng  ->更新通道
+   $ git pull zhufeng master ->把最新的讲义拉取到本地
+
+5、在把本地最新的代码推送到自己的远程仓库中
+   git add -A
+   git commit -m""
+   git pull origin master
+   git push origin master
+
+
+
+[上传作业]
+老师远程作业仓库的网址 https://github.com/zhufengpeixun/Share201509
+老师远程作业仓库的地址 https://github.com/zhufengpeixun/Share201509.git
+
+1、先fork老师的仓库地址->现在自己的gitHub就有一个和老师一模一样的仓库了(记住自己的仓库地址)->把"自己的仓库"克隆到本地一份
+
+2、开始收集本组的组员的作业->每周作业->第一周->全日制第一组->以每个组员的名字新建文件夹，然后把作业放进去
+
+3、开始把本地的推送到自己的仓库中
+   git add -A
+   git commit -m"全日制第一组第一周的作业"
+   git push origin master
+
+4、把作业提交给老师(在gitHub中操作)
+   new pull request -> 左边是老师的仓库，右边是自己的仓库 (把自己仓库的东西提交给老师,如果左右是相反的,是把老师的内容更新到自己的仓库) ->create pull request ->编写标题和问题描述完成最后的提交等待老师的审核...
+
+
+5、如果你们想看别人写的作业的话,可以按照更新讲义的步骤操作，每一次作业提交完成后都可以更新查看
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

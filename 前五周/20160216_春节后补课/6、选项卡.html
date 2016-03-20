@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="button" value="按钮1"/>
+<input type="button" value="按钮2"/>
+<input type="button" value="按钮3"/>
+
+<script type="text/javascript">
+
+    //->自定义属性
+    //    var btnList = document.getElementsByTagName("input");
+    //    for (var i = 0; i < btnList.length; i++) {
+    //        var cur = btnList[i];
+    //        cur.index = i;
+    //        cur.onclick = function () {
+    //            alert(this.index + 1);
+    //        }
+    //    }
+
+    //->闭包
+    //    var btnList = document.getElementsByTagName("input");
+    //    for (var i = 0; i < btnList.length; i++) {
+    //        ~function (i) {
+    //            btnList[i].onclick = function () {
+    //                alert(i + 1);
+    //            }
+    //        }(i);
+    //    }
+
+    //    var btnList = document.getElementsByTagName("input");
+    //    for (var i = 0; i < btnList.length; i++) {
+    //        btnList[i].onclick = (function (i) {
+    //            return function () {
+    //                alert(i + 1);
+    //            }
+    //        })(i);
+    //    }
+
+    //->采用事件委托
+    document.body.onclick = function (e) {
+        e = e || window.event;
+        var tar = e.target || e.srcElement;
+        if (tar.tagName.toLowerCase() === "input") {
+            alert(getIndex(tar) + 1);
+        }
+    };
+
+    function prev(curEle) {
+        if ("previousElementSibling" in curEle) {
+            return curEle.previousElementSibling;
+        }
+        var pre = curEle.previousSibling;
+        while (pre && pre.nodeType !== 1) {
+            pre = pre.previousSibling;
+        }
+        return pre;
+    }
+
+    function prevAll(curEle) {
+        var ary = [];
+        var pre = prev(curEle);
+        while (pre) {
+            ary.push(pre);
+            pre = prev(pre);
+        }
+        return ary;
+    }
+
+    function getIndex(curEle) {
+        return prevAll(curEle).length;
+    }
+</script>
+</body>
+</html>

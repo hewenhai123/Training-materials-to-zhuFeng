@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、如果window下也没有这个变量?
+    //获取：当前私有的作用域没有，一直找到window也没有的话，浏览器会报错
+    //    function fn() {
+    //        console.log(num);//Uncaught ReferenceError: num is not defined
+    //    }
+    //    fn();
+
+    //设置:相当于给window增加了新的属性名,不会报错
+    //    function fn() {
+    //        num = 13;//->不是私有的,window下也没有,相当于给window增加了一个叫做num的属性名,属性值是13
+    //    }
+    //    fn();
+    //    console.log(num);//->13
+
+    //2、当前作用域的上一级作用域是谁?
+    //    function fn(){
+    //        //这个私有作用域的上级作用域window
+    //    }
+    //    fn();
+
+    //当前作用域(cur)的上级作用域(pre)是谁,就看cur这个函数对应的堆内存是在哪个作用域下开辟的，那么当前的这个私有的作用域cur的上级作用域就是谁 ->和函数在哪执行的是没有任何的关系的,只和在哪定义的有关系
+    var num = 10;
+    function fn() {
+        var num = 100;
+        return function () {
+            console.log(num);
+        }
+    }
+    var f = fn();
+    f();
+</script>
+</body>
+</html>

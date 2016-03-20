@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //一维数组/多维数组
+
+    //一维数组:数组中的每一项的值都是基本的数据类型值,这样数组只有一级结构
+    //var ary = [12, 45, 56, 23, 34];
+
+    //    ary.sort(function (a, b) {
+    //        //console.log(this);//->window
+    //        console.log(a, b);
+    //        //return a - b;
+    //    });
+    //执行sort方法,并且给它传递一个参数值->匿名函数，匿名函数中的this->window，sort方法中的this->ary
+
+    //匿名方法一般会执行ary.length-1次,这一点和我们的冒泡排序类似,一共有五个数,我只需要把四个最大的数依次的放在末尾即可
+
+    //匿名函数中的形参a/b:
+    //a->当前项
+    //b->当前项的后一项
+
+    //在匿名函数中写的return a-b; 让当前项的值-后一项的值,得到一个>0或者<=0的数字,如果>0让当前项后一项交换位置,<=0位置保持不变 ->每一次我不一定非要写return a-b;我们的最终目的是返回一个>0还是<=0的数,来确定当前项和后一项是否交换位置
+    //    ary.sort(function (a, b) {
+    //        return 1;//->返回的是一个恒>0的数字,不管a和b谁大,都交换位置
+    //    });
+    //    console.log(ary);//->把原来的数组倒过来排列了 ->reverse
+
+
+    //多维数组:二维数组
+    //    ary = [
+    //        {
+    //            name: "张三",
+    //            age: 12
+    //        },
+    //        {name: "李四", age: 18}
+    //    ];
+
+
+    var ary = [{name: "左经贺", age: 35}, {name: "何殿杰", age: 36}, {name: "王彦珍", age: 19}, {name: "于双霞", age: 15}];
+    //实现按照姓名排序
+    ary.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+    });
+    //对于非数字之间的比较我们使用字符串方法localeCompare进行比较:把需要比较的转换为字母,然后按照字母在26个字母表中的先后顺序进行比较,例如:"z".localeCompare("a") ->1  "l".localeCompare("y") ->-1  "a".localeCompare("a") ->0
+    //"张三".localeCompare("张五") ->'zhangsan'.localeCompare('zhangwu') 对于第一个一样的,我们继续比较后面的字母... ->-1
+    console.log(ary);
+
+    //实现按照每一项中的年龄的从小到大进行排序
+    //    ary.sort(function (a, b) {
+    //        return parseFloat(a.age) - parseFloat(b.age);
+    //    });
+    //    console.log(ary);
+
+    //    ary.sort(function (a, b) {
+    //        //a是当前项:数组中的某一个对象,第一次是{name: "何殿杰", age: 36}
+    //        //b是后一项:第一次是{name: "王彦珍", age: 19}
+    //        //return a - b;//->返回的都是NaN
+    //    });
+</script>
+</body>
+</html>

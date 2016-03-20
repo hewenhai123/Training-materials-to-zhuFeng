@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        #div1 {
+            margin: 100px;
+            padding: 20px;
+            width: 50%;
+            height: 200px;
+            border: 5px solid #008000;
+            line-height: 25px;
+            background: #ff3333;
+
+            opacity: 0.58679;
+            filter: alpha(opacity=58.679); /*这个乘以100*/
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    站在台风口上,猪都能飞起来~~;要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子;
+</div>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+
+    //第一步优化:如果返回的结果是带着单位的,我们把单位去掉;但是需要注意,不是所有的值都要去单位,类似于"100px"我们去,但是"left"、"#fff"...就不能去
+    //    function getCss(curEle, attr) {
+    //        var val = reg = null;
+    //        if ("getComputedStyle" in window) {
+    //            val = window.getComputedStyle(curEle, null)[attr];
+    //        } else {
+    //            val = curEle.currentStyle[attr];
+    //        }
+    //        reg = /^-?\d+(\.\d+)?(px|em|rem|pt)?$/;
+    //        return reg.test(val) ? parseFloat(val) : val;
+    //    }
+    //    var res = getCss(oDiv, "borderTopWidth");
+    //    console.log(res);
+
+    //第二步:opacity是元素的透明度样式,在IE和标准浏览器中设置透明度是不一样的,那么我们在IE6~8下就不能用opacity获取透明度了
+    //->opacity: 0.5; filter: alpha(opacity=50); filter是单独的处理IE6~8浏览器的透明度的,因为IE6~8不支持opacity
+    //    function getCss(curEle, attr) {
+    //        var val = reg = null;
+    //        if ("getComputedStyle" in window) {
+    //            val = window.getComputedStyle(curEle, null)[attr];
+    //        } else {//->IE6~8
+    //            if (attr === "opacity") {//->获取的是透明度的值,我们需要先获取filter属性的样式值
+    //                val = curEle.currentStyle["filter"];//->"alpha(opacity=50.876)"
+    //                reg = /^alpha\(opacity=(\d+(\.\d+)?)\)$/;
+    //                val = reg.test(val) ? reg.exec(val)[1] / 100 : 1;
+    //            } else {
+    //                val = curEle.currentStyle[attr];
+    //            }
+    //        }
+    //        reg = /^-?\d+(\.\d+)?(px|em|rem|pt)?$/;
+    //        return reg.test(val) ? parseFloat(val) : val;
+    //    }
+    //    var res = getCss(oDiv, "opacity");
+    //    console.log(res);
+</script>
+</body>
+</html>

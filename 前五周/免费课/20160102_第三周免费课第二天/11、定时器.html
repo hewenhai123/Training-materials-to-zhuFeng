@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、定时器:设置一个定时器，并且设置一个等待的时间，当到达时间后执行对应的操作
+    //window.setTimeout([function],[interval]) ->设置一个定时器,interval是我们设置的等待的时间(ms),当到达时间后执行对应的[function],执行完成后定时器停止 ->执行一次
+
+    //window.setInterval([function],[interval]) ->设置一个定时器,interval是我们设置的等待的时间(ms),当到达时间后执行对应的[function],执行完成后,以后每隔这么长的时间,都会重新的执行[function] ->执行多次
+
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);
+    //    }, 1000);
+
+    //    window.setInterval(function () {
+    //        count++;
+    //        console.log(count);
+    //    }, 1000);
+
+
+    //2、关于定时器的返回值
+    //->设置一个定时器它是有返回值的,是一个number类型的值,代表当前是第几个定时器
+    //    var timer=window.setTimeout(function(){},1000);
+    //    console.log(timer);//->1
+    //
+    //    var timer2=window.setTimeout(function(){},1000);
+    //    console.log(timer2);//->2
+    //
+    //    var timer3=window.setInterval(function(){},1000);
+    //    console.log(timer3);//->3
+
+    //->如何清除定时器
+    //window.clearTimeout(timer);
+    //window.clearInterval(timer3);
+
+
+    var count = 0;
+    var timer = window.setInterval(function () {
+        count++;
+        console.log(count);
+
+        //当到达10的时候我们结束本次动画,清除对应的定时器
+        if (count >= 10) {
+            window.clearInterval(timer);
+        }
+    }, 1000);
+</script>
+</body>
+</html>

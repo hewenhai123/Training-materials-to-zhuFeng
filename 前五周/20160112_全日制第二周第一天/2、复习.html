@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、每一个函数(普通函数、类)都有一个天生自带的属性prototype，它是一个对象数据类型的值,浏览器会为其开辟一个堆内存;
+    //2、在浏览器默认给它开辟的这个堆内存中,有一个天生自带的属性constructor,指向函数本身
+    //3、每一个对象数据类型(普通对象、数组、正则、函数的prototype、类的实例...)都有一个天生自带的属性 __proto__，它指向所属类的原型
+
+    //第6题:
+    function Fn(num) {
+        this.x = this.y = num;
+    }
+    Fn.prototype.aaa = 100;//->Fn.prototype["aaa"] = 100;
+
+    Fn.prototype = {//让Fn.prototype指向自己创建的这个堆内存
+        //constructor: Fn,//->我们改变Fn.prototype指向后在自己开辟的这个堆内存中不会默认的有constructor,那么当前类的实例f的constructor都变为Object了,和最开始的默认情况是不一致的，所以我们需要手动增加constructor指向Fn
+        x: 20,
+        sum: function () {
+            console.log(this.x + this.y);
+        }
+    };
+    var f = new Fn(10);
+    console.log(f.sum === Fn.prototype.sum);
+    f.sum();//->this是f  f.x + f.y ->20
+    Fn.prototype.sum();//->this是Fn.prototype  Fn.prototype.x + Fn.prototype.y ->20+undefined=NaN
+    console.log(f.constructor);//->Object
+
+
+</script>
+</body>
+</html>

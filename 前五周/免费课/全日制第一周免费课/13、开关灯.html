@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="background-color: white;">
+
+<script type="text/javascript">
+    //默认是开灯(白色),当我点击body的时候,如果当前是开灯(当前的背景颜色是白色的话),我们让其关灯(背景颜色变为黑色),如果当前的背景颜色是黑色,我们让其变色白色
+    var oBody = document.body;//->获取整个body元素对象
+    oBody.onclick = function () {
+        //首先我们需要知道当前的背景颜色是什么
+        var bg = oBody.style.backgroundColor;
+
+        //其次我们根据当前的背景颜色是谁,让其变为对应的颜色
+        //白色->黑色
+        //黑色->白色
+        if (bg === "white") {
+            oBody.style.backgroundColor = "black";
+        } else {
+            oBody.style.backgroundColor = "white";
+        }
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训-表格排序</title>
+    <link type="text/css" rel="stylesheet" href="css/tab.css"/>
+</head>
+<body>
+<!--在一个table中,我们的thead只能有一个,而tbody可以有多个-->
+<div class="box">
+    <table id="tab" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <!--想让谁排序就给谁加class="cursor"-->
+            <th>姓名</th>
+            <th class="cursor">年龄</th>
+            <th class="cursor">武力</th>
+            <th>性别</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--实现奇数偶数行变色,只需让偶数行的class='bg'-->
+        <!--<tr>
+            <td>令狐冲</td>
+            <td>24</td>
+            <td>98</td>
+            <td>男</td>
+        </tr>
+        <tr class="bg">
+            <td>令狐冲</td>
+            <td>24</td>
+            <td>98</td>
+            <td>男</td>
+        </tr>-->
+        </tbody>
+    </table>
+</div>
+
+<!--引入JS的顺序要根据之间的依赖关系依次的来引入-->
+<script charset="utf-8" type="text/javascript" src="json/json-sort.js"></script>
+<script charset="utf-8" type="text/javascript" src="js/utils.js"></script>
+<script charset="utf-8" type="text/javascript" src="js/tab.js"></script>
+</body>
+</html>

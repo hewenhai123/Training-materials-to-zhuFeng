@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 28px;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 1000%;
+
+            /*CSS3中关于背景颜色的线性渐变,在IE浏览器中大部分都不兼容,不兼容我们使用一个纯色的背景颜色;如果在PC端想让更多的浏览器兼容的话,需要单独的加上特殊的前缀;*/
+            background: #ffe470;
+            background: -webkit-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: -moz-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: -ms-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: -o-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+        }
+
+        #goTo2 {
+            display: none;
+            position: fixed; /*固定定位，固定在当前页面的某一个位置*/
+            right: 50px;
+            bottom: 50px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+
+            /*以下是CSS3属性样式*/
+            border-radius: 50%; /*当前的盒子是正方形会变为了一个圆*/
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+    </style>
+</head>
+<body>
+<div id="goTo2">&gt;</div>
+
+<script type="text/javascript" src="js/scrollTop.js"></script>
+<script type="text/javascript">
+    var scrollObj = new scrollModel({
+        selector: "goTo2",
+        duration: 500
+    });
+    scrollObj.init();
+</script>
+</body>
+</html>

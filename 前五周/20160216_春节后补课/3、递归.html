@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //-> 1-100之间把所有不能被三整除的进行相加
+    //    var total = 0;
+    //    for (var i = 1; i <= 100; i++) {
+    //        if (i % 3 !== 0) {
+    //            total += i;
+    //        }
+    //    }
+    //    console.log(total);
+
+    function sum(n) {
+        if (n === 1) {
+            return 1;
+        }
+        if (n % 3 === 0) {
+            return sum(n - 1);
+        }
+        return n + sum(n - 1);
+    }
+    var res = sum(100);
+    //sum(100) ->100+sum(99) -> 100+sum(98) ->100+98+sum(97)....
+    console.log(res);
+</script>
+</body>
+</html>

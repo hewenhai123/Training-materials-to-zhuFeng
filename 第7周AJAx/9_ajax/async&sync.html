@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // 同步和异步的区别
+        var xhr=new XMLHttpRequest();
+        xhr.open('get','/9_ajax/info.txt',false,'abc','123');
+
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState===4&&xhr.status==200){
+                // 通过responseText获取响应主体
+                console.log(xhr.responseText)
+            }
+        };
+
+        xhr.send();
+
+        console.log('this is async request')
+    </script>
+</head>
+<body>
+
+</body>
+</html>

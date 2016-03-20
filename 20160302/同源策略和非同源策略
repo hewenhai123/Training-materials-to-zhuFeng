@@ -1,0 +1,7 @@
+http://www.zhufengpeixun.cn:80/
+1、协议、域名/IP、端口号
+
+2、
+->同源策略：上面的三个完全一致是同源 ->我们当前页面的地址(http://www.zhufengpeixun.cn/)和我们要向服务器请求数据的地址(http://www.zhufengpeixun.cn/data/userInfo?name=aaa&age=13)在同源下,这就是同源策略,项目中我们在同源下请求数据使用JS中的Ajax技术
+
+->非同源(跨域)策略：上面的三个有一个不一样就是非同源 ->我们当前页面的地址和请求数据的服务器地址不是同一个源,例如:当前地址是http://www.zhufengpeixun.cn/,请求数据的地址http://www.baidu.com/data/videoInfo,此时我们是跨域请求(非同源策略),在项目中目前最常用的解决跨域的方式是JS中的JSONP技术

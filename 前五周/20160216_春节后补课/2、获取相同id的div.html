@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="box">我是第一个div</div>
+<div id="box">我是第二个div</div>
+<p id="box">我是第三个p</p>
+
+<div id="top">我是第一个div</div>
+<div id="top">我是第二个div</div>
+
+<script type="text/javascript">
+    Array.prototype.myDistinct = function myDistinct() {
+        var that = this.slice(0);
+        var obj = {};
+        for (var i = 0; i < that.length; i++) {
+            var cur = that[i];
+            if (obj[cur] == cur) {
+                that[i] = that[that.length - 1];
+                that.length--;
+                i--;
+                continue;
+            }
+            obj[cur] = cur;
+        }
+        obj = null;
+        return that;
+    };
+
+    //->获取一个数组中哪些项重复了(第一种方式)
+    //    var a = [1, 2, 3, 4, 3, 4, 3, 4, 4, 3, 4, 5, 6, 7];
+    //    var b = [];
+    //    a.sort();
+    //    for (var i = 0; i < a.length - 1; i++) {
+    //        if (a[i] === a[i + 1]) {
+    //            b.push(a[i]);
+    //        }
+    //    }
+    //    b = b.myDistinct();
+
+
+    var oDiv = document.getElementById("box");//->只能获取第一个
+
+    //1、直接拿id来操作使用，这样的话页面中有几个，我们就可以获取几个
+    //console.log(box);
+
+    //2、querySelectorAll获取，但是在IE6~8不兼容 ->同理也可以使用jQuery选择器查询获取
+    //console.log(document.querySelectorAll("#box"));
+
+    //3、
+    var tagList = document.body.getElementsByTagName("*");
+
+    //->获取页面中元素标签的ID,存放在一个数组中
+    var ary = [];
+    for (var i = 0; i < tagList.length; i++) {
+        var cur = tagList[i];
+        if (cur.id) {
+            ary.push(cur.id);
+        }
+    }
+    //->把数组中重复的项获取到
+    var obj = {};
+    for (var i = 0; i < ary.length; i++) {
+        var cur = ary[i];
+        if (obj[cur] >= 1) {
+            obj[cur]++;
+            continue;
+        }
+        obj[cur] = 1;
+    }
+    ary = [];
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (obj[key] > 1) {
+                ary.push(key);
+            }
+        }
+    }
+
+    //->把所有具有重复的id的元素标签都获取到
+    obj = {};
+    for (var i = 0; i < ary.length; i++) {
+        var cur = ary[i];
+        obj[cur] = [];
+        for (var k = 0; k < tagList.length; k++) {
+            var curTag = tagList[k];
+            if (curTag.id === cur) {
+                obj[cur].push(curTag);
+            }
+        }
+    }
+    console.log(obj);
+</script>
+</body>
+</html>

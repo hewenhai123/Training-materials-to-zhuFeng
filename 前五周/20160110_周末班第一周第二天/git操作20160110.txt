@@ -1,0 +1,58 @@
+2015年第九期课堂讲义地址：https://github.com/zhufengpeixun/Nodes201509.git
+2015年第九期课后作业和代码贡献提交地址：
+https://github.com/zhufengpeixun/Share201509.git
+
+下载讲义:
+1、https://github.com/ 登录 ->在地址栏输入讲师git地址 -> fork(把老师的远程仓库克隆一份一模一样的) ->自己的gitHub中有一份和老师一模一样的仓库
+
+2、https://github.com/zhouxiaotian(你们自己的用户名)/Nodes201509.git 这个地址就是我们自己的远程仓库的地址
+
+   $ git clone 我们自己远程仓库的地址  （克隆完成关掉当前的git命令窗口）
+
+3、让自己的本地仓库和讲师的远程仓库保持连接
+   $ git remote add zhufeng(这个名字自己随便起,但是不要叫做origin) https://github.com/zhufengpeixun/Nodes201509.git
+
+   $ git remote -v 可以通过这个命令查看我们的当前连接
+   origin  https://github.com/zhouxiaotian/Nodes201509.git (fetch)
+   origin  https://github.com/zhouxiaotian/Nodes201509.git (push)
+   zhufeng https://github.com/zhufengpeixun/Nodes201509.git (fetch)
+   zhufeng https://github.com/zhufengpeixun/Nodes201509.git (push)
+   [origin这个名字是本地和自己远程仓库的连接名  zhufeng是本地个讲师远程仓库的连接名]
+
+以上三步只需要第一次执行，以后每一次更新讲义都不需要再重新的执行了
+
+4、开始每天更新老师的讲义
+  $ git remote update zhufeng
+  $ git pull zhufeng master
+
+  完成后本地的代码就是最新的了(为了防止和讲师的代码冲突，建议大家不要修改本地的代码)
+
+5、在把自己本地的最新代码上传到自己的远程仓库中(origin是我们和自己远程仓库的连接)
+  $ git add -A
+  $ git commit -m"备注信息"
+  $ git push origin master (提示输入gitHub的账号和密码)
+
+
+
+上传作业:
+https://github.com/zhufengpeixun/Share201509.git
+和我们下载讲义的步骤一样,也需要执行那几部
+
+1、for老师的仓库
+2、把自己的远程仓库克隆到本地
+3、让本地和老师的远程仓库保持连接
+
+每一次提交作业之前先把老师的仓库中的内容更新到本地
+4、$ git remote update zhufeng  $ git pull zhufeng master
+
+5、小组长自行收集作业(不要有压缩包),完成后,每周作业->第一周(第N周)->周末班第N组->以每个人的名字新建文件夹,把作业都放进去
+
+6、把自己本地的代码提交到自己的远程仓库中
+   $ git add -A
+   $ git commit -m"周末班第二组第一周作业"
+   $ git push origin master (在这步之前先 $ git pull origin master)
+
+7、现在自己的远程仓库中就有最新的作业了
+   [gitHub界面操作]
+
+   new pull request -> Create pull request ->标题和描述(描述中写本组本周遇到的问题都有哪些) -> Create pull request

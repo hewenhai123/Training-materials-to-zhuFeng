@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //JS中的定时器有两种：
+    //->window.setTimeout([function],[interval]) 设置一个定时器,并且设定了一个等待的时间[interval],当到达时间后,执行对应的方法[function],当方法执行完成定时器停止(但是定时器还在,只不过没用了)
+
+    //->window.setInterval([function],[interval]) 设置一个定时器,并且设定了一个等待的时间[interval],当到达时间后,执行对应的方法[function],当方法执行完成,定时器并没有停止,以后每隔[interval]这么长的时间都会重新的执行[function],直到我们手动清除定时器为止
+
+    //JS中的定时器是有返回值的:
+    //->返回值是一个数字,代表当前是第几个定时器
+    //    var timer1=window.setTimeout(function(){},1000);
+    //    //timer1->1 当前是第一个定时器
+    //    var timer2=window.setTimeout(function(){},1000);
+    //    //timer2->2 当前是第二个定时器
+    //    //...
+    //    window.clearTimeout(timer1);//->把第一个定时器清除掉
+    //
+    //    var timer3=window.setTimeout(function(){},1000);
+    //    //timer3->3 当前是第三个定时器 ? 上面清掉了,但是号还是继续往后排的,和去银行办业务一样,你是第一号,当你办完业务,把你的号清掉,新来的人还是从2开始的
+
+    //    var timer = window.setInterval(function () {
+    //        //console.log(timer);//->一直都是1
+    //    }, 1000);//->setInterval设定一次也是一个定时器,不管执行多少次都是一个定时器
+    //    var timer2=window.setTimeout(function(){},1000);
+    //    console.log(timer2);//->2
+    //    //->不管设定的是setInterval还是setTimeout都是定时器,号都是继续往后排的
+
+    //想实现从1数到5,每隔1s中数一次:
+    //->setInterval
+    //    var count = 0;
+    //    var timer = window.setInterval(function () {
+    //        count++;
+    //        console.log(count);
+    //        if (count === 5) {
+    //            window.clearInterval(timer);
+    //            //window.clearTimeout(1); ->不管用哪个都可以清除掉,里面放的是要清除的定时器的排列号
+    //        }
+    //    }, 1000);
+
+    //->setTimeout
+    //->原理:执行完成当前的方法,在从新的设置一个新的setTimeout定时器,让1s后在重新的执行这个方法就可以实现了
+    //    var count = 0, timer = null;
+    //    function move() {
+    //        window.clearTimeout(timer);//->每一次执行move的时候,把上一次执行move创建的那个没用的定时器清除掉,优化性能
+    //        count++;
+    //        console.log(count);
+    //        if (count === 5) {//->如果已经累加到5了,以后就不用重新的执行move了
+    //            return;
+    //        }
+    //        timer = window.setTimeout(move, 1000);
+    //    }
+    //    move();
+
+    //->我们在move执行的时候又调用了move自己执行,我们把自己调用自己的编程模式叫做"递归思想"
+    //面试题:获取1-100之间所有数的和,但是所有被3整除的都不进行相加
+    //->for循环
+    //    var total = null;
+    //    for (var i = 1; i <= 100; i++) {
+    //        if (i % 3 !== 0) {
+    //            total += i;
+    //        }
+    //    }
+    //    console.log(total);//->3367
+
+    //->递归
+    //    function sum(n) {
+    //        if (n === 1) {
+    //            return 1;
+    //        }
+    //        return n + sum(n - 1);
+    //    }
+    //    var total = sum(100);
+    //    console.log(total);
+    //total = 100+sum(99) -> total = 100+99+sum(98) -> total = 100+99+98+sum(97) -> ... -> total = 100+99+98+97+...+2+sum(1) -> total = 100+99+98+97+...+2+1
+
+    function sum(n) {
+        if (n === 1) {
+            return 1;
+        }
+        if (n % 3 === 0) {
+            return sum(n - 1);
+        }
+        return n + sum(n - 1);
+    }
+    var total = sum(100);
+    console.log(total);
+</script>
+</body>
+</html>

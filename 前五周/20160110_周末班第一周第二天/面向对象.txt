@@ -1,0 +1,32 @@
+1、所有的编程语言(java、c++、c#、php、.net、object-c、swift、ruby、python、c、b、vb、vf...JavaScript)都是面向对象开发的
+
+2、面向对象开发需要每一位"程序猿"(开发工程师、码农)掌握关于->类的继承封装和多态
+
+抽象:面向对象的研究过程其实是我们把很多的东西划分成具体的几大类,然后在拿出每一个类别中的具体的一个东西(实例)来进行学习研究,这个过程其实就是我们的面向对象开发的过程
+
+3、
+对象:JS中万物皆对象,他是一个抽象的概念,也是一个泛指  例如:自然界中万物皆对象
+类:把对象的具体细分  例如:自然界可以分为 人类、动物类、植物类...
+实例:某一个类中具体的事物  例如:我们每一个人都是人类中的一个实例
+
+var ary=[12,23,34];//->字面量方式来创建
+var ary=new Array();//->实例创建的方式 Array是一个类,而ary是它的一个实例
+//ary其实就是我们数组这个类(Array)中的一个实例,只要我们把ary的基本语法和常用方法等研究明白了,那么Array下的所有的实例都是这样来操作的
+
+
+4、JS中一些常用的内置类
+
+1)与数据类型有关系的类
+  Number、String、Boolean、Null、Undefined、Object、Array、RegExp、Date、Function...
+  每一个数字都是Number这个类的实例,其他的类也是同样的原理
+
+2)与元素对象/元素集合有关系的类
+  HTMLDivElement(每一个div元素标签都是它的一个实例,并且每一个元素标签都有一个自己对应的类,例如:HTMLParagraphElement它也是一个类,每一个p元素标签都是它的一个实例)
+  HTMLElement->Element->Node->EventTarget->Object
+  HTMLDocument->Document->Node->EventTarget->Object
+  Window->WindowProperties->EventTarget->Object
+
+  HTMLCollection(元素集合类,通过方法获取的元素集合都是它的一个实例)
+  NodeList(节点集合类)
+
+...

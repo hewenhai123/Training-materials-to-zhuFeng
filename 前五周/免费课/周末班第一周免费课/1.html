@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--内嵌样式-->
+    <style type="text/css">
+        #div1 {
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+    <!--外链式样式-->
+    <link type="text/css" rel="stylesheet" href="test.css"/>
+    <!--导入式-->
+    <style type="text/css">
+        @import "test2.css";
+    </style>
+</head>
+<body>
+<!--
+一个页面是由三部分组成的:
+1)HTML标签:超文本标记语言
+2)CSS样式:层叠样式表
+  ->a、直接在元素标签上编写样式(行内样式)
+  ->b、内嵌样式:在页面的样式表中同过CSS选择器,找到对应的元素给它设置样式
+  ->c、外链样式:把样式写在一个外部的文件中,然后在本页面中通过link标签把它引入到当前页面中
+  ->d、导入式样式:和外链式一样,都是把样式写在一个外部的文件中,也需要引入进来,我们导入式采用的是@import来导入文件
+
+3)JS脚本:JavaScript脚本编程语言
+  ->a、行内JS(强烈不推荐 性能不好而且相当的不安全)
+  ->b、内嵌式
+  ->c、外链式
+-->
+
+<!--行内样式-->
+<!--行内式引入JS-->
+<div id="div1" style="width: 100px;" onclick="alert('欢迎大家来珠峰培训~~')"></div>
+
+<!--内嵌式JS-->
+<script type="text/javascript">
+    alert("告别之前的状态，一切从新开始，寻找最适合自己发展的道路~~");
+</script>
+
+<!--外链式JS-->
+<script type="text/javascript" src="test.js">
+    //在外链式引入JS的时候,在script脚本块之间不能写JS代码,因为写了也没作用
+    alert("嘿嘿,我发现一个秘密~~");
+</script>
+<!--思考题：在script上除了写type和src以外还可以写什么属性,这些属性的作用
+    defer、async、charset...
+
+    "JavaScript高级程序设计第三版 (红色皮上面有个小孩拿的是一个望远镜)"
+-->
+</body>
+</html>

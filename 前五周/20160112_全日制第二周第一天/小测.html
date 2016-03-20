@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function Man() {
+
+    }
+    Man.prototype = {
+        constructor: Man,
+        attr: function () {
+
+        },
+        words: function () {
+
+        },
+        say: function () {
+
+        }
+    };
+    var m = new Man;
+
+    Array.prototype.myDistinct = function () {
+        var obj = null;
+        for (var i = 0; i < this.length; i++) {
+            var cur = this[i];
+            if (obj[cur] == cur) {
+                this[i] = this[this.length - 1];
+                this.length--;
+                i--;
+                continue;
+            }
+            obj[cur] = cur
+        }
+        obj = null;
+        return this;
+    };
+    var ary = [1, 2, 3, 1, 2, 3, 2, 3, 2, 3, 2, 3, 1];
+    ary.myDistinct().sort();
+
+
+    " zhufeng ".replace(/(^ +| +$)/g, "");
+
+    function getRandom(n, m) {
+        n = Number(n);
+        m = Number(m);
+        if (isNaN(n) || isNaN(m)) {
+            return Math.random();
+        }
+        if (n > m) {
+            n = n + m;
+            m = n - m;
+            n = n - m;
+        }
+        return Math.round(Math.random() * (m - n) + n);
+    }
+    var ran = getRandom(1, 100);
+
+    function fn(x, y, a) {
+        arguments[2] = 10;
+        alert(a);
+    }
+    fn(1, 2, 3);
+    //->10
+
+    function queryUrlParameter(url) {
+        var reg = /([^?&=]+)=([^?&=]+)/g;
+        var obj = url.replace(reg, function () {
+            obj[arguments[1]] = arguments[2];
+        });
+        return obj;
+    }
+</script>
+</body>
+</html>

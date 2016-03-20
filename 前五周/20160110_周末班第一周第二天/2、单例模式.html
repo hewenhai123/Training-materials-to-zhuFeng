@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var name = "张静怡";
+    //    var age = 18;
+    //    var name = "王远";
+    //    var age = 36;
+
+    //单例模式:把描述同一件事物的属性和方法放在相同的命名空间下进行分组,防止不同事物之间如果属性相同引发的冲突问题
+    //->就是我们之前学习的破对象
+    //->现在的每一个对象都是一个单独的个体(单独的实例)
+
+    //在单例模式中我们的person1/person2有一个新的称呼:"命名空间"namespace(浏览器开辟一个堆内存空间,把描述这件事物的属性存储进去,最后我们的person1相当于给这个空间起了个名字,所以叫做命名空间)
+    var person1 = {
+        name: "张静怡",
+        age: 18
+    };
+    var person2 = {
+        name: "王远",
+        age: 36
+    };
+    console.log(person1.name);
+    console.log(person2.age);
+
+
+    //模块化开发:对于一个复杂的页面,我们由多个前端人员协作开发,按照功能划分成具体的几个板块,每个人负责一个,同时开发,最后进行代码合并
+    //单例模式是实现模块化开发最简单的一种模式(大公司先在除了单例模式还常用的是sea.js/require.js实现模块化开发)
+    //每个人把自己这个模块编写的所有的方法都放在一个单独的命名空间下,这样最后在合并的时候就不会发生冲突了
+
+    var utils = {//tool、global ->这个命名空间下编写的方法都是各各模块公用的方法
+
+    };
+
+    var changeSkinModel = {
+        fn: function () {
+            //this->changeSkinModel
+            this.sel();//->同一个命名空间下方法的相互调用我们采用this.xxx来完成
+        },
+        sel: function () {
+
+        },
+        init: function () {
+
+        }
+    };
+    changeSkinModel.fn();
+
+    var tabModel = {
+        fn: function () {
+            changeSkinModel.sel();//->用单例模式不仅实现了我们独立,也能实模块间的相互调用
+        }
+    };
+
+
+    //    (function(){
+    //        function fn(){
+    //
+    //        }
+    //        function sel(){
+    //
+    //        }
+    //    })();
+    //    (function(){
+    //        function fn(){
+    //            sel();//->我们在下一个闭包中是无法调用上一个闭包中的方法的,如果sel是公用的话,完成不了模块间相互的调用
+    //        }
+    //    })();
+
+
+</script>
+</body>
+</html>

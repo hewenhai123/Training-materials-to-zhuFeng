@@ -1,0 +1,43 @@
+一、
+1、扩展作业题(原型链)
+   数组中有一个方法叫做slice,实现数组的查询:slice(n,m) slice(n) slice(0) slice() ...
+   一个slice很据传递的参数值的不一样可以实现很多种不同的操作，自己回去深入研究slice的不同操作:
+   1)一个参数都不传、传递一个参数值、传递两个参数值
+   2)参数传递的是负数、小数
+   3)n比m要大
+   ...
+   要求你们自己实现一个mySlice的方法(在内置的原型上),实现和内置slice一模一样的功能操作
+   Array.prototype.mySlice=function(){//this->当前要操作的数组}
+
+2、扩展作业(链式写法)
+   实现 (5).plus(3).minus(2) ->5+3-2
+   Number.prototype.plus...
+   Number.prototype.minus...
+
+扩展作业可以晚点交(1月15日 周五)
+
+
+二、作业
+1、"珠峰培训正式课作业[第一周].doc"
+
+2、回去后把免费课的选项卡循环绑定事件用闭包的原理实现了(我们之前使用的是自定义属性的原理)
+
+1月13号 晚上23:59之前 所有的组长必须提交到git上
+
+
+三、预习
+1、原型链还有一些扩展知识,这个不讲了,我视频中,自己有时间的同学去深入研究即可 http://www.zhufengpeixun.com/viewer.do?courseId=955223#currentPlaying=1706433 (课件2和课件4)
+
+2、第二周的知识点是所有周里面最多的
+
+JS前端课程按照时间分类->
+
+第二周一:从“第1讲:以面向对象的思想深入理解DOM-2015年第一期”--->"第8讲：求平均分示例和eval-2015年第一期" (五个视频)
+
+第二周一:"JSON基础知识专题第一讲"和"JSON基础知识专题2"
+
+第二周专题:http://www.zhufengpeixun.com/viewer.do?courseId=859485#currentPlaying=1351238
+
+第二周专题:http://www.zhufengpeixun.com/kecheng/detail_859484
+
+第二周二:"2014年JavaScript正则表达式：第一讲正则是干什么的？" -->"2014年JavaScript正则表达式：exec方法的面试题实例"(9个)  正则的教材一定要看

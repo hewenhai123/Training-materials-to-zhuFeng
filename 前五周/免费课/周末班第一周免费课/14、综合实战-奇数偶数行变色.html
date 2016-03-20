@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 10px auto;
+            padding: 20px;
+            width: 70%;
+            border: 1px dashed green;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        #ul1 li.bg0 {
+            background: antiquewhite;
+        }
+
+        #ul1 li.bg1 {
+            background: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+</ul>
+<script type="text/javascript">
+    //需求:想实现奇数行和偶数行变色,我们只需要让奇数行的class='bg0' 让偶数行的class='bg1'
+
+    //1、想要操作哪些元素,那么首先第一步就先把这些元素都获取到
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+
+    //2、实现我们的奇偶行变色(有多少个li我们就循环多少次)
+    for (var i = 0; i < oLis.length; i++) {
+        //第一次循环 i=0  i是偶数  第一行oLis[0]
+        //第二次循环 i=1  i是奇数  第二行oLis[1]
+        //第三次循环 i=2  i是偶数  第三行oLis[2]
+        //...
+        //规律:
+        //1)i存储的值是奇数对应我们li的偶数行,i是偶数,代表我们li的奇数行
+        //2)我们每一次循环i存储的值相当于我们当前要获取的li的索引 oLis[i]->获取的是每一次循环我们得到的对应的li
+        //i%2->i膜2->i除以2取余数
+        if (i % 2 === 0) {
+            //说明i是偶数,代表的是我们的奇数行
+            oLis[i].className = "bg0";
+        }else{
+            //说明i是奇数,代表的是我们的偶数行
+            oLis[i].className = "bg1";
+        }
+    }
+
+
+</script>
+</body>
+</html>

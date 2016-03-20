@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        #div1 {
+            margin: 100px;
+            padding: 20px;
+            width: 200px;
+            height: 200px;
+            border: 5px solid #008000;
+            line-height: 18px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    站在台风口上,猪都能飞起来~~;要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子;
+    站在台风口上,猪都能飞起来~~;要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子;
+    站在台风口上,猪都能飞起来~~;要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子;
+</div>
+<script type="text/javascript">
+    //CSS盒子模型
+    //margin(top、left、right、bottom)、border、padding、width、height
+
+    //1、JS盒子模型
+    //在浏览器中用JS代码(一些常用属性和方法)获取我们的元素的样式信息(margin、padding、width...)
+
+    //常用的属性
+    //->client:clientWidth、clientHeight、clientTop、clientLeft
+    //->offset:offsetWidth、offsetHeight、offsetTop、offsetLeft、offsetParent
+    //->scroll:scrollWidth、scrollHeight、scrollTop、scrollLeft
+
+    var oDiv = document.getElementById("div1");
+
+    //2、client
+    //clientTop:上边框的高度
+    //clientLeft:左边框的宽度
+
+    //clientWidth:内容的宽度(width)+左右padding
+    //clientHeight:内容的宽度(height)+上下padding
+    //->获取的结果和内容是否溢出没有关系,设定了固定的宽高,按照固定的值+padding来获取,不设置固定的宽高,按照自适应的+padding...
+
+    //document.documentElement.clientWidth||document.body.clientWidth ->获取当前浏览器可视窗口(页面内容能看到的区域)的宽度
+    //document.documentElement.clientHeight||document.body.clientHeight ->获取当前浏览器可视窗口的高度(一屏幕的高度)
+    //->在一般浏览器中,关于操作浏览器的盒子模型,我们使用document.documentElement来操作既可以获取到具体的值,用document.body也可以获取,但是获取的结果不准确;在特殊的IE浏览器中,使用document.documentElement获取不到值(不兼容),我们只能使用document.body获取; ->所以写的时候,两个都写上,并且document.documentElement在前面;
+
+    //3、offset
+    //offsetWidth:clientWidth+左右border
+    //offsetHeight:clientHeight+上下border
+    //->内容是否溢出和offsetWidth/offsetHeight也是没关系的
+    //->在jQuery中有两个方法:innerWidth/innerHeight ->clientWidth/clientHeight  outerWidth/outerHeight->offsetWidth/offsetHeight
+
+    //4、scroll
+    //scrollWidth/scrollHeight
+    //1)在真实的内容没有溢出的情况下等于clientWidth/clientHeight
+    //2)在有内容溢出的情况下,对于scrollHeight来说,我们获取的值 "约等于" 真实内容的高度(设定的高度+溢出内容的高度)+上padding
+
+    //->为啥是约等于?
+    //因为在不同的浏览器中我们获取的值是不一样的,并且同一个浏览器,加overflow:hidden溢出隐藏和不加也是不一样的;
+    //console.log(oDiv.scrollHeight);
+    //oDiv.style.overflow = "hidden";
+    //console.log(oDiv.scrollHeight);
+
+    //document.documentElement.scrollHeight||document.body.scrollHeight ->这个获取的是当前页面真实的高度(如果有多屏的话,是所有屏加起来的总高度)
+    //在当前页面只有一屏幕的情况下,我们的scrollHeight和clientHeight相等
+</script>
+</body>
+</html>

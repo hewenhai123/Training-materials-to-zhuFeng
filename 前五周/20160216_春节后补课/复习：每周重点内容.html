@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--<iframe src="https://www.baidu.com/" style="width: 1000px; height: 500px;"></iframe>-->
+<script type="text/javascript">
+    //1、从一个字符串中找出重复次数最多的字符?
+    var str = "zhufengpeixun2016";
+
+    //-->1)获取每一个字母出现的次数
+    var obj = {};
+    str.replace(/[a-zA-Z]/g, function () {
+        var val = arguments[0];
+        if (obj[val] >= 1) {
+            obj[val] = parseInt(obj[val]) + 1;
+            return;
+        }
+        obj[val] = 1;
+    });
+
+    //-->2)获取当前出现的最多次是多少次?
+    var max = 1;
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            obj[key] > max ? max = obj[key] : null;
+        }
+    }
+
+    //-->3)把所有出现max次的字母都获取到
+    var ary = [];
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (obj[key] == max) {
+                ary[ary.length] = key;
+            }
+        }
+    }
+    console.log("最多出现：" + max + "次，出现的字母都有：" + ary.toString());
+    obj = null;
+    ary = null;
+
+
+    //->数组去重的其它实现方法：http://web.jobbole.com/83425/
+    Array.prototype.myDistinct = function myDistinct() {
+        var that = this.slice(0);//->把要操作的数组克隆一份，以后操作克隆后的数组，这样的话原来的数组就不会发生改变了
+        var obj = {};
+        for (var i = 0; i < that.length; i++) {
+            var cur = that[i];
+            if (obj[cur] == cur) {
+                that[i] = that[that.length - 1];
+                that.length--;//->对使用splice删除的优化
+                i--;//->防止数组塌陷问题
+                continue;
+            }
+            obj[cur] = cur;
+        }
+        obj = null;
+        return that;//->实现我们的链式写法
+    };
+
+    var ary = [1, 2, 3, 2, 3, 2, 3, 1, 2, 3, 4, 3, 2, 3, 4];
+    var newAry = ary.myDistinct();
+
+
+</script>
+</body>
+</html>

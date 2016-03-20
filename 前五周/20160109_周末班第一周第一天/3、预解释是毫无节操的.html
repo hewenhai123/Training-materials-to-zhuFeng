@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //"a" in window ->判断"a"是否为window的一个属性名,是的话返回true,反之是false,例如:
+    //    var obj = {name: "张凯静"};
+    //    console.log("name" in obj);//->true
+    //    console.log("age" in obj);//->false
+
+
+    //自从学了预解释、从此节操是路人
+    //1、不管条件是否成立,在预解释的时候都要把判断体中带var/function的进行预解释
+
+    //    //window下的预解释:var a; ->window.a=undefined; a是window的一个属性,"a" in window是true
+    //    if (!("a" in window)) {//->"a" in window为true取反是false,条件不成立,a=13就不会执行
+    //        var a = 13;
+    //    }
+    //    console.log(a);//->undefined
+
+
+    //2、预解释只发生在“=”的左边;“=”是用来赋值的,“=”左边是变量,“=”右边是值;
+    //    fn();//->在代码上面也可以执行,因为预解释的时候fn就已经完成了定义
+    //    function fn() {
+    //        console.log("ok");
+    //    }
+
+    //匿名函数之函数表达式:把一个函数定义的部分当做一个值,赋值给变量/元素的事件/定时器...
+    //    //window下预解释:var fn;
+    //    fn();//->undefined() Uncaught TypeError: fn is not a function
+    //    var fn = function () {
+    //        console.log("ok");
+    //    };
+
+    //3、自执行函数中的function,在全局作用域下进行预解释的时候,是不参与的；只有当代码执行到对应行的时候，把声明+定义+执行都一起完成了；
+    //匿名函数之自执行函数:函数声明+定义+执行一起完成了
+    //    (function(num){})(100);
+    //    //前面加的所有的特殊符合都是保证语法正常而已,即使加的是!也不是取反...
+    //    ~function(num){}(100);
+    //    !function(num){}(100);
+    //    +function(num){}(100);
+    //    -function(num){}(100);
+
+    //4、return后面返回的是一个值,所以不参与预解释；return下面的代码虽然不在执行了,但是需要进行预解释；
+    //    var num = 10;
+    //    function fn() {
+    //        //私有作用域中的预解释:var num; ->函数中出现的num都是私有的
+    //        console.log(num);//->undefined
+    //        return function () {
+    //
+    //        };//->return后面返回的是一个值,所以这个小的function是不参与预解释的
+    //        var num = 13;//->return下面的代码虽然不在执行了,但是需要进行预解释
+    //    }
+    //    var f = fn();//->f其实等于的是里面的小函数
+    //    f();
+
+    //5、在预解释的时候，如果之前已经声明过一个名字，那么就不在重新的进行声明；但是需要重新的进行赋值；
+    //var num = 12;//->window.num=12;
+    //function num() {}//->window.num=xxxfff000;
+    //window是一个对象,属性名不能重复,也就是如果变量的名字函数的名字一样了,也算是冲突了,只能保留一个值(不管是函数名还是变量名都是一个名字,用来存储不同类型值的,但是在JS中一个名字一次只能存储一个值)
+
+    //window下的预解释：
+    //声明+定义 fn=xxxfff111;
+    //声明 var fn; (上面已经存在fn这个名字了,所以不需要重新的声明)
+    //声明(不需要)+定义 fn=xxxfff222;
+    //->有一个叫做fn的名字,值是xxxfff222;
+
+    fn();//->2
+    function fn(){console.log(1);}//在预解释阶段声明+定义都完成过，所以直接的跳过
+    fn();//->2
+    var fn=13;//在预解释阶段只是声明过，还少赋值这一步 fn=13
+    fn();//->13() Uncaught TypeError: fn is not a function JS上当前行代码报错下面的代码就不在执行了
+    function fn(){console.log(2);}
+    fn();
+</script>
+</body>
+</html>

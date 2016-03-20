@@ -1,0 +1,74 @@
+http
+一）超文本传输协议 hypertext transport protocol
+作用：传输网络上一切可以传输的东西
+构成：首先它是一个事务(包含n+1个事件组成，只有这个n+1个事件都成功之后这个事务才算成功)
+两个事件：请求和响应
+都包括：1、起始行
+请求起始行：GET / HTTP/1.1
+http方法(服务器就是通过这个知道请求类型)
+请求的路径(服务器通过这个知道请求资源路径的)
+http版本号(请求和响应的版本号必须一一对应)
+响应起始行：HTTP/1.1 200 OK
+http版本号
+http状态码(浏览器根据这个知道服务器的具体响应)
+http状态描述符(描述这个状态码信息)
+2、首部
+描述http的附属信息
+key:value1,value2,value3
+// 发送任何一个http请求都会在request中携带userAgent
+包含五种类型：请求首部(只在请求中出现_host,cookie,user-Agent) 响应首部(只在响应中出现_server，Date)，实体首部，扩展首部，通用首部
+3、实体/主体
+发送或接收到的数据
+请求实体和响应实体是有区别的
+只有http方法为post、put时才会携带请求主体
+而响应首部是除了http方法为head之外，都会携带响应主体
+
+二）http status code
+1xx http初始化，几乎见不到。websocket的http状态码为101 (http2.0已经取消1xx状态码，但是只为websocket保留了101)
+2xx 请求成功 200 ok 202 accepted
+3xx 重定向 301 永久转移 302 临时转移 304 缓存(响应首部：last-modified,etag；请求首部：if-modified-since,if-none-match)
+4xx 400 bad request(少参数后者参数错误) 401 auth (基本认证，摘要认证) 403 forbidden 禁止访问 404 not found 未找到该资源
+5xx 500 internal server error 内部服务器错误
+
+http1.1和http2.0的区别？
+1、多路复用，多个请求可以复用一个连接，减少性能消耗
+2、首部压缩，减少首部冗余。压缩重复的首部，减少http报文体积
+3、主动推送
+
+三）http 方法
+get 从服务器获取信息(1、没有请求主体，因为它是把参数都拼接到url后面了；2、有大小限制，因为浏览器对url有大小限制，所以造成了get有大小限制，ie 2k chrome 8k ff 7k；3、容易被缓存)
+post 向服务器发送数据(1、有请求主体，因为它是把内容全部放到了请求主体里；2、没有大小限制，因为请求主体是没有大小限制的，所以post没有大小限制；3、不会被浏览起缓存)
+put 向服务器推送数据(和post的区别在于post是往服务器发送数据，进行处理，而put是让服务器存储数据；属于post系，特点和post一模一样。成功返回的状态码为202)
+delete 告诉服务器删除某个资源(属于get系，特点和get一模一样。成功返回状态码为202)
+head 让服务器不需要返回响应主体(属于get系)
+例子：浏览器下载文件。用head发送往文件服务器发送一个请求，文件服务器返回content-length和content-type。获取这两个响应首部就知道下载文件名是什么，文件体积是多少。
+options 检验服务器都支持哪些http方法
+trace 断言
+track 调试
+connection
+
+get和post的区别？
+1、大小
+2、缓存
+3、请求主体
+
+明明get方法就可以完成所有的需求，为什么还要设计出这个么方法？
+各司其职。粒度划分。
+实现增删改查CURD
+add put
+remove delete
+update post
+select get
+
+这种软件接口通讯架构叫restful 表征状态转移
+/rest/2.0/add/userinfo?name=zhangyatao&age=18 put
+/rest/2.0/remove/userinfo?id=1 delete
+/rest/2.0/get/userinfo?id=1 get
+/rest/1.0/get/userinfo?id=1 get
+
+四）http scheme
+http默认端口是80
+https 默认是443 http+tls(加密层) 非对称加密
+ftp 文件传输协议
+smtp 邮件
+file 本地文件 不能传输传http(这种方案开头的页面内是不能执行ajax的)

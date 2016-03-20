@@ -1,0 +1,43 @@
+API接口文档
+1、获取比赛的日期
+   地址：http://matchweb.sports.qq.com/kbs/calendar
+   方式：get
+   跨域：跨域请求(JSONP)
+   请求参数：
+     columnId:100000 ->当前比赛的类型 100000 NBA  208 中超...
+     callback:calendar ->回调函数名calendar
+   返回内容：
+     {
+        "code":0, ->返回的数据是否正常 0一般是正常 1是不正常 2...
+        "data":{
+            "today":"2016-03-10", ->今天的日期
+            "data":[ ->存储的是返回的时间列表
+                {
+                    "date":"2015-10-08", ->日期
+                    "number":"6", ->比赛的数量
+                    "weekday":"\u661f\u671f\u56db" ->今天是星期几
+                },
+                {
+                    "date":"2015-10-09",
+                    "number":"9",
+                    "weekday":"\u661f\u671f\u4e94"
+                }
+                ...
+            ]
+        }
+     }
+
+2、根据传递的指定日期,获取当前日期下的所有的赛事
+  地址：http://matchweb.sports.qq.com/kbs/list
+  方式：get
+  跨域：跨域请求(JSONP)
+  请求参数：
+       columnId:100000 ->当前比赛的类型 100000 NBA  208 中超...
+       callback:gameList ->回调函数名gameList
+       startTime:"2016-03-07" ->开始时间
+       endTime:"2016-03-07" ->结束时间  (开始时间和结束时间一样,只获取这一天的内容赛事)
+     返回内容：
+        详见test.json
+
+
+

@@ -1,0 +1,4 @@
+张亚涛
+
+第一天 http 了解下ajax是什么 怎么用 需要注意什么 ajax的一个小lib
+第二天 jquery的ajax怎么用 跨域

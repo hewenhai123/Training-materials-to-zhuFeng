@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,user-scalable = no">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #outer {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #inner {
+            width: 500%;
+            height: 200px;
+            transition: 0.7s;
+            -webkit-transition: 0.7s;
+        }
+
+        #inner li {
+            float: left;
+            width: 20%;
+            height: 200px;
+        }
+
+        #inner li:nth-of-type(1) {
+            background: palegreen;
+        }
+
+        #inner li:nth-of-type(2) {
+            background: yellow;
+        }
+
+        #inner li:nth-of-type(3) {
+            background: red;
+        }
+
+        #inner li:nth-of-type(4) {
+            background: blue;
+        }
+
+        #inner li:nth-of-type(5) {
+            background: green;
+        }
+
+        #items {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        #items li {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: orange;
+            color: #000;
+            text-align: center;
+        }
+
+        #items li.cur {
+            background: #000;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <ul id="inner">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul id="items">
+        <li class="cur">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+</body>
+</html>
+<script>
+    var obj = {
+        outer: document.querySelector("#outer"),
+        inner: document.querySelector("#inner"),
+        oLis: document.querySelectorAll("#inner>li"),
+        items: document.querySelectorAll("#items>li")
+    }
+
+    var obj1  = {
+
+    }
+
+
+    var silder = {
+        init: function (ele) {
+            //初始化数据
+            this.outer = ele.outer || {};
+            this.inner = ele.inner || {};
+            this.oLis = ele.oLis || {};
+            this.items = ele.items || {};
+            var that = this;
+            [].forEach.call(this.oLis, function () {
+                var oLi = arguments[0];
+                oLi.index = arguments[1];
+                oLi.addEventListener("touchstart", that.start, false);
+                oLi.addEventListener("touchmove", that.move, false);
+                oLi.addEventListener("touchend", that.end, false);
+            });
+        },
+        start: function (e) {
+            var that = silder;
+            that.toucheStart = e.changedTouches[0].pageX;
+            that.time = +new Date();
+        },
+        move: function (e) { //click 或者仅仅点了一下,没有移动是不会触发touchmove
+            var time = +new Date();
+            var that = silder;
+            this.flag = true;//起一个标识,表示滑动了
+            e.preventDefault();
+            if(time - that.time>10){
+                var index = this.index;//索引
+                var touchMove = e.changedTouches[0].pageX;
+                var pos = touchMove - that.toucheStart;
+                that.changePos = pos;
+                //往右滑是正的值 往左滑是负的值
+
+                //往左滑动移动的距离 index*this.offsetWidth+移动的距离
+                // -(index*this.offsetWidth+移动的距离) =-移动的距离 -index*this.offsetWidth
+                //往右滑动移动的距离 index*this.offsetWidth-移动的距离
+                //-(index*this.offsetWidth-移动的距离) = 移动的距离-index*this.offsetWidth
+                var duration = pos - index * this.offsetWidth;
+                that.inner.style.webkitTransform = "translate(" + duration + "px,0)";
+            }
+        },
+        end: function (e) {
+            if(this.flag){//只有当移动的时候才去做这些事
+                var that = silder;
+                var index = this.index;
+                var len = that.oLis.length;
+                if (that.changePos > 0) {/*往右滑*/
+                    this.prevsIndex = (index == 0 ? 0 : index - 1);
+                } else {
+                    this.prevsIndex = (index == len - 1 ? len - 1 : index + 1);
+                }
+                that.inner.style.webkitTransform = "translate(-" + this.prevsIndex * this.offsetWidth + "px,0)";
+                var prevsIndex = this.prevsIndex;
+                that.inner.addEventListener("webkitTransitionEnd", function () {//transition动画结束的时候会触发这个webkitTransitionEnd事件
+                    this.style.webkitTransition = "";
+                    [].forEach.call(that.items, function () {
+                        arguments[0].className = "";
+                    })
+                    that.items[prevsIndex].className = "cur";
+                }, false)
+
+            }
+        }
+
+    }
+    silder.init(obj);
+
+
+</script>

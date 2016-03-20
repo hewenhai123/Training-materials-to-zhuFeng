@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //需求:我想写个正则把如下规律的单词匹配到
+    //"foot"、"wood"、"good"、"book"、"week"、"door"... 中间的两个字母一模一样
+    //var reg = /^[a-zA-Z]([a-zA-Z])\1[a-zA-Z]$/;
+    //console.log(reg.test("week"));//->true
+    //console.log(reg.test("foot"));//->true
+
+    //正则中的\1的意思? 和前面第一个分组出现一模一样的内容,同理\2出现和第二个分组一模一样的内容....
+
+    var reg = /^(\d)(\d)\2\1$/;
+    console.log(reg.test("1221"));//->true
+    console.log(reg.test("1222"));//->false
+</script>
+</body>
+</html>

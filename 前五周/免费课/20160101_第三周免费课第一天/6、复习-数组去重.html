@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var ary = [1, 2, 3, 2, 3, 2, 3, 4, 2, 1, 3, 2, 1];
+    var obj = {};
+    //把数组中的每一项的值当做对象的属性名和属性值存储进来
+    //    obj[1]=1; ->{1:1}
+    //    obj[2]=2; ->{1:1,2:2}
+    //    obj[3]=3; ->{1:1,2:2,3:3}
+    //    当我在继续存储2的时候 ->发现对象中已经存在2了,我们不在存储;并且说明数组中这一项重复了,重复的我们把其删除掉 ->如何知道之前是否存在2  如果存在obj[2]的值是2,如果不存在obj[2]的值是undefined  if(obj[2]==2){说明之前已经存在了}
+    //    ary.splice(3,1); splice删除原来的数组是发生改变的 [1, 2, 3, 2(3), 3(4),...]
+    //   [1, 2, 3, 3(3),...]
+    //   数组塌陷问题->删除当前项,后面每一项的索引都要提前一位,但是我们的循环i++还在继续,这样的话会造成有一项是比较不上的
+
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        if (obj[cur] == cur) {//->已经存在了
+    //            ary.splice(i, 1);
+    //            i--;
+    //            continue;
+    //        }
+    //        obj[cur] = cur;
+    //    }
+    //    console.log(ary);
+
+
+    //splice:如果当前删除这一项的后面有1000万项,那么也是每一项的索引都要从新的计算,浪费性能
+    //解决:
+    //我不删除当前项,我把最后一项的值赋给当前项,我在把最后一项删除
+    for (var i = 0; i < ary.length; i++) {
+        var cur = ary[i];
+        if (obj[cur] == cur) {
+            ary[i] = ary[ary.length - 1];//->用最后一项的值替换我们当前要删除的这一项
+            ary.length--;//->删除数组最后一项
+
+            i--;
+            continue;
+        }
+        obj[cur] = cur;
+    }
+    console.log(ary);
+</script>
+</body>
+</html>

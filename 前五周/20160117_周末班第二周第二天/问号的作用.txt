@@ -1,0 +1,26 @@
+﻿?在正则中有很多的作用
+
+1、它本身作为一个量词元字符代表出现0-1次
+    var reg=/\d?/; ->0-9之间的一个数字,出现0次或者1次
+
+2、出现在另外一个量词元字符的后面,是取消捕获时候的贪婪性
+    var reg=/\d+?/g;
+    var str="zhufeng2015";
+    str.match(reg); ->["2", "0", "1", "5"]
+
+3、?: 对于分组来说,是只匹配,不捕获
+    var reg=/zhufeng(\d+)/g;
+    var str="zhufeng2015~~~zhufeng2016~~~";
+    reg.exec(str) ->["zhufeng2015","2015"...]
+    reg.exec(str) ->["zhufeng2016","2016"...]
+
+    var reg=/zhufeng(?:\d+)/g;
+    var str="zhufeng2015~~~zhufeng2016~~~";
+    reg.exec(str) ->["zhufeng2015"...]
+    reg.exec(str) ->["zhufeng2016"...]
+
+4、?= 正向预查 / ?!负向预查
+    /zhufeng(?=1|2)/ 把符合后面是1或者2,前面是zhufeng的"zhufeng"匹配到 ->"zhufeng1",我们匹配的是"zhufeng",如果是"zhufeng3",我们是匹配不到"zhufeng"的
+    /zhufeng(?!1|2)/ 把符合后面不是1或者2,前面是zhufeng的"zhufeng"匹配到
+
+

@@ -1,0 +1,97 @@
+看比赛的接口地址：
+->http://matchweb.sports.qq.com/kbs/calendar?callback=calendar&columnId=100000&_=1456931466208
+->http://matchweb.sports.qq.com/kbs/list?callback=gameList&columnId=100000&startTime=2016-02-28&endTime=2016-03-05&_=1456931466209
+
+[NODEJS]
+1、
+url.parse(urlStr, [parseQueryString], [slashesDenoteHost])
+->将一个URL字符串转换成对象并返回
+->urlStr  url字符串
+->parseQueryString  为true时将使用查询模块分析查询字符串，默认为false
+->slashesDenoteHost 默认为false，//foo/bar 形式的字符串将被解释成{pathname:'//foo/bar'},如果设置成true，//foo/bar 形式的字符串将被解释成{host:'foo',pathname:'/bar'}
+->案例：
+url.parse('http://example.com:8080/one?a=index&t=article&m=default');
+Url {
+  protocol: 'http:',
+  slashes: true,
+  auth: null,
+  host: 'example.com:8080',
+  port: '8080',
+  hostname: 'example.com',
+  hash: null,
+  search: '?a=index&t=article&m=default',
+  query: 'a=index&t=article&m=default',
+  pathname: '/one',
+  path: '/one?a=index&t=article&m=default',
+  href: 'http://example.com:8080/one?a=index&t=article&m=default'
+}
+
+//->第二个参数写true
+Url {
+  protocol: 'http:',
+  slashes: true,
+  auth: null,
+  host: 'example.com:8080',
+  port: '8080',
+  hostname: 'example.com',
+  hash: null,
+  search: '?a=index&t=article&m=default',
+  query: { a: 'index', t: 'article', m: 'default' },
+  pathname: '/one',
+  path: '/one?a=index&t=article&m=default',
+  href: 'http://example.com:8080/one?a=index&t=article&m=default' }
+
+
+//->扩展：在没有JS中的Ajax技术前,我们实现交互是如何来做的?
+
+//在用户注册页面,我们的手机号需要做重复验证 ->当用户在文本框输入内容后,鼠标离开的时候(失去焦点的时候onblur),获取用户输入的内容,传输送给服务器进行对比验证,看是否已经存在了,如果存在返回一条信息"手机已经被注册,如果您是忘记密码,可以点击找回密码"
+
+//Ajax ->局部刷新:当前页面不需要重新的加载(刷新),我只把手机号文本框后面的提示信息部分内容进行更新
+
+//没有Ajax ->我们首先把用户手机给后台,后台返回一条信息,但是如果想让页面中显示这条信息,我们需要把当前的页面整体刷新一下,才可以获取到提示 ->发起一次数据请求,页面就要重新的刷新一次,非常的不友好
+
+
+
+API接口文档:
+
+1、/getInfo(接口地址)  GET(请求方式)
+
+  参数:[Request传给后台的]
+    无
+
+  返回值:[Response返回给客户端的内容]
+    ->JSON
+    {"count":1,"list":[{"id":1,"userName":"珠峰","age":17}]}
+    ->count:用户总数
+    ->list:存放的是用户列表
+        ->id:用户的唯一标识
+        ->userName:用户名
+        ->age:用户年龄
+
+2、增加用户信息
+  /addInfo  GET
+  参数:
+    userName:[string] 用户名
+    userAge:[number/string] 用户年龄
+  返回值:
+    ->JSON
+    {"id":2,"userName":"xxx","userAge":17}
+    ->把新添加用户的详细信息(包含ID)返回给客户端
+
+3、删除
+  /delInfo  GET
+  参数:
+      id:xxx 把要删除的用户ID传给服务器
+  返回值:
+      ->JSON
+      {"code":0,"message":"xxx"}
+      ->code:0 操作结果 0代表删除成功 1删除失败
+      ->message: 操作结果对应的信息
+
+
+
+
+
+
+
+

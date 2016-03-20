@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //需求升级:随便给我几个数(一个也行、两个也行，一百个也行...)都能求出和，但是具体多少个不知道了(不能在定义形参了)
+    //arguments ->JS中函数内置的(天生就有的,你传或者不传它就在那里),用来接收传递进来的参数值的集合
+
+    //结构分析：
+    //console.log(typeof arguments);//->"object"
+    //console.log(arguments);
+    //以数字作为索引,索引从0开始逐级递增;索引0代表第一个传递进来的参数,索引1代表第二个传递进来的参数...索引n代表第n+1个传递进来的参数...;arguments[0]获取第一个参数值...arguments[索引]获取对应的参数值...
+    //有一个length的属性代表集合的长度
+    //上述的特点和我们的数组非常的相似,但是arguments不是数组,我们可以把它称之为"类数组"
+    //->其实我们通过getElementsByTagName获取的元素集合也是类数组
+
+    //特殊的属性:
+    //arguments.callee ->代表的是当前函数本身，等价于sum;
+    //arguments.caller ->代表让当前函数执行，等价于sum();
+
+    //(6分)
+    //    function sum() {
+    //        var total = null;
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            //i=0 total+=arguments[0]
+    //            //i=1 total+=arguments[1]
+    //            total += arguments[i];
+    //        }
+    //        return total;
+    //    }
+    //    var res = sum(1, 2, 3, 4);
+    //    console.log(res);
+
+    //1)如果传递的是一个字符串还要把其转换为数字然后在相加（防止字符串拼接） 4分
+    //    function sum() {
+    //        var total = null;
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            var cur = Number(arguments[i]);//->在每一次累加之前先把传递进来的参数转换为数字
+    //            total += cur;
+    //        }
+    //        return total;
+    //    }
+    //    var res = sum(1, 2, 3, "4");
+    //    console.log(res);
+
+    //2)对于不是有效数字的我们拒绝累加(防止出现NaN) 4分
+    function sum() {
+        var total = null;
+        for (var i = 0; i < arguments.length; i++) {
+            var cur = Number(arguments[i]);
+            if (isNaN(cur)) {
+                //cur不是有效数字,这样结果为true,条件才成立
+                continue;
+            }
+            total += cur;
+        }
+        return total;
+    }
+    var res = sum(1, 2, 3, "q");
+    console.log(res);
+</script>
+</body>
+</html>

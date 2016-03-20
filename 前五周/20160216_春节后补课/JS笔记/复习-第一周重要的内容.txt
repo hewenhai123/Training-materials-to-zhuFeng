@@ -1,0 +1,34 @@
+﻿1、关于作用域的复习:
+  "第一周第一天的教材-最后两道题"
+  "第一周考试的内容"
+  "第一周作业题中的10道选择题"
+  "自己同学间互相分享些老同学的面试题"
+
+  思考题："关于选项卡循环绑定事件->不行的原因（从异步加载和作用域的原理综合考虑去描述）? 解决的办法（自定义属性、闭包的两种方式）"
+
+2、关于this的总结和实战练习 （******）
+
+3、关于构造函数模式、原型基础、原型扩展、原型继承(原型继承、call/apply的继承、冒充对象继承、混合继承、中间类继承(不兼容 周氏继承法))、fn.call.call...
+   -->http://www.zhufengpeixun.com/viewer.do?courseId=955223#currentPlaying=1648153
+
+4、在内置类的原型上扩展方法，并且实现链式写法
+  链式写法: ary.sort(function(a,b){return a-b;}).reverse().push(100);
+
+  链式写法的原理：执行完成当前的方法,返回的值还是当前类的一个实例,所以可以继续使用当前类中的方法,例如：ary.sort->排序后的数组,数组是Array的一个实例,所以可以继续使用reverse这个方法...,但是当push完成后返回的是一个数字(数组新增加后的长度),不是Array的实例了,所以这个链就不能再继续了;
+  Array.prototype.unique=function(){
+      var obj={};
+      for(var i=0;i<this.length;i++){
+         var item=this[i];
+         if(obj[item]==item){
+            this[i]=this[this.length-1];
+            this.length--;
+            i--;
+            continue;
+         }
+         obj[item]=item;
+      }
+      obj=null;
+      return this;//返回值保持是一个数组就可以链式写法了
+  };
+
+  思考题：实现(5).plus(3).minus(2) -> 5+3-2

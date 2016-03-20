@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="font-size: 40px;">
+<script type="text/javascript">
+    (function () {
+        //获取当前页面的URL地址
+        //->console.log(window.location.href);
+        //->http://localhost:.../detail.html?num=003&num2=004
+
+        //获取URL传递进来的参数值
+        var obj = queryURLParmeter(window.location.href);
+
+        var callBack = function (data) {
+            var res = null;
+            for (var i = 0; i < data.length; i++) {
+                var cur = data[i];
+                if (cur["num"] === obj.num) {
+                    res = cur;
+                    break;
+                }
+            }
+
+            var str = "";
+            str += "学号:" + res["num"];
+            str += "性别:" + res["sex"];
+            str += "分数:" + res["score"];
+            document.body.innerHTML += str;
+        };
+
+        //读取所有的数据
+        var xhr = createXHR();
+        xhr.open("get", "data.txt?_=" + Math.random(), true);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && /^2\d{2}$/.test(this.status)) {
+                var data = "JSON" in window ? JSON.parse(this.responseText) : eval("(" + this.responseText + ")");
+                typeof callBack === "function" ? callBack(data) : null;
+            }
+        };
+        xhr.send();
+    })();
+
+    function createXHR() {
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest;
+        } else {
+            if (new ActiveXObject("Microsoft.XMLHTTP")) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (new ActiveXObject("Msxml2.XMLHTTP")) {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } else if (new ActiveXObject("Msxml3.XMLHTTP")) {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+        }
+        return xhr;
+    }
+
+    function queryURLParmeter(url) {
+        var reg = /([^?&=]+)=([^?&=]+)/g, obj = {}, res = reg.exec(url);
+        while (res) {
+            var fir = res[1], tww = res[2];
+            obj[fir] = tww;
+            res = reg.exec(url);
+        }
+        return obj;
+    }
+</script>
+</body>
+</html>

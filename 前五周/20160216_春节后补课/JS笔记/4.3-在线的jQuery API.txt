@@ -1,0 +1,4 @@
+看jQuery-API的中文手册(API接口使用文档)
+-> http://jquery.cuishifeng.cn/
+
+看jQuery中包含了哪些方法,大概怎么用是做什么的?

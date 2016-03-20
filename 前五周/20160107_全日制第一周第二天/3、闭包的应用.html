@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //什么时候用闭包?
+    //->保护里面的变量不受外界的干扰的情况下,我们使用闭包
+    //    var name = "赵守涛";
+    //    var age = 29;
+    //    (function () {
+    //        var name = "徐惠林";
+    //        var age = 19;//->此时的name和age就是私有的变量了,和外面的没有任何的关系
+    //    })();
+
+    //    var name = "赵守涛";
+    //    var age = 29;
+    //    (function (name, age) {
+    //
+    //        console.log(name, age);//->赵守涛 29 虽然这个里的name/age是私有的变量,但是我们是把全局的name/age分别的赋值给它们了,所以它们是私有的变量但是和全局的此时是一样的
+    //        name = "徐惠林";
+    //        age = 19;
+    //        console.log(name, age);//->徐惠林 19 经过22~23行已经把私有的name/age的值进行修改了,修改的是私有的和全局是没有任何的关系的
+    //
+    //    })(name, age);//->一个自执行函数执行,把全局变量name和age的值赋值给私有作用域下的形参name和age ->()("赵守涛",29);
+    //    console.log(name, age);//->赵守涛 29
+
+
+    //需求:在函数里面操作name和age也把全局的改变了?
+    //    var name = "赵守涛";
+    //    var age = 29;
+    //    (function (name, age) {//->函数中的name/age是私有的
+    //        name = "徐惠林";
+    //        age = 19;
+    //        window.name = name;//->通过指定的前缀window，强制修改全局下的name的值为私有变量name的值->"徐惠林"
+    //    })(name, age);
+    //    console.log(name, age);//->"徐惠林" 29
+
+    //jQuery的部分实现原理:在私有的作用域中编写一个jQuery方法,通过window.jQuery让其在全局的作用域下也可以获取到并且操作执行
+    //    (function () {
+    //        var jQuery = function (selector, context) {
+    //
+    //        };
+    //
+    //        window.jQuery = window.$ = jQuery;
+    //    })();
+    //    jQuery();
+    //    $();
+
+    //Zepto.js部分实现原理
+    //    var Zepto = (function () {
+    //        var Zepto = function () {
+    //
+    //        };
+    //        return Zepto;
+    //    })();
+    //    Zepto();
+</script>
+</body>
+</html>

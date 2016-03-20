@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div id="div1" class="box">
+    <p></p>
+
+    <p></p>
+
+    <div class="box-bottom">
+        <p></p>
+
+        <p></p>
+    </div>
+</div>
+<div id="div2" class="box"></div>
+<div class="box"></div>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //1、什么是jQuery
+    //->非常强大的类库(它也是由原生JS编写的)，里面提供了一些我们项目中经常会用到的方法
+    //->核心、选择器、属性、CSS、文档处理、筛选、事件、效果(动画)、Ajax、工具...
+    //->http://jquery.cuishifeng.cn/
+
+    //2、jQuery存在很多的版本
+    //->1.xxx 兼容所有的浏览器的(通常应用于PC开发)  1.9.3  1.11.3(推荐)
+    //->2.xxx 不兼容IE6~8浏览器的(通常应用于移动端开发 Zepto.js)
+
+    //3、选择器
+    //->和我们的CSS选择器一样，通过一些标签、ID、样式类名等获取我们想要操作的那些元素
+    //->我们jQuery中常用的选择器使用方式和我们的CSS选择器也是一样的
+
+    //->通过jQuery选择器我们获取到的首先是一个类数组集合(jQuery对象)
+    //->jQuery其实它是一个方法(函数数据类型),在外面使用 $() / jQuery() 其实都是让这个方法执行，执行这个方法需要传递两个参数的值：selector(我们的选择器类型->string), context(上下文,我们通过选择器获取元素的范围，不写的话默认是在document下获取的)
+    //->当这个方法执行的时候，会返回一个实例 ->jQuery这个类的一个实例  ->$()获取到的结果就可以使用jQuery这个类原型上的属性和方法了
+
+    //1)什么是$
+    //-> $===jQuery
+
+    //    (function () {
+    //        var jQuery = function (selector, context) {
+    //            return new jQuery.fn.init(selector, context);
+    //        };
+    //
+    //        window.jQuery = window.$ = jQuery;
+    //    })();
+
+
+    //2)jQuery对象 vs JS对象
+    //->jQuery对象不能直接使用JS中内置的一些方法，同理JS对象也不能直接的使用jQuery这个类中定义的属性和方法
+    //->$("#div1") -> .__proto__ -> jQuery -> Object
+    //->document.getElementById("div1") -> .__proto__ -> HTMLDivElement->HTMLElement->Element->Node->EventTarget->Object
+
+    //var oDiv = document.getElementById("div1");
+    //var $div = $("#div1");
+    //    $div.addClass("box");
+    //    oDiv.addClass("box");//->NO
+    //    $div.className = "box";//->NO
+
+    //->把JS对象转换为jQuery对象 ->$(oDiv)
+    //->把jQuery对象转换为JS对象 ->$div[0] 直接通过所以在类数组中获取 $div.get(0) 通过调用jQuery.prototype.get方法来获取
+
+
+    //4、常用的一些方法
+    //->我们使用的jQuery方法根据定义的位置不一样分为两类：
+
+    //->jQuery.prototype定义在jQuery的原型上的,选择器获取的实例可以使用：属性、CSS、文档处理、筛选、事件、效果(动画)...
+    //->jQuery.prototype.bbb=function(){}  ->$().bbb()
+
+    //->jQuery.attribute把jQuery当做一个普通的对象,在它自己的属性上定义的->jQuery.aaa=function(){}  ->$.aaa()  ：Ajax、工具、核心...
+    var $div = $("#div1");
+
+    //1)核心：
+    //->$("#div1")
+    //->$("<div><p>Hello</p></div>").appendTo("body"); ->动态的把对应HTML标签增加到body中
+    //->$(function(){}) ->$(document).ready(function(){}) ->当页面中的HTML结构加载完成执行回调函数
+
+    //->index ->$("#div2").index()  ->获取当前元素在自己当前级别中的索引
+
+
+    //2)each
+    //->jQuery.prototype.each 它是把我们通过选择器获取到的类数组集合中每一项内容进行遍历的
+    $(".box").each(function (index, item) {
+        //->我们获取的集合中有三项,这个方法就执行三次,每一次执行传递两个形参值:index当前循环这一项的索引 item:当前循环的这一项
+        //->this也可以代表当前这一项
+        //->this VS $(this) 前者是原生JS对象，后者是jQuery对象
+    });
+
+    //->jQuery.each 它是用来循环数组和对象的
+    $.each([12, 23, 34], function (index, item) {
+        console.log(item);
+    });
+    $.each({name: "珠峰培训", age: 7}, function (index, item) {
+        console.log(item);
+    });
+
+    //3)extend 扩展方法
+    //->jQuery.fn = jQuery.prototype
+    //->jQuery.fn.extend({aaa:function(){}}) 我们向jQuery的原型上扩展了aaa这个方法 ->通常用来写jQuery插件 ->$().aaa()
+
+    //[插件]
+    //->具有某项特殊业务功能的组件 jQuery.validate(实现文本框验证的)  jQuery.dialog(实现弹出框的)
+
+    //->jQuery.extend({bbb:function(){}}) 我们向jQuery对象的属性中扩展方法 ->完善jQuery类库中的一些常用方法的 ->$.bbb()
+
+    //4)noConflict->转让$的使用权
+    //jQuery.js ->$ window.$
+    //Zepto.js ->$  window.$
+
+    //    var j=jQuery.noConflict(); //->从此以后$就不代表jQuery了 j是一个新的名字,用来代替$的一个名字
+    //    jQuery("#div1")
+    //    j("#div1")
+
+    //->$.parseJSON  字符串->对象
+    //->$.param 序列化
+    //    var data = [{"name": "zhufeng", "age": 7}, {"name": "geng", "age": 60}];
+    //    //console.log(JSON.stringify(data));//->把JSON格式的对象转换为JSON格式的字符串 在IE6~7中不兼容
+    //    var str = "";
+    //    $.each(data, function (index, item) {
+    //        str += "&" + $.param(item);
+    //    });
+    //    console.log(str);
+
+
+    //->原型上的:
+    //->$(".box").attr('zhufeng',7) 获取所有样式类名为box的元素，并且分别的给每一个元素增加一个自定义属性 'zhufeng',属性值是7  ->在jQuery中有这样一个特性，我们通过选择器获取一个集合，不管集合中有几个元素，当我们$("...").xxx() 相当于集合中的每一个元素都执行了这个方法，不需要自己单独的在写循环一个个处理
+    //->$(".box").attr({zhufeng: 7, age: 8})
+
+    //->通过attr设置的自定义属性可以显示在HTML结构上
+    //$(".box").attr('zhufeng'); ->获取自定义属性的值
+
+    //prop->一般用它来设置或者获取内置的属性名和属性值(尤其是表单元素的操作)
+
+    //$("#div1").html() 获取  $("#div1").html("哈哈") 设置 ->innerHTML
+    //.text ->innerText
+    //.val ->value
+
+    //->筛选
+    //filter:同级筛选 $("p").filter(".selected") 在获取的集合中把所有具有.selected的样式的获取到
+    //find:后代筛选 $("#div1").find("a")  -> $("#div1 a")
+    //children:子代筛选 $("#div1").children("a")  -> $("#div1>a")
+
+    $("#div1").bind("click", function () {
+
+    });
+    $("#div1").trigger("click");
+
+    //on/off、bind/unbind/trigger、还有一些常用的click、dblclick、mouseover、hove(mouseover+mouseout)...
+    //->所有的方法都是基于on/off实现的
+
+    //$("#div1").delegate("a","click",function...) delegate采用的是事件委托机制实现的 ->把点击事件绑定给#div1,当我点击的是a标签的时候,执行对应的方法
+
+
+    //->链式写法
+    $("#div1").css({
+        width: 100,
+        height: 100,
+        background: 'red'
+    }).mouseover(function () {
+        $(this).css("opacity", 0.5);
+    }).mouseout(function () {
+        $(this).css("opacity", 1);
+    });
+</script>
+</body>
+</html>

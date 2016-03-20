@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //boolean布尔类型:true false
+    //1、把其他的数据类型转换为布尔类型
+    //规律:将其他类型转换为布尔类型,只有 0、NaN、null、undefined、空字符串 这个五个值会转换为false,其余的任何值都会转换为true
+    //1)Boolean(value) 把其他的类型转换为布尔类型
+    //console.log(Boolean(-1));//->true
+
+    //2)! 把其他的类型先转换为布尔类型，然后在取反
+    //console.log(![]);//->首先[]变为布尔值是true,然后在取反为false
+
+    //3)!! 把其他的类型先转换为布尔类型
+    //console.log(!![]);//->true
+
+    //4)在条件判断中,如果只有一个值,它的意思是把这个值转换为布尔类型,看是真还是假,是真的话条件成立,否则条件不成立
+    //    if (1) {
+    //        //条件成立
+    //    }
+
+
+    //string:字符串数据类型
+    //1、在JS中所有用""/''包起来的都是字符串
+    //var a = '[]';//->字符串
+
+    //2、每一个字符串都是由零到多个字符组成,每一个字符都有一个自己的位置,第一个字符的位置是0,第二个字符的位置是1...我们把代表当前是哪个字符的数字称之为"索引"
+    //var str = "zhufengpeixun";
+    //console.log(str.length);//->获取字符串的长度(里面一共有多少个字符) ->13
+    //console.log(str[0]);//->"z" ->想获取其中的某一个字符我们使用str[索引]来获取
+
+    //3、"+"在JS中除了数学相加还有字符串拼接的意思
+    console.log(1 + 1);//->2
+    console.log("1" + 1);//->"11" 在加法运算中如果出现了一个字符串不是数学运算而是字符串拼接
+    console.log("1" - 1);//->0
+    console.log("1" * 1);//->1
+    console.log("1" / 1);//->1
+    console.log("1px" - 1);//->NaN
+
+    //4、自己回去先预习的内容->关于字符串中常用到的11个方法
+    //http://pan.baidu.com/share/link?shareid=996234058&uk=4251301043&fid=267908418500557
+</script>
+</body>
+</html>

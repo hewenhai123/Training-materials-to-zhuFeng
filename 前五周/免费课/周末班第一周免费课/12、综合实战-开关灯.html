@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: pointer;
+            /*默认的背景颜色不是白色而是黑色透明*/
+            /*background: rgba(0, 0, 0, 0);*/
+        }
+    </style>
+</head>
+<body id="body1" style="background: white;">
+
+
+<script type="text/javascript">
+    //var oBody = document.getElementById("body1");
+    var oBody = document.body;//->等价于上面的代码,获取整个body元素对象
+
+    //给body绑定点击事件,当点击的时候完成我们的开关灯效果
+    oBody.onclick = function () {
+        //1、首先们需要知道当前是什么背景颜色->获取body的背景颜色
+        var bg = oBody.style.backgroundColor;
+
+        //2、如果当前的背景颜色是白色,我们让其变为黑色,否则当前是黑色我们让其变为白色
+        if (bg === "white") {//说明当前是白色,我们让其变为黑色
+            oBody.style.backgroundColor = "black";
+        } else {//说明当前是黑色,我们让其变为白色
+            oBody.style.backgroundColor = "white";
+        }
+    };
+</script>
+</body>
+</html>

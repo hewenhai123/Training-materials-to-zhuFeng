@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //"use strict";
+    //->Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them
+    //但是在严格模式下,浏览器是禁止我们使用arguments.callee和arguments.callee.caller的
+
+    //->arguments.callee当前函数本身
+    //->arguments.callee.caller 当前函数是在哪个函数下执行的,它就是谁
+    function fn1() {
+        //console.log(arguments.callee);//->fn1
+        //console.log(arguments.callee.caller);//->fn2 说明当前的fn1是在fn2这个函数中执行的
+    }
+
+    function fn2() {
+        //console.log(arguments.callee.caller);//->null 在全局作用域下执行的输出的结果是null
+        //console.log(arguments.callee);//->fn2
+        fn1();
+    }
+    fn2();
+</script>
+</body>
+</html>

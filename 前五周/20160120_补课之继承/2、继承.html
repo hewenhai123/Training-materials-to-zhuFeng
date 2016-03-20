@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    //继承:子类继承父类中的属性和方法(私有的/公有的)
+
+    //1、原型继承:子类.prototype=new 父类;
+    //->核心原理:和生活中儿子继承爹的基因原理是不一样的;生活中是儿子把爹的基因克隆一份一模一样的到自己的身上,接下来儿子怎么改都跟父亲没关系;但是原型继承并不是把父类的属性和方法克隆一份到自己这,只是改变了原有的原型的指向,当我们在使用父类方法的时候,是通过原型链的查找机制一级级的向上查找使用的...
+
+    //->重写:子类重写父类的方法
+    //b.aa=function(){} ->写在b这个小的实例私有属性上,和B的其他实例没有任何的关系
+    //b.__proto__.bb=function(){} ->写在B.prototype上的
+    //b.__proto__.__proto__.cc=function(){} ->写在A.prototype上的
+
+    //->既可以继承父类私有的，也可继承父类公有的，并且都继承到子类的公有上了 ->父(私有+公有) 变为 子(公有)
+
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        this.y = 200;
+    }
+    //想让B作为子类,继承A这个父类中的私有的/公有的属性和方法
+    B.prototype = new A;
+
+    var b = new B;
+    b.getX();
+
+    //原型继承是我们整个JS中最常用的继承方式->浏览器中的内置类实现的时候如果需要继承使用的都是原型继承
+    //#div1
+    //#div1->HTMLDivElement.prototype->HTMLElement.prototype->Element.prototype->Node.prototype->EventTarget.prototype->Object.prototype
+
+    //b
+    //b->B.prototype->A.prototype->Object.prototype
+</script>
+</body>
+</html>

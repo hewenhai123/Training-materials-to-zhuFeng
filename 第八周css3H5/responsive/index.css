@@ -1,0 +1,153 @@
+*{
+    margin:0;
+    padding:0;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+body{
+    font-family: "Microsoft Yahei";
+}
+
+.headerLayout{
+    width: 100%;
+    height: 83px;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
+    position:fixed;
+}
+.header{
+    height: 83px;
+    line-height: 83px;
+    background: #fff;
+
+}
+.header a{
+    float: left;
+    margin-top: 10px;
+}
+.header ul{
+    float: right;
+}
+.header ul li{
+    float: left;
+    margin: 0 20px;
+    color: #000;
+    font-size:1em;
+}
+.channel ul{
+    text-align: center;
+    padding-top: 100px;
+}
+.channel ul li{
+    display: inline-block;
+    margin: 0 1%;
+    max-width: 23%/*如果宽度>23%,以23%的宽度显示,如果<23%,以本身的宽度显示*/
+}
+.channel ul li img{
+    max-width: 100%;/*为了和li的宽度达成一致*/
+}
+
+.service{
+    text-align: center;
+    margin-top: 50px;
+}
+.service ul li{
+    display: inline-block;
+    width: 263px;
+    vertical-align: top;
+}
+.service ul li h5{
+    font-size: 1.2em;
+    padding: 10px 0;
+    font-weight: normal;
+}
+.service ul li p{
+    font-size:1em ;
+    line-height: 25px;
+}
+.service ul li img{
+    display: block;
+    width: 100%;
+}
+@media screen and (min-width: 1000px) {/*屏幕宽度大于等于1000时,设置以下样式*/
+    .header{
+        width: 1000px;
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width: 999px) {
+    .header{
+        font-size: 14px;
+    }
+    .header ul li{
+        margin: 0 10px;
+    }
+    .channel ul li.watch img, .channel ul li.phone img{
+        max-width: 50px;
+    }
+    .service {
+        font-size: 14px;
+    }
+    .service ul li{
+        width: 33.3%;
+
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .headerLayout{
+        position: absolute;
+        height: 50px;
+        box-shadow: none;
+    }
+    .header{
+        height: 50px;
+        line-height: 50px;
+        background: palegreen;
+    }
+    .header a{
+        margin: 0;
+        display: block;
+        height: 40px;
+        padding-top: 10px;
+        overflow: hidden;
+    }
+    .header ul{
+        background: palegreen;
+        width: 100%;
+        display: none;
+    }
+    .header ul li{
+        width: 100%;
+    }
+    .header:after{
+        content: "";
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0NkQ1N0YwRDFGMjQ2ODExODA4M0M5RUE1NUY0ODcyRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1NzBDQ0I1NzUzNzYxMUU0QjdGNzk4NTAyRkVFNTUyOCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1NzBDQ0I1NjUzNzYxMUU0QjdGNzk4NTAyRkVFNTUyOCIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChNYWNpbnRvc2gpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzBFMkY0QTI1RTI0NjgxMTgwODNDOUVBNTVGNDg3MkUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDZENTdGMEQxRjI0NjgxMTgwODNDOUVBNTVGNDg3MkUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5jEkKZAAAA3UlEQVR42uzbwQmAMBBFQVe8a/9VagVr0oPgD8wD75KRLHuwuntTTrsjACIgQAQEiIAAERAgAiIgQAQEiIAAERAgAiIgQAQEiIAAERAgAiIgQAQEiL7rCHmPazwVdC73eH75taxCfmmbB3AGgcwP5HFlCQgQLTFDDPUwELmygAiITd1Qt6nb1AUEiGzqhrpN3ZUlIEBkUzfUbequLDNEQGRTN9TlygIiIEAEBIiAABEQAQEiIEAEBIiAABEQAQEiIEAEBIiAABEQAQEiIEAEBIiAABEQAQEiICv3CjAAFEMwp2HLEjcAAAAASUVORK5CYII=") no-repeat 0 50%;
+        background-size: 100% 100%;
+        position: absolute;
+        right: 0;
+        top:0;
+    }
+    .channel ul li {
+        width: 48%;
+        max-width: 100%;
+    }
+    .service ul  li{
+        width: 100%;
+        text-align: left;
+    }
+    .service ul  li img{
+        width: 25px;
+        height: 25px;
+        float: left;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+}

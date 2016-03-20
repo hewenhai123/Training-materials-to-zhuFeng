@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+    var oDiv1 = document.createElement("div");
+    oDiv1.id = "div1";
+    oDiv1.style.backgroundColor = "red";
+    oDiv1.className = "box";
+    oDiv1.innerHTML = "珠峰培训";
+    document.body.appendChild(oDiv1);//->放在body的最末尾的位置
+
+    var oDiv2 = document.createElement("div");
+    oDiv2.id = "div2";
+    oDiv2.className = "box";
+    oDiv2.style.backgroundColor = "green";
+    document.body.insertBefore(oDiv2, oDiv1);//->放在body中oDiv1的前面
+
+    var oDiv3 = oDiv1.cloneNode(false);//true->把当前元素及里面的内容都克隆 false->只克隆当前的元素
+    document.body.insertBefore(oDiv3, oDiv2);
+
+
+    var oDiv4 = document.createElement("div");
+    oDiv4.id = "div4";
+    oDiv4.className = "box";
+    oDiv4.style.backgroundColor = "orange";
+    document.body.replaceChild(oDiv4, oDiv1);//->让oDiv4把oDiv1给替换掉
+
+
+    document.body.removeChild(oDiv2);//->移除oDiv2
+
+
+    //给当前的元素设置自定义属性
+    //1)把当前元素当做一个对象,操作它的属性名和属性值,类似于操作obj
+    //oDiv4.zhuFeng = 100;//->设置一个自定义属性名字叫做zhuFeng,属性值是100
+    //console.log(oDiv4.zhuFeng);//->100
+    //oDiv4.zhuFeng=null;
+    //delete oDiv4.zhuFeng;
+
+    //2)在HTML结构中增加属性->可以在它的HTML结构中体现出来
+    //oDiv4.setAttribute("zhuFeng", 1000);
+    //console.log(oDiv4.getAttribute("zhuFeng"));
+    //oDiv4.removeAttribute("zhuFeng");
+
+    //两种方式不能相互混淆,我用setAttribute只能用getAttribute获取,也只能用removeAttribute删除;如果是直接的.zhuFeng设置的,我们用getAttribute获取不到...
+
+    //oDiv4.className = "box";
+    //oDiv4.setAttribute("class", "box");//->在IE6~8下不兼容
+</script>
+</body>
+</html>

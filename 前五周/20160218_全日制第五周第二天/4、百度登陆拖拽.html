@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <style type="text/css">
+        body, div, h2 {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #box {
+            /* position: absolute;
+             top: 50%;
+             left: 50%;
+             margin: -150px 0 0 -150px;*/
+
+            /*position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;*/
+
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #ffe470;
+        }
+
+        #box h2 {
+            padding: 0 20px;
+            height: 35px;
+            line-height: 35px;
+            background: #F9044E;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <h2 id="boxTop">珠峰培训-登录</h2>
+</div>
+
+<script type="text/javascript">
+    //->使用JS实现让box在整个屏幕居中的位置
+    var winW = document.documentElement.clientWidth || document.body.clientWidth, winH = document.documentElement.clientHeight || document.body.clientHeight;
+    var box = document.getElementById("box"), boxTop = document.getElementById("boxTop");
+    var boxW = box.offsetWidth, boxH = box.offsetHeight;
+    box.style.left = (winW - boxW) / 2 + "px";
+    box.style.top = (winH - boxH) / 2 + "px";
+
+    //->实现拖拽
+
+    //->mouseDown鼠标按下事件：只有先按下才开启拖拽,首先让元素具有move和up的事件；并且记录鼠标的起始位置和盒子的起始位置
+    function down(e) {
+        //->给行为绑定方法
+        this.onmousemove = move;
+        this.onmouseup = up;
+
+        //->记录初始位置
+        e = e || window.event;
+        this["mouseX"] = e.clientX;
+        this["mouseY"] = e.clientY;
+        this["boxL"] = parseFloat(box.style.left);
+        this["boxT"] = parseFloat(box.style.top);
+    }
+
+    //->mouseMove鼠标移动事件：获取鼠标最新的位置，计算出移动的距离，在求出盒子最新的位置
+    function move(e) {
+        e = e || window.event;
+        //->计算鼠标偏移的值求出盒子当前的位置值
+        var spanX = e.clientX - this["mouseX"], spanY = e.clientY - this["mouseY"];
+        var curL = this["boxL"] + spanX, curT = this["boxT"] + spanY;
+        //->获取四个边界的值
+        var minT = 0, minL = 0, maxT = winH - boxH, maxL = winW - boxW;
+        //->边界判断
+        if (curL < minL) {
+            box.style.left = minL + "px";
+        } else if (curL > maxL) {
+            box.style.left = maxL + "px";
+        } else {
+            box.style.left = curL + "px";
+        }
+
+        if (curT < minT) {
+            box.style.top = minT + "px";
+        } else if (curT > maxT) {
+            box.style.top = maxT + "px";
+        } else {
+            box.style.top = curT + "px";
+        }
+    }
+
+    //->mouseUp鼠标抬起事件：取消拖拽，把move和up事件移除掉;在把记录在当前元素上的自定义属性值清空
+    function up(e) {
+        this.onmousemove = null;
+        this.onmouseup = null;
+
+        this["mouseX"] = null;
+        this["mouseY"] = null;
+        this["boxL"] = null;
+        this["boxT"] = null;
+    }
+
+    boxTop.onmousedown = down;
+</script>
+</body>
+</html>

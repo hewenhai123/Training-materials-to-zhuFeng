@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>闭包方式和自定义属性方式的区别</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 100px;
+            height: 100px;
+            background: #ff6600;
+        }
+
+        .box2 {
+            top: 300px;
+            left: 300px;
+            background: #FFE0E9;
+        }
+
+        .box3 {
+            top: 700px;
+            left: 600px;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" class="box"></div>
+<div class="box box2"></div>
+<div class="box box3"></div>
+
+<script type="text/javascript">
+    var boxList = document.getElementsByTagName("div");
+    for (var i = 0; i < boxList.length; i++) {
+        ~function (i) {
+            var curBox = boxList[i];
+            curBox.onmousedown = down;
+
+            var strX, strY, strL, strT;
+
+            function down(e) {
+                strX = e.clientX;
+                strY = e.clientY;
+                strL = curBox.offsetLeft;
+                strT = curBox.offsetTop;
+                if (curBox.setCapture) {
+                    curBox.setCapture();
+                    curBox.onmousemove = move;
+                    curBox.onmouseup = up;
+                } else {
+                    document.onmousemove = move;
+                    document.onmouseup = up;
+                }
+            }
+
+            function move(e) {
+                var curL = e.clientX - strX + strL;
+                var curT = e.clientY - strY + strT;
+                curBox.style.left = curL + "px";
+                curBox.style.top = curT + "px";
+            }
+
+            function up(e) {
+                if (curBox.releaseCapture) {
+                    curBox.releaseCapture();
+                    curBox.onmousemove = null;
+                    curBox.onmouseup = null;
+                } else {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+                fn();
+            }
+        }(i);
+    }
+
+    function fn() {
+        console.log(strX, strY);//->Uncaught ReferenceError: strX is not defined
+    }
+
+
+    //    function fn1(curEle) {
+    //        var num = 13;
+    //        curEle.num = num;
+    //    }
+    //
+    //    function fn2(curEle) {
+    //        //console.log(num);//->Uncaught ReferenceError: num is not defined
+    //        console.log(curEle.num);
+    //    }
+    //
+    //    var oDiv = document.getElementById("div1");
+    //    fn1(oDiv);
+    //    fn2(oDiv);
+
+    //自定义属性
+    //->优势:不用考虑作用域保护的影响,我在A作用域中把一些东西写在自定义属性上,在作用B中依然可以通过当前元素把需要的东西获取到
+    //->弊端:我们写的自定义属性很有可能和内置的属性冲突了,多个人开发,如果使用自定义属性过多的话,相互之间也会发生冲突
+
+    //->以后如果我们写类库/插件,一定要记住一个宗旨:我们写的代码即使别人不看,在用的过程中,别人可以随便的应用,别人写的东西不要和自己的东西冲突
+</script>
+</body>
+</html>

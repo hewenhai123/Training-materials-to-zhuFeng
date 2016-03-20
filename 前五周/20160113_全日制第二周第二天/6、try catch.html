@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //浏览器异常信息捕获:try catch finally
+    //    try {
+    //        //<js code>
+    //    } catch (e) {
+    //        //如果try中的<js code>执行的时候报错了,就会走到catch中,执行这里的操作
+    //    } finally {
+    //        //不管try中的代码是否报错,都会执行这里的代码(我们一般不用finally)
+    //    }
+
+    //1、JS中当前行代码报错,下面的代码都不在执行了;而try catch可以把代码报错捕获到,并且让下面的代码继续执行;
+    //console.log(num);//->Uncaught ReferenceError: num is not defined
+    //console.log("ok");//->上面报错,这行就不在执行了
+
+    //    try {
+    //        console.log(num);
+    //    } catch (e) {
+    //        //console.log(e.message);//->num is not defined 存储的是异常的信息,但是没有在浏览器中抛出红色异常
+    //        console.log("您的人品已经欠费~~");
+    //    }
+    //    console.log("ok");//->"ok"
+
+    //需求：我即想获取报错的信息(try catch),也让下面的代码不能继续执行(手动的在浏览器中抛出异常的错误信息)
+    //throw new Error("");//->创建一个Error这个类的实例,抛出一个异常的错误信息
+    //throw new ReferenceError("");//->引用类型错误
+    //throw new TypeError("");//->类型错误
+    //throw new RangeError("");//->范围错误
+
+    //    try{
+    //        console.log(num);
+    //    }catch(e){
+    //        //e.message
+    //        throw new ReferenceError("当前网络繁忙~请稍后再试~");
+    //    }
+    //    console.log("ok");
+
+    //2、使用try catch进行浏览器兼容检测和处理(前提：不兼容的情况下会报错,这样的才可以在catch中进行不兼容处理)
+</script>
+</body>
+</html>

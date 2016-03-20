@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 10px auto;
+            padding: 20px;
+            width: 50%;
+            border: 1px dashed #999;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        #ul1 li.c0 {
+            background: burlywood;
+        }
+
+        #ul1 li.c1 {
+            background: limegreen;
+        }
+
+        #ul1 li.ho {
+            background:red;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+</ul>
+<script type="text/javascript">
+    //1、想要操作谁就先获取谁
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+    //2、循环给每一个li设置样式值:当前如果是奇数行我们让它的class='c0',否则让它的class='c1'
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        if (i % 2 === 0) {
+    //            //i是偶数,代表的是奇数行
+    //            oLis[i].className = "c0";
+    //        } else {
+    //            //i是奇数,代表的是偶数行
+    //            oLis[i].className = "c1";
+    //        }
+    //    }
+
+    //第一步优化：用三元运算符代替我们的if else
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        oLis[i].className = (i % 2 === 0 ? "c0" : "c1");
+    //    }
+
+    //第二步优化:利用i%2的值正好是我们c?后的值
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].className = "c" + i % 2;
+    }
+
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        //i=0第一次循环  i是偶数  代表第一行oLis[0]
+    //        //i=1第二次循环  i是奇数  代表第二行oLis[1]
+    //        //i=2第三次循环  i是偶数  代表第三行oLis[2]
+    //        //....
+    //        //->i是奇数代表的是偶数行,i是偶数代表的是奇数行
+    //        //->每一次循环i存储的值和我们要获取的li的索引正好对应了 oLis[i]->每一次循环我们要操作的那个li
+    //
+    //        //12%3->12除以3的余数是?  12膜3
+    //    }
+</script>
+
+<script type="text/javascript">
+    //需求分析
+    //1、我们要操作的是#ul1下的所有的li
+    //2、按照当前是奇数行还是偶数行的规律,给每一个li增加背景颜色
+    //->如果是奇数行我们让其class="c0" 如果是偶数行我们让它的class="c1"
+    //->JS控制一个元素的class值的话,需要使用className
+
+    //代码实现
+    //1、想要操作哪些元素,首先,先把这些元素获取到
+    //var oUl = document.getElementById("ul1");//->在整个文档中通过元素的ID"ul1"获取当前的这个元素对象
+    //->document在这里面其实是限定了我们查找获取的范围,我们把它称之为"上下文"(context)
+
+    //var oLis = oUl.getElementsByTagName("li");//->在整个#ul1中我们通过元素的标签名li来获取所有的li元素
+    //->oUl在这里也是限定了我们获取的范围只能是#ul1中,所以它也是我们的"上下文"
+    //->typeof oLis ->"object"
+    //->console.dir(oLis);
+    //我们获取的是一个元素集合,里面存储了我们所有的li元素,大部分的属性名都是数字,属性值分别对应页面中的每一个li;还有一个属性叫做length,存储的值是当前集合中li的个数
+    //oLis[0] ->我们的第一个li
+    //oLis[2] ->我们的第三个li
+    //...
+    //oLis.length ->一共有多少个li  oLis["length"]
+
+    //->我们把代表当前某一个li的数字属性名称之为"索引",也就是我们的获取的元素集合,其实是以数字作为索引,索引从零开始逐级递增,并且有一个叫做length的属性代表集合的长度
+    //->我们把具有上述两个特点的集合称之为"类数组"(类似于数组的结构但是不是数组的)
+
+
+</script>
+</body>
+</html>

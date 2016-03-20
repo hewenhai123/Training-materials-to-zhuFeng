@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //实现随便给我两个数,我都能求出和
+
+    //形参作用:
+    //实现一个功能,但是在制定这个功能的时候,我们并不知道需要的值(原材料)是什么,需要在执行的时候告诉我才可以
+    //JS中提供了形参的机制,让我们提前定义几个入口,执行的时候分别的给每一个入口传递值即可,这样我们就能灵活的控制方法的功能了
+
+    //num1/num2就是我们的形参变量,用来存储函数执行的时候传递进来的值的
+    function sum(num1, num2) {
+        var total = null;
+        total = num1 + num2;
+
+        return total;
+    }
+    var total = sum(100, 200);//->num1=100 num2=200
+    console.log(total);
+
+    sum(100);//->num1=100 num2=undefined  定义了形参变量(提供了入口),但是执行的时候没有给其传递值,默认传递的值是undefined(啥也没传)
+</script>
+</body>
+</html>

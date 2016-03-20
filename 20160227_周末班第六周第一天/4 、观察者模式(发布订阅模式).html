@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->on:订阅,把当前元素某个自定义行为需要做的事情依次的写在纸上(在JS中就是用一个容器把需要操作的事情依次的存储下来)
+    function on(curEle, evenType, evenFn) {
+        if (!curEle["myBook" + evenType]) {
+            curEle["myBook" + evenType] = [];
+        }
+        var ary = curEle["myBook" + evenType];
+        for (var i = 0; i < ary.length; i++) {
+            if (ary[i] === evenFn) {
+                return;
+            }
+        }
+        ary.push(evenFn);
+    }
+
+    on(王远, "结婚", 陈宏吃饭);
+    on(王远, "结婚", 宇丹跳舞);
+    on(王远, "结婚", 杨洋唱歌);
+    on(王远, "结婚", 静怡掏钱);
+    on(王远, "结婚", 静怡掏钱);
+
+
+    //->fire:发布一个计划(创建一个API接口)、当行为发生的时候，通知对应的操作执行
+    function fire(evenType, e) {
+        //this->curEle
+        var ary = this["myBook" + evenType];
+        if (ary && ary instanceof Array) {
+            for (var i = 0; i < ary.length; i++) {
+                var tempFn = ary[i];
+                if (typeof tempFn === "function") {
+                    tempFn.call(this, e);
+                }
+            }
+        }
+    }
+
+//    fire.call(王远, "结婚");
+
+</script>
+</body>
+</html>

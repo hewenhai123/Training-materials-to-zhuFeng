@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、获取一个字符串中出现次数最多的字符和对应的次数,例如:var str = "zhufengpeixun2015yangfanqihang";问哪几个字符出现的次数最多,一共有多少次?
+    var str = "zhufengpeixun2015yangfanqihang", obj = {};
+    //首先统计每一个字符出现的次数
+    str.replace(/\w/g, function () {
+        var key = arguments[0];
+        if (obj[key] >= 1) {
+            obj[key]++;
+            return;
+        }
+        obj[key] = 1;
+    });
+    //用假设法获取出现的最多次数
+    var maxNum = 0;
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            obj[key] > maxNum ? maxNum = obj[key] : null;
+        }
+    }
+    //最后在把所有出现次数为maxNum的输出
+    var res = "最多出现:" + maxNum + "次  出现的字符是:";
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            obj[key] === maxNum ? res += key + " " : null;
+        }
+    }
+    obj = null;
+    console.log(res);
+
+
+    //2、模板引擎绑定数据实现的原理
+    //->"my name is 葛琪，my age is 26，i com from china，i can do javascript~~";
+    var ary = ["葛琪", "26", "china", "javascript"];
+    str = "my name is {0}，my age is {1}，i com from {2}，i can do {3}~~";
+    str = str.replace(/\{(\d+)\}/g, function () {
+        return ary[arguments[1]];
+    });
+    console.log(str);
+
+
+    //3、单词首字母大写
+    str = "my name is zhou xiao tian,my age is twenty five years old~~";
+    str = str.replace(/\w+/g, function () {
+        var res = arguments[0];
+        return res.substr(0, 1).toUpperCase() + res.substr(1);
+    });
+    console.log(str);
+
+
+    //4、格式化时间
+    //->"2015年05月03日 12时09分13秒"
+
+    //    str = "2015-05-03 12:09:13";
+    //    str = str.replace(/^(\d+)-(\d+)-(\d+) +(\d+):(\d+):(\d+)$/, "$1年$2月$3日 $4时$5分$6秒");
+    //    console.log(str);
+    String.prototype.myFormatTime = function myFormatTime() {
+        var reg = /^(\d{4})(?:-|\/|\.|:)(\d{1,2})(?:-|\/|\.|:)(\d{1,2})(?:\s+)(\d{1,2})(?:-|\/|\.|:)(\d{1,2})(?:-|\/|\.|:)(\d{1,2})$/g, ary = [];
+        this.replace(reg, function () {
+            ary = Array.prototype.slice.call(arguments, 1, 7);
+        });
+        var format = arguments[0] || "{0}年{1}月{2}日 {3}:{4}:{5}";
+        return format.replace(/{(\d+)}/g, function () {
+            var val = ary[arguments[1]];
+            return val.length === 1 ? "0" + val : val;
+        });
+    };
+    str = "2015-5-3 12:9:13";
+    console.log(str.myFormatTime());
+    console.log(str.myFormatTime("{0}年{1}月{2}日"));
+    console.log(str.myFormatTime("{1}-{2} {3}:{4}"));
+
+    //5、数字转大写
+    //->"贰零壹伍"
+    str = "2015";
+    ary = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    str = str.replace(/\d+?/g, function () {
+        return ary[arguments[0]];
+    });
+    console.log(str);
+
+    //6、queryURLParameter 获取地址栏中的参数
+    //->http://kbs.sports.qq.com/kbsweb/game.htm?mid=1467588&age=18
+    //->{mid:"1467588",age:18}
+    String.prototype.queryURLParameter = function queryURLParameter() {
+        var reg = /([^?&=]+)=([^?&=]+)/g, obj = {};
+        this.replace(reg, function () {
+            obj[arguments[1]] = arguments[2];
+        });
+//        var res = reg.exec(this);
+//        while (res) {
+//            obj[RegExp.$1] = RegExp.$2;
+//            res = reg.exec(this)
+//        }
+        return obj;
+    };
+    //var url = window.location.href;//获取当前页面的地址,下面我们假设一个地址,来看一下方法编写的正确性
+    url = "http://kbs.sports.qq.com/kbsweb/game.htm?mid=1467588&age=18";
+    console.log(url.queryURLParameter());
+</script>
+</body>
+</html>

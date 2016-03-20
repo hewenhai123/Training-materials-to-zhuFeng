@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 10px auto;
+            padding: 20px;
+            width: 70%;
+            border: 1px dashed green;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        #ul1 li.bg0 {
+            background: antiquewhite;
+        }
+
+        #ul1 li.bg1 {
+            background: yellowgreen;
+        }
+
+        #ul1 li.hover {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+    <li>习近平出席田径世锦赛开幕式 会见奥委会主席</li>
+    <li>缺水之城郑州洒水降尘治霾 日耗水量达3.5万吨</li>
+</ul>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        oLis[i].className = i % 2 === 0 ? "bg0" : "bg1";
+    //    }
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].className = "bg" + i % 2;
+        //实现鼠标滑过变颜色
+        oLis[i].oldClass = oLis[i].className;
+        oLis[i].onmouseover = function () {
+            this.className = "hover";
+        };
+        oLis[i].onmouseout = function () {
+            this.className = this.oldClass;
+        };
+    }
+</script>
+</body>
+</html>

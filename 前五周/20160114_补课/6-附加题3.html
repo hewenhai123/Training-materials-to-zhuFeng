@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var num = 10;
+    var obj = {num: 20};
+    obj.fn = (function (num) {
+        this.num = num * 3;
+        num++;
+        return function (n) {
+            this.num += n;
+            num++;
+            console.log(num);
+        }
+    })(obj.num);
+    var fn = obj.fn;
+    fn(5);//->22
+    obj.fn(10);//->23
+    console.log(num, obj.num);//->65 30
+
+    //var a = 1 > 0 ? 1 : 0;//->把三元运算符的结果赋值给a,a=1
+    //a+2;//1+2
+</script>
+</body>
+</html>

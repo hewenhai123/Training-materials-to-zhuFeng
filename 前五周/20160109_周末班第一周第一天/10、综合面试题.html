@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var num = 10;//->全局变量,也相当于window的一个属性名
+    var obj = {
+        num: 20,//->obj的属性名->obj.num才能获取值
+        fn: (function (num) {
+            this.num *= 2;
+            num += 10;
+            return function () {
+                this.num *= 3;
+                num += 1;
+                console.log(num);
+            }
+        })(num)//->把全局作用域下的10赋值给形参
+    };
+    var fn = obj.fn;
+    fn();//->21
+    obj.fn();//->22
+    console.log(window.num, obj.num);//->60 60
+
+    fn = null;
+    obj.fn = null;
+    //->私有的作用域A和xxxfff111都会释放掉了
+</script>
+</body>
+</html>

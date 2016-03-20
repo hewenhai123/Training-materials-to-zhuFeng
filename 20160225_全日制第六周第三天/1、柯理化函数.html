@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JS高阶编程技巧-柯理化函数</title>
+</head>
+<body>
+<div id="div1" style="width: 100px;height: 100px;background:red;"></div>
+
+<script type="text/javascript">
+    //    function fn() {
+    //        console.dir(this);
+    //    }
+    //    var obj = {
+    //        name: "珠峰培训"
+    //    };
+
+    //window.setTimeout(fn, 1000);//->1000ms后执行fn,fn中的this是window ->想让fn执行，里面的this变为obj?
+
+    //window.setTimeout(fn.call(obj), 1000);//->设置一个定时器，首先把fn执行(让里面的this变为obj)，把fn执行的返回值undefined赋值给定时器，1000ms后执行的是undefined
+
+
+    //1、改变this关键字
+    //->我们可以使用call/apply:首先让当前方法中的this变为第一个参数的值,然后紧接着就让当前的这个函数执行了 ->Function.prototype
+
+    //->除了call/apply，在Function.prototype上还有一个重要的方法->bind：把某一个函数中的this关键字进行修改,相对于call/apply来说它不会把函数立即执行，只是改变了一个this指向，函数该啥事候执行还啥事候执行 (在IE6~8下不兼容)
+    //->预处理this指向
+
+    //window.setTimeout(fn.bind(obj), 1000);
+    //document.addEventListener("click", fn.bind(obj), false);//->fn中的this是document
+
+
+    //2、我们在项目中需要自己模拟bind写一个方法processThis：可以预先把一个方法的this进行修改
+
+    //->不使用bind解决的话，我们自己可以给需要执行的函数的外面包一层匿名函数，在匿名函数中在执行当前的函数，使用call/apply来改变其this
+    //    window.setTimeout(function () {
+    //        fn.call(obj);
+    //    }, 1000);
+    //
+    //    document.attachEvent("onclick", function () {
+    //        fn.call(document)
+    //    });
+
+    //->processThis：预先处理函数中的this指向问题
+    //->fn:当前我们需要处理的这个函数
+    //->context:让当前的fn函数中的this变为谁,我们就传递谁
+    //    function processThis(fn, context) {
+    //        return function () {
+    //            fn.call(context);
+    //        }
+    //    }
+
+    //    //->完善：可以接受我们自己给fn传递的参数值(自定义传递的参数值)
+    //    function processThis(fn, context) {
+    //        var outerArg = Array.prototype.slice.call(arguments, 2);//->借用数组原型上的slice方法,把arguments转换为数组,但是不是从第一个开始，而是从第三个开始处理 ->我们此时获取到的outerArg是processThis这个函数中除了fn和context剩下的所有的参数值
+    //        return function () {
+    //            fn.apply(context, outerArg);//->使用apply来处理,这样的话才相当于把outerArg数组中存储的每一项的值一个个的传递给我们的fn
+    //        }
+    //    }
+
+    //    function fn(num1, num2) {
+    //        this["total"] = num1 + num2;
+    //        console.log(this);
+    //    }
+    //    var obj = {name: "珠峰培训"};
+
+    //window.setTimeout(processThis(fn, obj), 1000);//->已经能够把fn中的this预先处理为obj了,当1000ms后执行fn,我们的this是obj ->但是有个问题：如果fn需要传递参数值的话，我们无法传值
+    //window.setTimeout(processThis(fn, obj, 1000, 1), 1000);
+
+    //    window.setTimeout(function () {
+    //        fn.call(obj, 100, 200);
+    //    }, 1000);
+
+    //document.attachEvent("onclick", processThis(fn, document));
+
+
+    //->fn此时是给document的click行为绑定的,当我们的行为触发的时候，fn会执行(并且我们已经预先的把this和参数都处理了)，但是除此之外，浏览器还应该默认的给fn传递了一个参数值MouseEvent
+    function fn(num1, num2, e) {
+        console.dir(arguments);
+        this["total"] = num1 + num2;
+        console.dir(this.total);
+        console.dir(e);
+    }
+    var obj = {name: "珠峰培训"};
+
+
+    document.getElementById("div1").attachEvent("onclick", processThis(fn, obj, 100, 200));
+
+    //document.addEventListener("click", fn.bind(obj, 100, 200), false);
+    //    document.addEventListener("click", function (e) {
+    //        fn.apply(obj, [100, 200]);
+    //    }, false);
+
+
+    //->完善：把浏览器默认传递的事件对象也需要传递给fn
+    //    function processThis(fn, context) {
+    //        var outerArg = Array.prototype.slice.call(arguments, 2);
+    //        return function () {//->在事件绑定中,我们返回的这个匿名函数,其实就是我们给元素的行为绑定的方法,所以它其实是有一个天生自带的参数值MouseEvent,我们需要把这个值也传递给fn,并且作为fn的第一个参数值
+    //            var innerArg = [].slice.call(arguments, 0);
+    //            var arg = innerArg.concat(outerArg);
+    //            fn.apply(context, arg);
+    //        }
+    //    }
+
+    function processThis(fn, context) {
+        var outerArg = Array.prototype.slice.call(arguments, 2);
+        return function () {
+            var innerArg = Array.prototype.slice.call(arguments, 0);
+            fn.apply(context, outerArg.concat(innerArg));
+        }
+    }
+    //->使用柯理化函数编程的思想其实就是我们JS中预先处理的机制，利用了栈内存不销毁的原理，把需要后期使用的都存储在不销毁的作用域中，后期如果需要使用我们直接的查找使用即可
+</script>
+</body>
+</html>

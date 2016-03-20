@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        input {
+            width: 100px;
+        }
+
+        .panel {
+            width: 300px;
+            float: left;
+            border: 1px solid #ccc;
+            height: 300px;
+            text-align: center;
+        }
+    </style>
+    <script src="../ajax.js"></script>
+    <script src="handler.js"></script>
+</head>
+<body>
+<div id="C" class="panel">
+    <p><span>增加：</span></p>
+
+    <p><label><input type="text" name="name">姓名</label></p>
+
+    <p><label><input type="text" name="age">年龄</label></p>
+
+    <p><label><input type="text" name="class">年级</label></p>
+
+    <p>
+        <button type="button">添加信息</button>
+    </p>
+</div>
+<div id="D" class="panel">
+    <p><span>删除：</span></p>
+    <p><label><input type="text" name="number">学号</label></p>
+    <p>
+        <button type="button">删除信息</button>
+    </p>
+</div>
+<div id="U" class="panel">
+    <p><span>修改：</span></p>
+
+    <p>
+        <label><input id="number-select" type="text" name="number">根据学号查询</label>
+    </p>
+
+    <p>
+        <button id="select">查询</button>
+    </p>
+    <p><label><input type="text" name="name">姓名</label></p>
+
+    <p><label><input type="text" name="age">年龄</label></p>
+
+    <p><label><input type="text" name="class">年级</label></p>
+
+    <p>
+        <button id="modified" type="button">修改信息</button>
+    </p>
+</div>
+<div id="S" class="panel">
+    <p><span>查询所有：</span>
+        <button type="button">查询信息</button>
+    </p>
+    <p>
+    <table>
+        <thead>
+        <td>姓名</td>
+        <td>年龄</td>
+        <td>年级</td>
+        <td>学号</td>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>自从学了预解释，从此节操是路人~~</title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、不管条件是否成立,判断体中的内容都要进行预解释
+    //    //预解释:var a; ->在全局作用域中声明一个变量相当于给window这个对象增加了一个属性名window.a=undefined;
+    //    if (!("a" in window)) {//->"a" in window 判断"a"是否为window的一个属性名,因为预解释的时候声明了a,所以"a" in window的结果是true,取反为false,条件不成立,a=12这个赋值的操作是执行不了的了
+    //        var a = 12;
+    //    }
+    //    console.log(a);//->undefined
+
+    //2、预解释的时候只对 “=”左边的变量进行预解释，右边代表的都是值，所以是不进行预解释的
+    //    fn();//->可以在上面执行,因为预解释的时候fn声明+定义都完成了
+    //    function fn() {
+    //        console.log("ok");
+    //    }
+
+    //fn();//->Uncaught TypeError: fn is not a function 因为只能对左边的var fn进行预解释,只有声明,此时的fn的值还是undefined,不是一个函数不能执行
+    //匿名函数之函数表达式：把函数定义的部分当做一个值赋值给我们的变量/元素的事件
+    //    var fn = function () {
+    //        console.log("ok");
+    //    };
+    //    fn();//->"ok"
+
+    //3、在全局作用域下预解释的时候,我们的自执行函数中的function是不参与的;当代码执行到对应的区域时,声明+定义+执行一起都完成了;
+
+    //匿名函数之自执行函数:定义和执行都一起完成的函数
+    //    ;(function (num) {
+    //        console.log(num);
+    //    })(100);//->定义一个匿名函数并且执行,执行的时候给形参num赋值为100,在最前面加一个";"的目的是为了防止上面的代码结束不加";"
+
+    //下面也是自执行函数,前面加的所有符合都是保证语法正常的,没有特殊的意义,例如：写个!不是取反,写个+也不是相加
+    //    ~function(num){}(100);
+    //    !function(num){}(100);
+    //    +function(num){}(100);
+    //    -function(num){}(100);
+
+
+    //4、虽然函数体中“return”下面的代码是不执行的,但是需要进行私有作用域下的预解释;而“return”后面紧跟着的是返回的值,是不参与预解释的;
+    //    var a = 15;
+    //    function fn() {
+    //        //预解释：var a; ->a是私有的变量
+    //        //代码执行：
+    //        console.log(a);//->undefined
+    //        return function () {};//->函数体中return下面的代码都不在执行的 ->return xxxfff111; 返回的是function这个函数对应的地址
+    //        var a = 13;
+    //    }
+    //    fn();
+
+
+    //5、在预解释的时候,如果发现了名字冲突了,不需要重新的声明,但是需要重新的赋值
+    //    fn();//->2
+    //    function fn(){console.log(1);}
+    //    fn();//->2
+    //    var fn=13;//->fn=13
+    //    fn();//->13() 抱错:fn is not a function 本行代码报错的话,下面的代码都不在执行了
+    //    function fn(){console.log(2);}
+    //    fn();
+
+    //不仅在全局作用域下声明的变量是给window增加属性名,而且在全局下定义的函数也是给window增加属性名,例如:
+    //var fn=12;//->window.fn=12;
+    //function fn(){}//->window.fn=xxxfff000;
+    //总结:在JS中不管是变量还是函数,他们的名字如果一样的了,都算相互冲突,JS中一个名字就代表一个变量,只不过存储的值可以是任何的数据类型的(变量的松散性)
+
+    //window下的预解释:
+    //声明+定义 fn=xxxfff000 ->1
+    //声明 var fn; (其实没啥意思)
+    //声明+定义 fn=xxxfff111 ->2 (不需要重新的声明,但是需要重新的赋值)
+    //->此时window下有一个fn,存储的值xxxfff111
+    //代码执行执行
+    //    fn();//->2
+    //    function fn(){console.log(1);}
+    //    fn();//->2
+    //    var fn=13;//->fn=13
+    //    fn();//->13() 报错
+    //    function fn(){console.log(2);}
+    //    fn();
+</script>
+</body>
+</html>

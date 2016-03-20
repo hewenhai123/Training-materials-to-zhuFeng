@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JS高阶编程技巧-柯理化函数实现JS预处理机制</title>
+</head>
+<body>
+<script type="text/javascript">
+    function fn() {//->xxxfff111
+        console.log(this);
+    }
+    var obj = {name: "珠峰培训", fn: fn};//->obj.fn=xxxfff111
+
+
+    //window.setTimeout(fn, 1000);//->设置一个定时器,1000ms后执行fn这个方法,此时方法中的this是window ->setInterval和setTimeout对于this这一点的问题是一样的
+    //window.setTimeout(obj.fn, 1000);//->方法中的this依然是window  window.setTimeout(xxxfff111, 1000);
+    //->我想让定时器执行,fn中的this变为obj
+
+    //window.setTimeout(fn.call(obj), 1000);//->错误 ->这样写的意思:设置一个定时器,并且首先先把fn执行(执行时候让里面的this变为obj),然后把fn执行的返回结果undefined赋值给定期器 window.setTimeout(undefined, 1000); 1000ms后我们执行的是undefined,而不是fn
+
+    //call/apply不仅仅是改变this,而且让对应的方法立即就执行了，上面的案例中如果可以把this改变了,但是不立即执行, 而是等1000ms后在执行就解决了
+    //->Function.prototype.bind 它也是改变this关键字的,但是并没有立即执行对应的函数,函数和之前一样,该啥事候执行就啥事候执行 ->bind就是JS的预处理机制,先把函数的this预先处理为我们需要的,以后执行的时候this就变了 ->IE6~8下不兼容
+    //window.setTimeout(fn.bind(obj), 1000);
+
+
+    //->我们自己写一个匿名函数把需要执行的方法包起来
+    //    window.setTimeout(function () {
+    //        //this->window
+    //        fn.call(obj);
+    //    }, 1000);
+    //
+    //    document.onclick = fn;//this->document  this变为obj?
+    //    document.onclick = function () {
+    //        //this->document
+    //        fn.call(obj);
+    //    };
+    //
+    //    document.attachEvent("onclick", fn);//this->window  this变为document?
+    //    document.attachEvent("onclick", function () {
+    //        fn.call(document);
+    //    });
+
+    //->processThis:根据上述处理某个函数this问题的原理(不把当前函数直接绑定,而是给它包一层匿名函数,当匿名函数执行的时候,在里面执行当前的函数并且把this改变)，我们编写一个统一的改变this的方法
+    //->fn:我们最终需要执行并且改变this的那个函数
+    //->context:让函数中的this变为谁就传递谁
+    //    function processThis(fn, context) {
+    //        return function () {
+    //            fn.call(context);
+    //        }
+    //    }
+    //
+    //    function fn1() {
+    //        console.log(this);
+    //    }
+    //    document.attachEvent("onclick", processThis(fn1, document));
+    //    window.setTimeout(processThis(fn1, obj), 1000);
+
+
+    //->很多时候不仅需要执行fn把this改变,还需要在执行fn的时候把参数也能传递进来
+    function processThis(fn, context) {
+        var outerArg = Array.prototype.slice.call(arguments, 2);//->获取的随时除了fn&context以外的其它的需要给当前函数手动传递的参数值
+        return function () {
+            var innerArg = Array.prototype.slice.call(arguments, 0); //->获取的是浏览器默认给其传递的参数值(比如我们的鼠标事件对象)
+            fn.apply(context, outerArg.concat(innerArg));
+        }
+    }
+
+    function fn1(num1, num2, num3, e) {
+        console.log(this);//->obj
+        console.log(num1, num2, num3);
+        console.log(e);
+    }
+    //window.setTimeout(processThis(fn1, obj, 1000, 2000, 3000), 1000);
+
+    document.onclick = processThis(fn1, obj, 1, 2, 3);
+    //    function (e) {//->只要是给浏览器元素的行为绑定的方法,都会默认传递一个事件对象
+    //        fn1.apply(obj, [1,2,3,e]);
+    //    }
+
+    //fn->当前函数本身,它是函数定义的部分
+    //fn()->当前函数执行,它代表的是函数执行的返回值 ->undefined
+</script>
+</body>
+</html>

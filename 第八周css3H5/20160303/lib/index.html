@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册新用户</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        input {
+            display: block;
+            outline: none;
+            border: 1px solid #2B93D2;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 400px;
+            border: 1px dashed red;
+        }
+
+        .box h2 {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .box div {
+            margin-top: 10px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .box div input {
+            padding: 0 10px;
+            width: 378px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        #userBtn {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        span {
+            display: block;
+        }
+
+        .box li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #999;
+        }
+
+        .box li span {
+            float: left;
+            width: 100px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>注册成为珠峰培训会员</h2>
+
+    <div><input type="text" id="userName"/></div>
+    <div><input type="text" id="userAge"/></div>
+    <div><input type="submit" id="userBtn" value="立即注册"/></div>
+</div>
+
+<div class="box">
+    <ul id="boxList">
+
+    </ul>
+</div>
+
+<script type="text/javascript">
+    var comURL = "http://localhost:1001/";
+    var boxList = document.getElementById("boxList"), btnList = boxList.getElementsByClassName("delBtn");
+
+    //->展示列表
+    function show() {
+        ajax(comURL + "getInfo?_=" + Math.random(), function (val) {
+            var str = "", ary = val.list;
+            for (var i = 0; i < ary.length; i++) {
+                var cur = ary[i];
+                str += "<li>";
+                str += "<span>" + cur.id + "</span>";
+                str += "<span>" + cur.userName + "</span>";
+                str += "<span>" + cur.userAge + "</span>";
+                str += "<span class='delBtn' userId='" + cur.id + "'>删除</span>";
+                str += "</li>";
+            }
+            boxList.innerHTML = str;
+            delInfo();
+        });
+    }
+    show();
+
+    //->实现增加
+    function addInfo() {
+        var userName = document.getElementById("userName").value;
+        var userAge = document.getElementById("userAge").value;
+        ajax(comURL + "addInfo?userName=" + userName + "&userAge=" + userAge + "&_=" + Math.random(), function (val) {
+            var oLi = document.createElement("li");
+            oLi.innerHTML += "<span>" + val.id + "</span>";
+            oLi.innerHTML += "<span>" + val.userName + "</span>";
+            oLi.innerHTML += "<span>" + val.userAge + "</span>";
+            oLi.innerHTML += "<span class='delBtn' userId='" + val.id + "'>删除</span>";
+            boxList.appendChild(oLi);
+            delInfo();
+        });
+    }
+    document.getElementById("userBtn").onclick = addInfo;
+
+    //->删除
+    function delInfo() {
+        for (var i = 0; i < btnList.length; i++) {
+            var cur = btnList[i];
+            cur.onclick = function () {
+                var flag = window.confirm("确认要删除本条信息吗?");
+                if (!flag) return;
+
+                var userId = this.getAttribute("userId");
+                var _this = this;
+                ajax(comURL + "delInfo?id=" + userId + "&_=" + Math.random(), function (val) {
+                    if (val.code == 0) {
+                        boxList.removeChild(_this.parentNode);
+                    }
+                });
+            }
+        }
+    }
+
+
+    function ajax(url, callback) {
+        var xhr = new XMLHttpRequest;
+        xhr.open("get", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+                var val = xhr.responseText;
+                val = JSON.parse(val);
+                typeof callback === "function" ? callback(val) : null;
+            }
+        };
+        xhr.send(null);
+    }
+</script>
+</body>
+</html>

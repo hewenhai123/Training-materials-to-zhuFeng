@@ -1,0 +1,151 @@
+1、URL地址
+   协议->
+     HTTP:超文本传输协议,除了用来传输文本,还可以传输HTML页面、CSS文件、JS文件、图片、音视频...
+     HTTPS:SSL,它比HTTP更加安全一些
+     FTP:文件传输的,我们买了个服务器,我们要把一些文件上传到服务器上,我们就需要使用FTP上传了
+
+   域名->
+     一级域名 www.qq.com
+     二级域名 sports.qq.com
+     三级域名 kbs.sports.qq.com
+
+   可以把我们每个部门的产品分不同的服务器进行管理,我们作为客户访问不同的域名其实找到的是不同的服务器->减少服务器的压力、有利于服务器的维护、有利于每个产品的SEO和权重...
+
+   端口号:0~65535
+     HTTP协议默认的端口号是80
+     HTTPS协议默认的端口号是443
+     ->如果你的端口号是默认的值,我们在访问的时候端口号不需要添加
+     ->如果你的端口号不是默认的值,访问的时候必须加
+     ->为啥会出现端口号?因为一台服务器上可能会发多个产品,可能会有多个域名,用户通过域名进来了,但是具体找谁我们需要分清
+
+
+   具体的目录文件和URL后面的参数值
+     ->?后面的都是传递给当前页面的参数值(问号传参),如果需要传递多个参数,中间中&隔开,#是当前页面的锚点定位
+     ->https://www.baidu.com:80/user/index.html?name=aaa&age=17&sex=1#userName (#userName锚点定位,定位到当前页面中ID为userName这个标签的位置)
+
+
+2、HTTP
+ ->超文本传输协议:它能够把客户端要告诉给服务器端的东西带给服务器端,也可以把服务器给客户端的内容带给客户端,用它就可以实现客户端和服务器端的文件内容的传输
+
+ ->事物:n+1个事件
+
+ ->起始行/首部/主体
+ ->起始行:描述这个HTTP的基本请求
+ ->首部:通用首部(请求和响应都有的) 请求首部  响应首部  扩展首部(自定义的) 实体首部(描述响应/请求内容的)
+ ->实体:一般很少见,请求或者响应的内容
+
+ [Headers]
+ General->通用头(Request/Response都有的)
+    Request URL:http://matchweb.sports.qq.com/kbs/hotMatchList?callback=getHotMatchList&_=1456903174906 请求的服务器详细地址
+    Request Method:GET 请求的方式,GET是到服务器获取内容,POST是向服务器发送内容...
+    Status Code:200 HTTP状态码  ok HTTP状态码描述
+    Remote Address:123.151.148.59:80 服务器的IP地址和端口号
+
+ Request Headers->
+    GET /kbs/hotMatchList?callback=getHotMatchList&_=1456903174906 HTTP/1.1
+    Host: matchweb.sports.qq.com
+    Connection: keep-alive
+    Pragma: no-cache
+    Cache-Control: no-cache
+    User-Agent: Mozilla/5.0...
+    Accept: */*
+    Referer: http://kbs.sports.qq.com/
+    Accept-Encoding: gzip, deflate, sdch
+    Accept-Language: zh-CN,zh;q=0.8
+    Cookie:
+
+ Response Headers->
+    HTTP/1.1 200 OK
+    Server: nginx/1.4.4-omg  当前服务器是用什么样的服务发布的(IIS、apache、nginx...)
+    Date: Wed, 02 Mar 2016 07:20:05 GMT  当前请求回来的服务器的时间,时间格式是英国的格林尼治时间
+    Content-Type: application/json  当前请求回来的数据的格式
+    Transfer-Encoding: chunked
+    Connection: keep-alive
+    Keep-Alive: timeout=120  当前是用了120ms请求回来的(整个HTTP的请求时间)
+    Vary: Accept-Encoding
+    X-Server-Ip: 10.248.116.169
+    X-Cached: EXPIRED
+    Content-Encoding: gzip
+
+
+3、HTTP状态码
+ ->100初始化/正在请求  HTTP2.0已经删除了1xx系列的
+
+ ->200请求成功
+ ->202接收
+
+ ->301永久转移(一般是不同的服务器转移--降低了搜索引擎的权重 第一次检测做了永久的转移,第二次就不在进行搜索了)
+ ->302临时转移(一般是相同的服务器临时转移)
+ 注意：上述是Location地址之间的跳转
+
+ ->303永久重定向 负载均衡
+ ->307临时重定向
+ 注意：上述是服务器之间的跳转
+
+ ->304走缓存 (接收响应数据的时候走的是服务器缓存数据)
+ ->响应首部：
+ ->last-modified 最后一次改变的时间 GMT(英国格林尼治时间)
+ ->e-tag 实体内容 一串通过校验内容进行sha(1/2)算法的字符串
+ ->请求首部：
+ ->if-modified-since GMT
+ ->if-none-match 一串通过校验内容进行sha(1/2)算法的字符串
+
+ ->400 参数错误
+ ->403 禁止访问没权限
+ ->404 没有找到
+ ->417 发送资源文件过大
+
+ ->500 未知服务器错误
+ ->503 服务器并发数过多 (只能连接100个,过来200个,剩下的100个就会被告知503)
+
+
+4、HTTP请求方式
+ ->get 从服务器获取
+ ->post 向服务器发送->注册页面:用户填完信息,有很多的信息,我们把这些信息都获取到,然后通过Ajax中的POST请求,在请求主体中把这些信息都传递给后台服务器,服务器把这些信息存储到数据库中("表单提交")
+
+ ->put 增加
+ ->delete 删除
+ ->head、options、trace、connection、track...
+
+ ->get系的特征(get、delete、head)
+ 1、会把给服务器发送的数据放到url后面 ->http://matchweb.sports.qq.com/kbs/hotMatchList?callback=getHotMatchList&_=1456903174906  "?后面写的内容都是同过get请求传递给服务器的"
+
+ 2、有大小限制
+    因为get系把数据都放到url里面，而浏览器会对url的长度有大小限制， 所以造成了get系对传输的数据大小有限制
+    ie->2K
+    firefox->7k
+    chrome->8k
+
+ 3、会被缓存(服务器和浏览器自带的缓存)
+   ->我们一般不用缓存,因为自带的缓存很多情况导致,第二次请求的内容一直和第一次一样,最新的内容请求不回来
+   ->如果想要快,我们做的所有的缓存都是自己单独用程序设计出来的而不是浏览器自带的缓存机制
+
+ 4、不安全,因为明文发送 ->在浏览器的控制台中我们可以查看到URL后面的参数值,所以不安全
+
+ ->post系(post、put)
+ 1、会把给服务器发送的数据放到请求主体里
+ 2、不会有大小限制
+    因为post系把数据放到请求主体里，而请求主体是没有大小限制的
+ 3、永远不会被缓存
+ 4、相对于get系安全许多,因为不是明文发送
+
+ ->为什么get系会被缓存而post系不会被缓存?
+ 1、因为get系设计的初衷是用来从服务器拉取数据的。含有两个特点：
+    数据可能很大，数据可能会重复。正因为有这两个特点，所以造成了get系会被缓存
+    post系设计的初衷是往服务器发送数据的,所以不需要缓存
+
+ ->HEAD、DELETE这两个方法比较特殊：他们成功只返回202，不会返回200
+
+
+$.ajax({
+   type:'get',
+   url:'',
+   data:{name:''}, 向服务器端发送的数据
+   dataType:"json",
+   cache:false,是否可以缓存
+   async:true,同步
+   username:,用户名
+   password:,密码
+   timeout:,超时时间
+   headers:{},设置请求头
+});

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //document.parentNode的值是什么，为什么
+    //->null
+    //因为parentNode是获取当前元素document的父亲节点,而document是顶级元素没有父亲,所以为null
+
+    //document.parentnode的值是什么，为什么
+    //->undefined
+    //因为JS是严格区分大小写的，parentnode不是document的一个属性,一个对象没有这个属性,它的属性值默认为undefined
+
+    //null和undefined的区别:
+    //    null属于当前的值为空,以后会给其赋值的
+    //    undefined属于非人为设置,意料之外的没有
+    //    例如：耿大大的女朋友是null、耿大大的男朋友是undefined
+    //
+    //    1、null
+    //    1)在定义变量的时候手动的设置为null
+    //    var _temp=null;
+    //    [疑问]为啥不设置为0或者""来代表空呢? ->0/""属于挖了坑没有种树，是有内存的消耗的，而null是连坑都没有挖所以没有内存的消耗，性能更好一些
+    //    2)我们用DOM的属性和方法获取元素，如果当前的元素不存在，获取到的结果就是null
+    //    document.parentNode ->null 、 document.body.offsetParent ->null 、document.getElementById("tab") 如果ID不存在 ->null ...
+    //    3)关于在浏览器中内存释放的时候
+    //    var obj={}; 如果使用完成后想让obj对应的堆内存销毁 -> obj=null
+    //    4)元素节点/document的nodeValue值为null
+    //    5)正则捕获exec的时候，如果捕获不到内容，捕获的结果就是null
+
+    //    2、undefined
+    //    1)只声明为定义,默认的结果是undefined
+    //    2)在函数中定义了形参变量，但是执行的时候没有传递值，那么默认值也是undefined
+    //    3)在函数中没有写return或者什么也没有返回(return;)我们默认返回的值就是undefined
+    //    4)获取对象属性名对应的属性值,如果当前的这个属性不存在我们获取的属性值也是undefined，扩展：->JS检测浏览器兼容
+    //    "getComputedStyle" in window、window.getComputedStyle、typeof window.getComputedStyle!=="undefined"
+</script>
+</body>
+</html>

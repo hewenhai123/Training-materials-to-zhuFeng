@@ -1,0 +1,108 @@
+@charset "utf-8";
+body, div, ul, li, span, h2, input {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 14px;
+
+    /*禁止用户选中文字*/
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+input {
+    display: block;
+    outline: none;
+}
+
+.box {
+    overflow: hidden;
+    margin: 10px auto;
+    padding: 20px;
+    width: 600px;
+    border: 1px solid #008000;
+
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px 0 #999;
+}
+
+/*标题区域*/
+.box h2 {
+    height: 35px;
+    line-height: 35px;
+
+    background: -webkit-linear-gradient(top left, #08BECE, #99CC99, #ff7b00, #FFF38F);
+}
+
+.box h2 span {
+    display: inline-block; /*一但这样设置,元素标签之间的空格和换行都是占位置的,所以需要手动的让span没有间隙*/
+    width: 200px;
+    text-align: center;
+}
+
+/*内容区域*/
+#list {
+    height: 300px;
+}
+
+#list li {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+#list li.bg {
+    background: #FFF38F;
+}
+
+#list li span {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+}
+
+/*分页区域*/
+.box-page {
+    float: right;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.box-page .bp-btn {
+    float: left;
+    margin-left: 5px;
+    width: 50px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #11a3ff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.box-page .bp-list {
+    float: left;
+    overflow: hidden;
+}
+
+.box-page .bp-list li {
+    float: left;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #11a3ff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.box-page .bp-list li.select {
+    background: #ffe470;
+    font-size: 14px;
+    color: lightcoral;
+}

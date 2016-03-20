@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="css/tab.css"/>
+</head>
+<body>
+<div class="tab">
+    <ul>
+        <li class="select">电影</li>
+        <li>电视</li>
+        <li>动漫</li>
+    </ul>
+    <div class="select">寻龙诀</div>
+    <div>芈月传</div>
+    <div>海贼王</div>
+</div>
+
+<div class="tab">
+    <ul>
+        <li>电影</li>
+        <li class="select">电视</li>
+        <li>动漫</li>
+    </ul>
+    <div>寻龙诀</div>
+    <div class="select">芈月传</div>
+    <div>海贼王</div>
+</div>
+
+<div class="tab">
+    <ul>
+        <li>电影</li>
+        <li>电视</li>
+        <li class="select">动漫</li>
+    </ul>
+    <div>寻龙诀</div>
+    <div>芈月传</div>
+    <div class="select">海贼王</div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    $(".tab li").click(function () {
+        //$(this) ->当前点击的那一个li
+        var $index = $(this).index();
+        $(this).addClass("select").siblings().removeClass("select");
+        $(this).parent().siblings().each(function (index, item) {
+            index === $index ? $(item).addClass("select") : $(item).removeClass("select");
+        });
+    });
+</script>
+</body>
+</html>

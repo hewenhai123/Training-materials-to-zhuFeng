@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>事件委托/事件代理</title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+
+        #inner {
+            padding: 20px;
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+
+        #center {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //事件委托：利用事件冒泡传播的机制，如果一个容器中很多元素都需要绑定点击事件，我们没必要给所有元素依次把绑定方法了，只需要给最外层的盒子绑定点击事件即可，这样的话不管里面的哪个元素点击行为触发，最外层的点击行为也会被触发，执行对应的函数的时候，通过MouseEvent中的e.target事件源是谁来进行不同的操作处理...
+    //->使用事件委托的性能比一个个的绑定方法性能提高了一倍
+
+    var outer = document.getElementById("outer");
+    outer.onclick = function (e) {
+        e = e || window.event;
+        e.target = e.target || e.srcElement;
+        if (e.target.id === "center") {
+            console.log("center");
+        }
+        if (e.target.id === "inner") {
+            console.log("inner");
+        }
+        if (e.target.id === "outer") {
+            console.log("outer");
+        }
+    };
+</script>
+</body>
+</html>

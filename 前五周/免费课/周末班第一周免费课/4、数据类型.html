@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //JS中的变量有一个特点,是松散类型的(我们使用var定义的变量可以存储各种数据类型的值)
+    var num = 12;//->数字类型的
+    var str = "珠峰培训";//->字符串类型的
+    var boo = true;//->布尔类型的
+    var n = null;
+    var u = undefined;
+
+    var obj = {name: "谢淑宁", age: 18};//->对象数据类型
+    var ary = [12, 23, 34];//->数组
+    var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?$/;//->正则
+    var fn = function () {
+
+    };//->函数
+
+    //1、在JS中我们的数据类型都有哪些?
+    //基本数据类型(值类型)
+    //number(数字)、string(字符串)、boolean(布尔)、null(空)、undefined(未定义)
+
+    //引用数据类型
+    //object对象数据类型:{}对象->Object []数组->Array  /^$/正则->RegExp...
+    //function函数数据类型
+
+    //2、浏览器是如何的分辨这么多的数据类型的?
+    //JS中的数据类型检测一共有四种方式
+    //1)typeof ->用来检测数据类型的运算符
+
+    //语法: typeof value;
+    //console.log(typeof 12);//->"number"
+    //var num = 13;
+    //console.log(typeof num);//->虽然我们放的是num这个名字,其实它相当于把我们num这个变量存储的值13拿出来检测,看它是什么数据类型的 ->"number"
+
+    //返回值：
+    //用typeof检测某个值的数据类型,首先返回的是一个字符串,其次里面包含了对应的数据类型,例如："number"、"string"、"boolean"、"object"、"function"、"undefined"
+
+    //局限性:
+    //->用typeof检测object下具体细分的那几个数据类型(对象、数组、正则)返回的结果都是"object",所以我们无法使用typeof区分当前的值,具体的是一个数组还是一个正则...
+    //->typeof null是"object",所以不能用typeof检测是否为null
+
+    //2)instanceof
+    //3)constructor
+    //4)Object.prototype.toString.call()
+
+
+    //BAT面试题:
+    //console.log(typeof typeof typeof ["珠峰", "培训"]);
+    //typeof ["珠峰", "培训"] ->"object"
+    //typeof "object" ->"string"
+    //typeof "string" ->"string"
+    //规律：如果我们同时使用多个typeof检测的话,由于每一次执行typeof的返回结果首先都是一个字符串,其次才是对应的数据类型,所以最后的答案不用过脑子,肯定是"string"
+</script>
+</body>
+</html>

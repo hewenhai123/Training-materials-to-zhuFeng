@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 400px;
+            width: 100px;
+            height: 100px;
+            background: #008000;
+        }
+
+        input {
+            display: block;
+            outline: none;
+
+            position: absolute;
+            top: 200px;
+            left: 100px;
+
+            width: 100px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        #btnRight {
+            left: 300px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<input type="button" value="向左" id="btnLeft"/>
+<input type="button" value="向右" id="btnRight"/>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var tarR = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth, tarL = 0;
+
+    //->tar是传递给我的目标值,我们首先获取当前的位置值,如果比目标值小,该向右走,如果比目标值还要大,该向左走
+    var timer = null;
+    function move(tar) {
+        window.clearTimeout(timer);
+
+        var curL = utils.getCss(oDiv, "left");
+        if (curL < tar) {//->向右
+            if (curL + 15 >= tar) {
+                //->向右一直走,但是当前的值已经比目标值还要大了,结束动画
+                utils.setCss(oDiv, "left", tar);
+                return;
+            }
+            utils.setCss(oDiv, "left", curL + 15);
+        } else if (curL > tar) {//->向左
+            if (curL - 15 <= tar) {
+                //->向左一直走,但是当前的值已经比目标值还要小了,结束动画
+                utils.setCss(oDiv, "left", tar);
+                return;
+            }
+            utils.setCss(oDiv, "left", curL - 15);
+        } else {
+            return;
+        }
+
+        //timer = window.setTimeout(move, 10);//->这样写不行,我们每一次执行move需要把目标值传递进来,但是这样写是10ms后执行move,但是没有传递值
+        timer = window.setTimeout(function () {
+            move(tar);
+        }, 10);
+    }
+
+
+    var btnLeft = document.getElementById("btnLeft"), btnRight = document.getElementById("btnRight");
+    btnLeft.onclick = function () {
+        move(tarL);
+    };
+    btnRight.onclick = function () {
+        move(tarR);
+    };
+</script>
+</body>
+</html>

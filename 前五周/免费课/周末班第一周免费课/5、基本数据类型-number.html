@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //number数字：正数、负数、小数、零
+
+    //1、NaN : not a number 不是一个数，但是它属于number数据类型的
+    //console.log(typeof NaN);//->"number"
+
+    //2、NaN==NaN 两个是不相等的,返回的结果是false
+    //NaN代表的是除了数字以外的任何种可能情况,所以两个NaN之间根本没有可比性
+
+    //3、什么情况下会出现我们的NaN
+    //1)数字+undefined=NaN  ->12+undefined=NaN
+    //2)在无效的数学运算中,我们可能会出现NaN  ->"珠峰"-12=NaN
+    //3)在将其他的数据类型转换为number类型的时候会出现NaN
+
+
+    //4、将其他的数据类型转换为number类型
+    //->Number(value) 把value值严格的转换为我们的数字
+    //严格:对于把一个字符串转换为数字来说,只有字符串中的所有字符都是数字才可以转换,只要有一个不是数字字符最后的结果都是NaN
+    //console.log(Number("12"));//->12
+    //console.log(Number("12px"));//->NaN
+
+    //->parseInt/parseFloat 非严格转换
+    //从字符串的左边到右边依次的查找,把找到的有效数字字符转换为数字,一但遇到一个非有效的数字字符,则立即停止查找
+    //    console.log(parseInt("12px"));//->12
+    //    console.log(parseInt("12px13"));//->12
+    //    console.log(parseInt("px12"));//->NaN
+
+    //parseFloat只是比parseInt多识别一个小数点
+    //    console.log(parseInt("12.5px"));//->12
+    //    console.log(parseFloat("12.5px"));//->12.5
+
+
+    //5、isNaN(value) 检测value是否为有效的数字(如果把value强制转换为数字不是NaN的话,那么它就是有效数字),如果是有效的数字返回false,不是有效的数字才返回的是true
+
+    //num==NaN 如果num和NaN相等则代表它不是有效数字(不行->因为NaN和任何东西都是永远不相等)
+    //console.log(isNaN("14"));//->false
+
+    //6、数字常用的一个方法
+    //toFixed->保留小数点后面的位数多少位
+    //var num = 3.141592653589723846;
+    //console.log(num.toFixed(2));//->保留小数点后两位
+
+
+    //BAT面试题:
+    var num = parseFloat("px12");//->num=NaN
+    if (num == 12) {//->NaN==12不成立
+        console.log(12);
+    } else if (num == NaN) {//->NaN==NaN不成立
+        console.log(NaN);
+    } else if (typeof num == "number") {//->typeof NaN="number"   "number"=="number"->true
+        console.log("number");
+    } else {
+        console.log("zhufeng");
+    }
+</script>
+</body>
+</html>

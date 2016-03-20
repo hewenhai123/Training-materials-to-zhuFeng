@@ -1,0 +1,59 @@
+body, div, ul, li {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+
+    /*禁止谷歌等webkit内核的浏览器中,禁止用户选中文字*/
+    -webkit-user-select: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+#tab {
+    margin: 20px auto;
+    width: 500px;
+}
+
+#tab ul {
+    /*overflow: hidden; 清除子元素的浮动对自己的影响*/
+    position: relative;
+    top: 1px;
+}
+
+#tab ul li {
+    float: left;
+    margin-right: 10px;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border: 1px solid green;
+    cursor: pointer;
+}
+
+#tab ul li.select {
+    background: wheat;
+    border-bottom: 1px solid wheat;
+}
+
+
+#tab div {
+    display: none;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    border: 1px solid green;
+    clear: both; /*清除上面元素的浮动对自己的影响*/
+}
+
+#tab div.select {
+    display: block;
+    background: wheat;
+}
+
+
+
+
+

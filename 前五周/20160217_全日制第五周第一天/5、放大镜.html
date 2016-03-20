@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>京东放大镜</title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        #box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 350px;
+            height: 350px;
+            box-shadow: 3px 3px 10px 0 #ccc;
+        }
+
+        #box img {
+            width: 100%;
+            height: 100%;
+        }
+
+        #mark {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 175px;
+            height: 175px;
+            background: #000;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            cursor: move;
+        }
+
+        /*右侧boxRight和左侧的box宽高一样,但是里面的图片是左侧图片的2倍:因为mark是box的一半,同理:如果mark是box的1/3,说明mark会把box横竖分成三份,右侧的图片就应该是左侧图片的三倍*/
+        /*同理：左侧的mark移动10px，那么右侧图片就要移动20px这样才和图片的比例对应上*/
+        #boxRight {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 380px;
+            width: 350px;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        #boxRight img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <img src="img/iphone.jpg" alt="苹果手机"/>
+</div>
+
+<div id="boxRight">
+    <img src="img/iphone_big.jpg" alt="苹果手机"/>
+</div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var boxRight = document.getElementById("boxRight");
+    var boxRightImg = boxRight.getElementsByTagName("img")[0];
+
+    //->进入：创建mark,让其定位在初始位置
+    box.onmouseenter = function (e) {
+        e = e || window.event;
+        var mark = document.getElementById("mark");
+        if (!mark) {
+            mark = document.createElement("div");
+            mark.id = "mark";
+            this.appendChild(mark);
+        }
+        setPosition(mark, e);
+        boxRight.style.display = "block";
+    };
+
+    //->移动：让mark的位置跟着鼠标改变
+    box.onmousemove = function (e) {
+        e = e || window.event;
+        var mark = document.getElementById("mark");
+        if (mark) {
+            setPosition(mark, e);
+        }
+    };
+
+    //->离开：移除mark
+    box.onmouseleave = function (e) {
+        e = e || window.event;
+        var mark = document.getElementById("mark");
+        if (mark) {
+            this.removeChild(mark);
+        }
+        boxRight.style.display = "none";
+    };
+
+    //->设置元素mark的位置值,e是我们的MouseEvent对象
+    function setPosition(mark, e) {
+        //->计算正常情况下mark的top/left的值
+        var top = e.clientY - box.offsetTop - (mark.offsetHeight / 2), left = e.clientX - box.offsetLeft - (mark.offsetWidth / 2);
+
+        //->获取四个边界值
+        var minLeft = 0, maxLeft = box.offsetWidth - mark.offsetWidth, minTop = 0, maxTop = box.offsetHeight - mark.offsetHeight;
+
+        //->赋值并且进行边界判断
+        var imgTop = 0, imgLeft = 0;
+
+        if (left < minLeft) {
+            mark.style.left = minLeft + "px";
+            imgLeft = minLeft;
+        } else if (left > maxLeft) {
+            mark.style.left = maxLeft + "px";
+            imgLeft = maxLeft;
+        } else {
+            mark.style.left = left + "px";
+            imgLeft = left;
+        }
+
+        if (top < minTop) {
+            mark.style.top = minTop + "px";
+            imgTop = minTop;
+        } else if (top > maxTop) {
+            mark.style.top = maxTop + "px";
+            imgTop = maxTop;
+        } else {
+            mark.style.top = top + "px";
+            imgTop = top;
+        }
+
+        //->让右侧的图片按照左侧移动距离的2倍进行移动
+        boxRightImg.style.left = -imgLeft * 2 + "px";
+        boxRightImg.style.top = -imgTop * 2 + "px";
+    }
+</script>
+</body>
+</html>

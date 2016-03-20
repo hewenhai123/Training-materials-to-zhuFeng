@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, span {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        #outer {
+            position: relative;
+            margin: 20px auto;
+            padding: 0 5px 0 35px;
+            width: 900px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px dashed #08BECE;
+        }
+
+        #outer span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: #ff3333;
+        }
+
+        #inner {
+            width: 900px;
+            height: 30px;
+            white-space: nowrap; /*强制不换行*/
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <span></span>
+
+    <div id="inner">
+        新版经理人论坛上线了：亲爱的用户，为了更好的提供服务，神州英才推出了全新经理人论坛平台。从即日起面向网站所有的会员朋友们开放公测！上线的社区平台，有全新的读版、读帖页样式，增添了更多的交互功能，关注用户需求和使用感受。
+    </div>
+</div>
+
+<!--<div id="outer">
+<span></span>
+<marquee id="inner" scrollamount="8" onmouseover="this.stop();" onmouseout="this.start();">
+新版经理人论坛上线了：亲爱的用户，为了更好的提供服务，神州英才推出了全新经理人论坛平台。从即日起面向网站所有的会员朋友们开放公测！上线的社区平台，有全新的读版、读帖页样式，增添了更多的交互功能，关注用户需求和使用感受。
+</marquee>
+</div>-->
+
+<script type="text/javascript">
+    var inner = document.getElementById("inner");
+    var val = inner.innerHTML;//->首先获取inner中的内容
+    window.setInterval(function () {
+        var oldL = inner.scrollLeft;
+        inner.scrollLeft += 1;
+        var newL = inner.scrollLeft;
+        if (oldL === newL) {//加之前的值和加之后的值一模一样,说明加没起到作用,到头了->在把之前的内容向末尾增加一遍,这样就可以继续向后走了,从而实现我们的无缝衔接跑马灯
+            inner.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;" + val;
+        }
+    }, 10);
+</script>
+</body>
+</html>

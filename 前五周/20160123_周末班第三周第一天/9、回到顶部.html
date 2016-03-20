@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 500%;
+
+            background: #ffe470;
+            background: -webkit-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: -moz-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: -ms-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: -o-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+        }
+
+        #div1 {
+            display: none;
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            cursor: pointer;
+
+            border-radius: 50%;
+            box-shadow: 3px 3px 10px 0 #000000;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    ~function () {
+        var oDiv = document.getElementById("div1");
+        oDiv.onclick = function () {
+            this.style.display = "none";
+            window.onscroll = null;
+
+            var step = (utils.win("scrollTop") / 500) * 10;
+            var timer = window.setInterval(function () {
+                var curT = utils.win("scrollTop");
+                if (curT <= 0) {
+                    utils.win("scrollTop", 0);
+                    window.onscroll = scrollMove;
+
+                    window.clearInterval(timer);
+                    return;
+                }
+                utils.win("scrollTop", curT - step);
+            }, 10);
+        };
+
+        var winH = utils.win("clientHeight");
+
+        function scrollMove() {
+            var curT = utils.win("scrollTop");
+            oDiv.style.display = curT >= winH ? "block" : "none";
+        }
+
+        window.onscroll = scrollMove;
+    }();
+    //->刚开始回调顶部的按钮没有,当卷去的高度超过一屏幕的时候,才显示;当点击的时候,在让其消失;
+    //->如何让滚动条滚动:按键盘的上下键、鼠标滚轮、手动拖、JS控制scrollTop变化...
+    //->window.onscroll事件,不管用那种方式触发滚动条动的,只要动了就会触发这个事件
+</script>
+</body>
+</html>

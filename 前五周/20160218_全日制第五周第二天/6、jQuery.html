@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //1、jQuery->类库:jQuery是一个类(它是函数数据类型的)，这个类中包含了我们项目中常用的一些属性和方法
+
+    //2、如何学习jQuery
+    //->看jQuery的API文档(Application Programming Interface 应用程序接口):提供了jQuery中常用方法的使用说明->http://jquery.cuishifeng.cn/
+    //->买一本书："锋利的jQuery第二版"...
+    //->看jQuery源码：https://github.com/jquery/jquery
+
+    //3、jQuery包含了很多的版本
+    //jQuery-1.4.1-min.js  jQuery-1.7.2-min.js  jQuery-1.8.3-min.js  jQuery-1.9.3-min.js  jQuery-1.11.3-min.js(推荐)
+    //jQuery-2.xxx-min.js
+    //jQuery.min.js(是jQuery一些常用的方法库，里面包含的方法不多，只是一些最常用的)
+
+
+    //4、jQuery是如何来实现的?
+    //    (function () {
+    //        var jQuery = function (selector, context) {
+    //            return new jQuery.fn.init(selector, context);
+    //        };
+    //
+    //        jQuery.fn = jQuery.prototype = {
+    //            constructor: jQuery
+    //            /*这里面还包含了很多的方法->*/
+    //        };
+    //
+    //        window.jQuery = window.$ = jQuery;
+    //    })();
+
+    //->jQuery()===$()  ->jQuery===$
+    //$()->第二个参数context不传值默认是document,传递值是指定具体的上下文
+    //->第一个参数selector是选择器:通过某一个规则的值获取到对应的元素
+    //->我们通过$()获取到的结果是jQuery这个类的一个实例
+    //->$()既然是jQuery这个类的一个实例，那么它就可以使用jQuery原型上定义的属性和方法了
+
+    //5、通过原理想了解jQuery常用的方法都有哪些,我们可以输出 console.dir(jQuery.fn/jQuery.prototype/$.fn...)
+
+    //6、jQuery是一个函数数据类型(类),在它的原型上包含了很多的方法,我们使用$()创建出来的实例都可以使用原型上的方法
+    //->jQuery.prototype={add:function...};
+    //$().add()
+
+    //->不仅如此,jQuery也是一个普通的对象（因为我们学过函数有三种角色：普通函数、类、普通对象），当做普通对象的时候它和var obj={}中的obj一样,也可以给它增加一些自己的属性名和属性值
+    //->jQuery.extend=function...
+    //jQuery.extend() / $.extend()
+
+
+    //->核心思想的一些总结:
+    //1、jQuery是一个函数数据类型，把它当做一个类的时候，在它的原型上(jQuery.fn=jQuery.prototype={add:function...})定义了很多的常用方法；把它当做一个普通的对象，上面也增加了很多的属性名和属性值(jQuery.extend=function...)
+    //2、$和jQuery是相同的($可以代表jQuery),它是一个函数,执行的时候传递两个参数值(selector/context),返回的结果是jQuery这个类的一个实例
+    //3、$.xxx()是调用jQuery对象中的方法；$().xxx()是调用jQuery.prototype上的方法
+</script>
+</body>
+</html>

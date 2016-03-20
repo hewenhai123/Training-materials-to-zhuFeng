@@ -1,0 +1,13 @@
+1、行内引入(强烈不推荐使用,因为不安全)
+  <div onclick="alert(100)"></div> ->给当前的div标签增加一个点击的效果,当点击的时候在页面中弹出100
+
+2、内嵌式
+<script type="text/javascript">
+    //写我们的js代码
+</script>
+
+3、外链式
+<script type="text/javascript" src="js/test.js">
+    //写JS代码,发现没有起到任何的效果
+</script>
+外链式中我们的JS代码都写在test.js文件中了,这样的话在script脚本块之间就不能再编写JS代码了,编写了也不会起到效果

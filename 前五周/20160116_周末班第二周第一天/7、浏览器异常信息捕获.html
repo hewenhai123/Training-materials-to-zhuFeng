@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //在JS中我们使用 try catch finally 来进行浏览器异常信息的捕获
+    //    try {
+    //        //<js code>
+    //    } catch (e) {
+    //        //如果上述的代码报错,会自己走到catch中执行这里的代码
+    //        //e.message存储的是当前浏览器的异常错误信息
+    //    } finally {
+    //        //我们一般不用:不管try中的代码是否报错,都会执行finally
+    //    }
+
+    //1、上面的代码出错,我们用try catch包起来,不影响下面的代码继续执行
+    //    console.log(a);//->Uncaught ReferenceError: a is not defined 一般默认的情况下,当前行代码出现异常错误信息,下面的代码就不在执行了
+    //    console.log("ok");
+
+    //    try {
+    //        console.log(a);//->这行代码执行出错,没有在浏览器中抛出红色的异常错误信息
+    //    } catch (e) {
+    //        console.log(e.message);//->a is not defined
+    //    }
+    //    console.log("ok");//->不管上面是否报错,我们这一行代码都可以正常的执行
+
+    //我即想捕获到异常信息(try catch),而且还想不让下面的代码继续执行(手动抛出异常的错误信息)
+    try {
+        console.log(a);
+    } catch (e) {
+        console.log(e.message);
+        throw new Error("当前网络繁忙~~");//->手动在浏览器中抛出一个红色的异常信息,终止浏览器的继续执行(创建Error这个类的实例)
+        //throw new ReferenceError ->引用地址错误
+        //throw new TypeError ->类别错误
+        //throw new RangeError ->范围错误
+    }
+    console.log("ok");
+
+    //2、我们可以使用try catch处理浏览器的兼容
+    //把JS代码放在try中,如果当前浏览器不兼容,一般执行的时候会报错,这样我们就可以在catch中继续用其他的代码来实现对应的功能了
+</script>
+</body>
+</html>

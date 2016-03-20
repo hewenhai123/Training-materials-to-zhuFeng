@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, span {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        #outer {
+            position: relative;
+            margin: 20px auto;
+            padding: 0 5px 0 35px;
+            width: 900px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px dashed #08BECE;
+        }
+
+        #outer span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            background: #ff3333;
+        }
+
+        #inner {
+            width: 900px;
+            height: 30px;
+            white-space: nowrap; /*强制不换行*/
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <span>#</span>
+
+    <div id="inner">
+        新版经理人论坛上线了：亲爱的用户，为了更好的提供服务，神州英才推出了全新经理人论坛平台。从即日起面向网站所有的会员朋友们开放公测！上线的社区平台，有全新的读版、读帖页样式，增添了更多的交互功能，关注用户需求和使用感受。
+    </div>
+</div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    ~function () {
+        var inner = document.getElementById("inner");
+        var innerVal = inner.innerHTML;
+
+        var timer = null;
+
+        function init() {
+            timer = window.setInterval(function () {
+                var curL = inner.scrollLeft;//->加之前
+                inner.scrollLeft = curL + 1;
+                var nowL = inner.scrollLeft;//->加之后
+
+                if (curL === nowL) {//->两个值相等说明已经到头了
+                    inner.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;" + innerVal;
+                }
+            }, 10);
+        }
+
+        init();
+
+        inner.onmouseover = function () {
+            window.clearInterval(timer);
+        };
+
+        inner.onmouseout = init;
+    }();
+</script>
+</body>
+</html>

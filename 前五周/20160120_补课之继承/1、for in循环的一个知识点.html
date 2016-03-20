@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //私有属性
+    //公有属性:在实例所属类的原型上定义的属性和方法就是公有的
+
+    //obj
+    //私有的:1、2、name、age
+    //公有的:hasOwnProperty、toString...  Object.prototype内置的方法
+
+    Object.prototype.aa = function () {
+    };//->aa也是obj的公有属性,这个是我们自定义的
+
+    var obj = {name: "秦梦娇", age: 19, 1: 100, 2: 98};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {//->为了防止循环的时候,把写在原型上的,自定义公有的属性遍历到,我们用hasOwnProperty进行检测,只有是私有的我们才进行操作
+            console.log(key);
+        }
+    }
+
+    //for in循环可以遍历一个对象中所有的属性(私有+公有),但是对于浏览器内置的属性我们是遍历不到的
+    //浏览器内置的属性是属于不可枚举的属性,而我们自己写在原型上的属性是可枚举的属性
+</script>
+</body>
+</html>

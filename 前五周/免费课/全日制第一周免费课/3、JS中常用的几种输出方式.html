@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>常用的几种输出方式</title>
+    <style type="text/css">
+        div{
+            position: absolute;
+            top:0;
+            left: 0;
+            margin: 0;
+            width: 100px;
+            height: 100px;
+            background: #ffff00;
+            border-radius: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    //1、alert("欢迎大家来到珠峰培训~~");
+    //->在页面中弹出一个框,里面展示了我们要输出的内容(它是把要输出的内容首先转换为字符串然后在输出的)
+
+    //2、document.write("我们要输出的内容")
+    //->在文档页面中直接的输出我们想要输出的内容(它是把要输出的内容首先转换为字符串然后在输出的)
+    //document.write("欢迎大家来到珠峰培训~~");
+
+    //3、console.log("我们要输出的内容")
+    //->在控制台输出日志 [所有的浏览器打开控制台都是F12]
+    //[谷歌浏览器]
+    //Elements:当前页面中的所有元素都在这 ->随时的调整我们页面中元素的样式,然后把调整好的样式直接的粘贴到我们的样式表中,这样避免了在样式表中调整的时候,还需要重新刷新页面才会看到
+    //Console:在这里可以查看我们在JS中通过console.log输出来的日志信息
+    //Sources:存储的是我们当前页面所有的CSS和JS
+    //Network:可以查看我们所有的资源请求文件(图片、数据接口)
+    //console.log("欢迎大家来到珠峰培训~~");
+
+
+    //思考题:
+    //回去后看我们第一周第21个视频 "基础课专题--页面中常用的几种输出方式(谷歌的控制台详解).wmv"
+    //console.dir
+    //console.table
+
+    //innerHTML/innerText 两个方法的意思和两者的区别
+</script>
+</body>
+</html>

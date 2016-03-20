@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -171px 0 0 -171px;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+        }
+
+        #box li {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px dashed #999;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul id="boxUl">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <!--我们都是LI-->
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>
+            <ul>
+                <li>9-1</li>
+                <li>9-2</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    var boxUl = document.getElementById("boxUl");
+
+    //1、Node:节点
+    //元素节点->HTML标签
+    //文本节点->文字 但是在标准浏览器(除了IE6~8)中会把空格和换行都当做文本节点来处理
+    //注释节点->注释
+    //document
+
+    //2、节点的特征
+    //元素节点:
+    //nodeType->1   nodeName->大写的标签名   nodeValue->null
+
+    //文本节点:
+    //nodeType->3   nodeName->#text   nodeValue->文本内容
+
+    //注释节点:
+    //nodeType->8   nodeName->#comment   nodeValue->注释内容
+
+    //document:
+    //nodeType->9   nodeName->#document   nodeValue->null
+
+
+    //3、节点之间关系的属性
+
+    //childNodes:获取所有的子节点(既有元素的,也有文本和注释的)
+    //console.log(boxUl.childNodes);
+
+    //children:获取所有的元素子节点 ->在IE6~8下我们获取的结果不完全准确
+    //console.log(boxUl.children.length);
+
+    //4、自己编写一个方法 queryChildren 获取指定元素下的所有的元素子节点(解决children在IE6~8下不完全准确的问题)
+    //curEle:我们要操作的这个元素,要获取谁下面的元素子节点,我们就把谁传递给这个形参变量
+    function queryChildren(curEle) {
+        //思路：先获取所有的子节点,然后我们在把其中的元素子节点(nodeType等于1)单独的获取到
+        var ary = [];//->先弄个容器用来存储我们需要的元素子节点
+        var allNodes = curEle.childNodes;//->获取所有的子节点
+
+        //循环遍历每一个子节点,把元素节点单独的存储到ary这个容器中
+        for (var i = 0; i < allNodes.length; i++) {
+            var cur = allNodes[i];
+            if (cur.nodeType === 1) {
+                //ary.push(cur);
+                ary[ary.length] = cur;
+            }
+        }
+        return ary;
+    }
+
+    var res = queryChildren(boxUl);
+    console.dir(res.length);
+</script>
+</body>
+</html>

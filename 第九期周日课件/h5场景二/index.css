@@ -1,0 +1,269 @@
+*{
+    margin:0;
+    padding: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#main{
+    width: 640px;
+    height: 1008px;
+    position: absolute;
+    left:50%;
+    top:0;
+    margin-left: -320px;
+    transform-origin:top;/*设置缩放的基准点是顶端的中心点*/
+    -webkit-transform-origin: top;
+}
+#loading{
+    width: 100%;
+    height: 100%;
+    background: #000;
+    position: absolute;
+    z-index: 11;
+}
+.loadBox{
+    position: absolute;
+    top:40%;
+    width: 80%;
+    height: 40px;
+    margin: 0 10%;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+}
+.progress{
+    display: block;
+    width: 0;
+    height: 40px;
+    background-image:-webkit-linear-gradient(45deg,#61bb61 25%,#72c272 50%,#61bb61 75%, #72c272 100%) ;
+    background-size:40px 40px ;
+    background-repeat: repeat-x;
+    transition:all 1s;
+    -webkit-transition: 1s;
+}
+
+#phone{
+    width: 100%;
+    height: 100%;
+    background: url(images/phoneBg.jpg) no-repeat;
+    position: absolute;
+    z-index: 10;
+    -webkit-transition: 1s;
+    transition: 1s;
+}
+.phoneName{
+    width: 262px;
+    height: 89px;
+    margin: 10% auto 0;
+    background: url(images/phoneHeadName.png) no-repeat 0 bottom;
+}
+.answer{
+    width: 520px;
+    height: 360px;
+    position: absolute;
+    left:50%;
+    margin-left: -260px;
+    bottom:0;
+    background: url(images/phoneBtn.png) no-repeat;
+}
+.listen,.listenTouch{
+    width: 170px;
+    height: 170px;
+    position: absolute;
+    left:358px;
+    top:143px;
+}
+.listen{
+    border:2px solid #0F0;
+    border-radius: 50%;
+    animation:move 1s ease-in-out infinite;
+    z-index: -1;
+}
+@keyframes move {
+    0%{
+        transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+@-webkit-keyframes move {
+    0%{
+        transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+.speaker{
+    width: 520px;
+    height:659px;
+    position: absolute;
+    left:50%;
+    bottom:0;
+    margin-left: -260px;
+    background: url(images/phoneKey.png) no-repeat;
+    transform: translate(0,659px);
+    -webkit-transform: translate(0,659px);
+    transition:1s;
+    -webkit-transition:1s;
+}
+.hangUp{
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    left:190px;
+    bottom: 37px;
+}
+
+#message{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9;
+    background: #eaeaea;
+}
+#message ul{
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+#message ul li{
+    max-width: 360px;
+    min-width: 300px;
+    padding: 25px;
+    line-height: 40px;
+    font-size: 30px;
+    background: #fff;
+    border:2px solid #cacaca;
+    margin-bottom: 30px;
+    position: relative;
+    list-style: none;
+    border-radius: 10px;
+    transform: translate(0,30px);/*默认每个li向下移动30px*/
+    -webkit-transform: translate(0,30px);
+    opacity: 0;
+    transition:1s;
+    -webkit-transition:1s;
+}
+#message ul li.left{
+    float: left;
+    left: 125px;
+}
+#message ul li.left img:nth-child(1){
+    position: absolute;
+    left:-100px;
+    top:0;
+}
+#message ul li.left img:nth-child(2){
+    position: absolute;
+    left:-10px
+}
+#message ul li.right{
+    float: right;
+    right: 125px;
+    background: #a2e45c;
+    border:2px solid #96b474;
+}
+
+#message ul li.right img:nth-child(1){
+    position: absolute;
+    right:-100px;
+    top:0;
+}
+#message ul li.right img:nth-child(2){
+    position: absolute;
+    right:-10px
+}
+.messageText{
+    width: 640px;
+    height: 88px;
+    background: url(images/messageText.png) no-repeat;
+    position: absolute;
+    left: 50%;
+    margin-left: -320px;
+    bottom:0;
+}
+
+#cube{
+    width: 640px;
+    height:100%;
+    background: url(images/cubeBg.jpg) no-repeat;
+    background-size:cover;
+    position: absolute;
+    z-index: 8;
+    perspective: 800px;/*距离800px这个物体*/
+}
+#cubeBox{
+    width: 510px;
+    height: 510px;
+    position: absolute;
+    left:50%;
+    top:50%;
+    margin-left: -255px;
+    margin-top:-255px;
+    transform-style: preserve-3d; /*3d空间里展示的*/
+    -webkit-transform-style: preserve-3d; /*3d空间里展示的*/
+    transform: scale(0.2) rotateY(-135deg) rotateX(-45deg) ;
+    transform-origin: 255px 255px -255px;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+#cubeBox li{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    list-style: none;
+}
+#cubeBox li:nth-child(1){
+    background: url(images/cubeImg1.png) no-repeat;
+    top:-510px;
+    transform-origin: bottom;
+    -webkit-transform-origin: bottom;
+    transform: rotateX(90deg);
+    -webkit-transform: rotateX(90deg);
+}
+#cubeBox li:nth-child(2){
+    background: url(images/cubeImg2.png) no-repeat;
+    top:510px;
+    transform-origin: top;
+    -webkit-transform-origin: top;
+    transform: rotateX(-90deg);
+    -webkit-transform: rotateX(-90deg);
+}
+#cubeBox li:nth-child(3){
+    background: url(images/cubeImg3.png) no-repeat;
+    left:-510px;
+    transform-origin: right;
+    -webkit-transform-origin: right;
+    transform: rotateY(-90deg);
+    -webkit-transform: rotateY(-90deg);
+}
+#cubeBox li:nth-child(4){
+    background: url(images/cubeImg4.png) no-repeat;
+    left:510px;
+    transform-origin: left;
+    -webkit-transform-origin: left;
+    transform: rotateY(90deg);
+    -webkit-transform: rotateY(90deg);
+}
+#cubeBox li:nth-child(5){
+    background: url(images/cubeImg5.png) no-repeat;
+    transform: translateZ(-510px);
+    -webkit-transform: translateZ(-510px);
+}
+#cubeBox li:nth-child(6){
+    background: url(images/cubeImg6.png) no-repeat;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+
+
+

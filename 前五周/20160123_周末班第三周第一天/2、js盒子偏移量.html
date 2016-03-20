@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        #outer {
+            margin: 50px auto;
+            padding: 50px;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+            border: 10px solid #990099;
+        }
+
+        #inner {
+            padding: 50px;
+            width: 200px;
+            height: 200px;
+            background: #ffe470;
+            border: 10px solid #990099;
+        }
+
+        #center {
+            padding: 50px;
+            width: 100px;
+            height: 100px;
+            background: #08BECE;
+            border: 10px solid #990099;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var body = document.body;
+    var outer = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+    var center = document.getElementById("center");
+
+    //1、父级元素parentNode
+    //->HTML结构中层级关系中的父级元素,和HTML结构的嵌套关系有关
+    //    console.log(outer.parentNode);//->body
+    //    console.log(inner.parentNode);//->outer
+    //    console.log(center.parentNode);//->inner
+
+    //2、父级参照物offsetParent
+    //->父级参照物是谁和HTML的层级关系(parentNode)没有必然的关系
+    //->一般情况下我们元素的父级参照物默认都是body
+
+    //->如果想改变默认的父级参照物,需要使用定位position:absolute/relative/fixed 这个三个属性哪个都可以
+
+    //    console.log(outer.offsetParent);//->body
+    //    console.log(inner.offsetParent);//->body
+    //    console.log(center.offsetParent);//->body
+
+    //    outer.style.position = "relative";
+    //    console.log(outer.offsetParent);//->body
+    //    console.log(inner.offsetParent);//->outer
+    //    console.log(center.offsetParent);//->outer
+
+    //    inner.style.position = "relative";
+    //    console.log(outer.offsetParent);//->body
+    //    console.log(inner.offsetParent);//->body
+    //    console.log(center.offsetParent);//->inner
+
+    //3、盒子的偏移量
+    //->当前元素(外边框)距离父级参照物(内边框)的距离
+    //offsetLeft/offsetTop:左偏移或者上偏移
+
+    //outer.style.position = "relative";//outer->body  inner->outer  center->outer  body->null(body没有父级参照物)
+
+    outer.style.position = "relative";
+    inner.style.position = "relative";
+    //outer->body  inner->outer  center->inner
+
+    //通过上述改变我们发现,只要元素的定位样式改变,我们的父级参照物是谁就不好判断了,在真实的项目中,我们很有可能不知道具体哪些定位哪些没有定位,而且后期的定位的样式可能还会随时的进行修改...所以,我们项目中通常获取的都是当前元素距离body的偏移量(不管body是否是它的父级参照物)
+    //jQuery->offset:获取任意元素距离body的偏移量->{top:xxx,left:xxx}把上和左的偏移都可以获取到
+
+    //获取当前元素距离body的偏移量
+    function offset(curEle) {
+        var t = curEle.offsetTop, l = curEle.offsetLeft, p = curEle.offsetParent;
+        while (p) {//->p!=null
+            //在标准的IE8浏览器中,我们的偏移量已经把边框算在内了,所以我们在相加的时候,对于IE8浏览器来说不需要再重复的累加边框了
+            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                //->不是IE8浏览器,我们把边框加上
+                t += p.clientTop;
+                l += p.clientLeft;
+            }
+
+            t += p.offsetTop;
+            l += p.offsetLeft;
+
+            p = p.offsetParent;
+        }
+        return {top: t, left: l};
+    }
+    var obj = offset(center);
+    console.log(obj);
+
+    obj = offset(inner);
+    console.log(obj);
+
+    obj = offset(outer);
+    console.log(obj);
+</script>
+</body>
+</html>

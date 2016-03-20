@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //call继承:
+    //->原理:在子类B中,把父类A当做普通的函数的执行(A原型上写的方法等都起不到作用了),然后让A执行的时候,里面的this变为B的一个实例,也就是在A函数体中写的this.xxx=xxx其实也相当于给B的实例增加了一些私有的属性(属于直接把A中的拿过来一份)...
+
+    //->call继承只能把父类的私有的属性，继承到子类的私有属性上 ->父(私有) 变为 子(私有)
+
+    function A() {
+        this.x = 100;//->也就是此时A作为一个普通函数执行,私有作用域中的this->b ->b.x=100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        //this->B的实例b
+        this.y = 200;//->b.y=200;
+
+        A.call(this);//->执行A这个方法,让里面的this关键字变为b
+    }
+    var b = new B;
+</script>
+</body>
+</html>

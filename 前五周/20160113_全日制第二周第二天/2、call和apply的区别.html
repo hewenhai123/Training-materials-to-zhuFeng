@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、call和apply的作用
+    //当call/apply执行的时候,它做了两件事情:
+    //1)让"."前面方法中的this变为第一个参数传递进来的值
+    //2)让"."前面方法执行
+
+    //2、两者区别和细节
+    //call
+    //第一个参数值是用来改变this指向的,第二个及以后的参数,是一个个的传递进来,相当于给函数执行的时候传递进来的形参的值;
+
+    //apply
+    //和call的唯一区别在于给函数传递参数值的时候:call是一个个的传递参数值的,而apply的语法要求,把需要传递的参数值放在一个数组中一起传递进去,但是也相当于一个个的给形参赋值;
+
+    //call/apply
+    //第一个参数值不传或者传递的是null/undefined,在非严格模式下this指向的都是window;在严格模式下,传递的是null,this指向null,传递的是undefined/不传,this都是undefined;
+
+    var name = "welcome to zhu feng~~";
+    var obj = {name: "珠峰培训", fn: fn};
+    function fn(num1, num2) {
+        var total = num1 + num2;
+        console.log(this, total);
+    }
+    //fn.call(100, 200);//this->100 num1=200 num2=undefined
+    //fn.call(obj, 100, 200);//this->obj num1=100 num2=200
+    //fn.call();//this->window num1=undefined num2=undefined
+    //fn.call(null);//this->window
+    //fn.call(undefined);//this->window
+
+    fn.apply(obj, [100, 200]);//this->obj num1=100 num2=200
+
+
+    //fn();//this->window
+    //obj.fn();//this->obj
+
+    //obj.fn.call(window);//this->window
+    //fn.call(obj);//this->obj
+</script>
+</body>
+</html>

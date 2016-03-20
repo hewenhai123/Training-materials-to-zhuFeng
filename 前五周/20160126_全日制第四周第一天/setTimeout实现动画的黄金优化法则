@@ -1,0 +1,91 @@
+1、使用递归思想实现setTimeout的轮询动画:在每一次执行方法的时候都重新的设置一个定时器,然后在指定时间内重新的执行当前的方法
+   问题:每一次设置的定时器,虽然不执行了,但是还存在呢,浪费性能
+
+ ->在每一次执行方法的时候首先把上一次创建的定时器清除掉
+ [案例]
+  var timer = null;
+  function move() {
+     window.clearTimeout(timer);
+     <js code>
+     timer = window.setTimeout(move, 10);
+  }
+  move();
+
+
+2、当我们的元素即将到达目标值的时候,我们经常会出现这样一个问题:走一步比目标值大,但是不走这一步还要比目标值小,这样的话,浏览器就会徘徊到底走还是不走->"边界优化"
+
+  ->我们的边界判断把步长加上:假设多走一步会不会比边界大,如果大的话,我们让其直接到边界即可...
+  [案例]
+  function move(tar) {
+     window.clearTimeout(timer);
+     var curL = utils.getCss(oDiv, "left");
+     if (curL < tar) {
+       if (curL + 7 >= tar) {//->边界判断加步长
+            utils.setCss(oDiv, "left", tar);
+            return;
+       }
+       utils.setCss(oDiv, "left", curL + 7);
+     }
+     .....
+  }
+
+3、如果我们的move方法执行的时候需要传递参数,我们可以按照如下的操作写代码:
+  [案例1]
+  function move(tar){
+     window.clearTimeout(timer);
+     <js code>
+     timer=window.setTimeout(move,10);//->这块无法传递给move参数
+  }
+  //->这样写不行,因为第二次定时器执行move方法的时候没有办法给我们的方法传递参数
+
+  [案例2]
+  function move(tar){
+     window.clearTimeout(timer);
+     <js code>
+     timer=window.setTimeout(function(){
+        move(tar);
+     },10);
+  }
+  ->这样写可以实现,但是由于作用域的累积嵌套会导致私有的作用域不进行自主销毁,浪费性能->"作用域嵌套累积问题"
+
+  [案例3]
+  ->解决这样的问题,只需要在move中在定义一个小的方法,把所有需要重复执行的动画代码放在小的方法中执行(小的方法是不需要传递参数的)
+  function move(tar){
+     var _move=function(){
+        window.clearTimeout(timer);
+        if(curL<tar){
+           ...
+        }
+        timer=window.setTimeout(_move,10);
+     };
+     _move();
+  }
+  ->这样写的话,只有move这个方法第一次形成的私有的作用域不销毁,其余每一次执行_move形成的私有作用域在代码执行完成后立即销毁
+
+
+4、按照上述的代码改完后,我们发现存在问题了:每一次执行move都会形成一个新的不销毁的私有的作用域,timer是控制动画的,但是此时的timer是每个作用域私有的变量
+   ->点击向左:形成一个不销毁的私有的作用域A,timer是正在向左的动画,操作的是oDiv这个元素
+   ->同时点击向右:形成一个新的不销毁的私有的作用域B,timer是正在向右的动画,操作的是oDiv这个元素
+   问题:一个元素既有向左走的动画,也有向右走的动画,原地徘徊了
+
+  [源代码]
+  function move(tar) {
+     var timer = null;
+     var _move = function () {
+         window.clearTimeout(timer);
+         <js code>
+         timer = window.setTimeout(_move, 10);
+     };
+     _move();
+  }
+
+  ->把timer设置为全局变量即可:因为这样的话oDiv的每一次动画用的是同一个timer,这样保证了第二个动画开始的时候,会把第一个动画清除掉,元素同时进行的只有一个动画了
+  ->但是全局变量使用多了不好,我们可以把timer设置为当前元素的自定义属性->"把定时器设置为当前元素的自定义属性,防止同一个元素同时两个动画进行"
+  function move(tar) {
+       var _move = function () {
+           window.clearTimeout(curEle.timer);
+           <js code>
+           curEle.timer = window.setTimeout(_move, 10);
+       };
+       _move();
+  }

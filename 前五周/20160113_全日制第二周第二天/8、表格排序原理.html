@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            padding: 30px;
+            width: 300px;
+            border: 1px solid #ff3333;
+            border-radius: 10px;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #990099;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>98</li>
+    <li>92</li>
+    <li>89</li>
+    <li>95</li>
+    <li>91</li>
+</ul>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+
+    //1、把类数组转换为数组 ->ary和oLis指向的是不同的堆内存空间,接下来操作的数据和oLis是没有任何的关系的
+    var ary = utils.listToArray(oLis);
+
+    //2、按照内容的从小->大进行排序
+    ary.sort(function (a, b) {
+        return parseFloat(a.innerHTML) - parseFloat(b.innerHTML);
+    });
+    //ary中此时存储的是最新的li排列顺序
+
+    //3、按照最新的排列的顺序,把li在重新的添加到页面中
+    for (var i = 0; i < ary.length; i++) {
+        var curLi = ary[i];
+        oUl.appendChild(curLi);
+    }
+</script>
+</body>
+</html>

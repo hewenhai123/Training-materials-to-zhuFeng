@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, h2 {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            -webkit-user-select: none;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 500px;
+            border: 1px dashed #999;
+        }
+
+        .box h2 {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #ff3333;
+        }
+
+        #btn {
+            margin: 10px 0 0 0;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            font-size: 24px;
+            background: #ffe470;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>1、认为张弘毅长得丑的请疯狂投票~~</h2>
+
+    <div id="btn">0</div>
+</div>
+
+<script type="text/javascript">
+    var oBtn = document.getElementById("btn");
+
+    //不行:每一次点击的时候,都会形成一个新的私有的作用域,i都是从0开始,因为i是私有的变量,所以每一次都重新给元素赋值为1,当执行完成后作用域销毁...
+    //    oBtn.onclick = function () {
+    //        var i = 0;
+    //        i++;
+    //        this.innerHTML = i;
+    //    };
+
+    //1、利用全局作用域不销毁的原理,把需要存储的i变成全局的变量,这样每一次点击操作的i++都是让全局下的i累加...
+    //    var i = 0;
+    //    oBtn.onclick = function () {
+    //        i++;
+    //        this.innerHTML = i;
+    //    };
+    //弊端:在严格的前端团队中是禁止/减少使用全局变量的,为了防止变量名冲突...
+
+    //2、我们自己创建一个不销毁的私有的作用域来保存i
+    //自执行函数执行,形成一个私有的作用域A,返回一个堆内存的地址(我们里面的小函数),并且被外面的oBtn.onclick给接收了,也说明A被占用了,那么此时的A就不能在销毁了..
+    //    oBtn.onclick = (function () {
+    //        var i = 0;
+    //        return function () {
+    //            //this->oBtn
+    //            this.innerHTML = ++i;
+    //        }
+    //    })();
+
+    //外面包起来的自执行函数执行,也会形成一个不销毁的私有的作用域A
+    //    (function () {
+    //        var i = 0;
+    //        oBtn.onclick = function () {
+    //            this.innerHTML = ++i;
+    //        };
+    //    })();
+    //弊端:又多形成了一个不销毁的私有的作用域,浪费性能
+
+    //3、利用innerHTML不仅仅可以设置内容,而且通过它还可以获取之前的内容
+    //    oBtn.onclick = function () {
+    //        this.innerHTML++;
+    //    };
+
+    //4、利用自定义属性存储我们的需要保存的值(推荐)
+    //    oBtn.zhuFeng = 0;
+    //    oBtn.onclick = function () {
+    //        this.innerHTML = ++this.zhuFeng;
+    //    };
+</script>
+</body>
+</html>

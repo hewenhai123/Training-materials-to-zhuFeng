@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>图片/数据的延迟加载-懒加载-异步加载</title>
+    <style type="text/css">
+        body, img {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            width: 300px;
+            height: 150px;
+        }
+
+        #img2 {
+            margin: 1000px auto;
+        }
+    </style>
+</head>
+<body>
+<!--浏览器首先通过src中的地址,到服务器上下载图片(需要时间,图片越大时间越长),下载完成后浏览在开始把图片进行渲染-->
+<!--
+    图片延迟加载的思路:
+    1)首先展示的是默认图(大小限制在10kb以内),在其src中存放的是默认图的地址
+    2)我们在给这个img增加一个"自定义属性trueImg",里面存放的是我们的真实图片的地址
+    [当前的img在第一屏幕]
+    我们可以在页面上所有的资源都加载完成后(window.onload)在显示真实的图片/用定时器设定一个时间,当到达时间后在加载真实的图片
+
+    [当前的img在第一屏幕以下]
+    当页面滚动到指定的区域(window.onscroll),我们的图片已经完全加载出来了,在显示真实的图片
+-->
+<img src="img/default.jpg" trueImg="img/1.jpg" id="img1"/>
+
+<img src="img/default.jpg" trueImg="img/2.jpg" id="img2"/>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //->第一张第一屏幕的图片延迟加载
+    function imgLoadFir() {
+        var imgFir = document.getElementById("img1");
+        var trueImg = imgFir.getAttribute("trueImg");
+        //imgFir.src = trueImg; ->直接这样写不好,如果真实图片的地址不存在的话,当我们设置src后,页面中显示的是一张碎图,这样的话还不如显示默认图呢
+        var oImg = new Image;//->createElement("img")创建一个新的img标签
+        oImg.src = trueImg;
+        oImg.onload = function () {//->当前的真实图片可以加载成功
+            imgFir.src = this.src;
+            //console.log("ok");//->2
+        };
+        //console.log("loading...");//->1 这个事件也是异步编程:当真实的图片加载的时候,需要一段时间才能加载完成,在这个阶段内,我们不等,继续执行下面的代码...
+    }
+    window.setTimeout(imgLoadFir, 1000);
+
+
+    //->第二张图片的延迟加载(不在第一屏幕)
+    //图片完全加载出来条件:图片底边框距离body的上偏移<=浏览器底边框距离body的上偏移
+    function imgLoadLast() {
+        var imgLast = document.getElementById("img2");
+        if (imgLast.isLoad) return;//->如果图片已经加载过了,我们就不在重新的进行加载,下面的代码就可以不在执行了
+
+        var imgT = utils.offset(imgLast).top + imgLast.offsetHeight;//->图片底边框距离body的上偏移=上边框距离body的偏移+本身的高度
+
+        var winT = utils.win("clientHeight") + utils.win("scrollTop");//->浏览器底边框距离body的上偏移=一屏幕的高度+滚动条卷去的高度
+
+        if (imgT <= winT) {
+            console.log("loading...");
+            var trueImg = imgLast.getAttribute("trueImg");
+            var oImg = document.createElement("img");
+            oImg.src = trueImg;
+            oImg.onload = function () {
+                imgLast.src = this.src;
+                //->为了防止重复加载,我们用一个自定义属性进行判断
+                imgLast.isLoad = true;
+            }
+        }
+    }
+    window.onscroll = imgLoadLast;
+</script>
+</body>
+</html>

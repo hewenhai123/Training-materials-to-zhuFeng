@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //如何查找当前作用域的上一级作用域?
+    //当前作用域的上级作用域是谁，和函数在哪执行没有任何的关系，取决于当前函数所对应的内存空间是在那个作用域下定义的，那么当前的上级作用域就是谁
+
+    //    function fn() {
+    //
+    //    }
+    //    fn();//->执行形成一个私有的作用域,它的上级作用域是window
+
+    //    var num = 10;
+    //    function fn() {
+    //        var num = 100;
+    //        return function () {
+    //            console.log(num);
+    //        }
+    //    }
+    //    var f = fn();
+    //    f();//->虽然f是在全局作用域下执行的,但是上级作用域和在哪执行没有关系,f对应的堆内存是xxxfff111,是在fn这个里面定义的,所以它的上级作用域是fn ->100
+
+    //    var num = 10;
+    //    function fn() {
+    //        num = 100;//->让全局下的num变为了100
+    //        return function () {
+    //            console.log(num);
+    //        }
+    //    }
+    //    var f = fn();
+    //    f();//->100
+    //    console.log(num);//->100
+</script>
+</body>
+</html>

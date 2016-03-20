@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--内嵌式:把样式写在内嵌的样式表中-->
+    <style type="text/css">
+        div {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+    <!--外链式:通过link把外部的样式文件导入进来-->
+    <!--<link type="text/css" rel="stylesheet" href="css/test.css"/>-->
+
+    <!--导入式-->
+    <style type="text/css">
+        @import "css/test.css";
+    </style>
+</head>
+<body>
+<!--
+一个页面是由三部分组成的：
+    HTML(超文本标记语言 XHTML->更严谨的HTML  DHTML->动态展示的HTML)
+    CSS(层叠样式表)
+    JavaScript(轻量级的脚本编程语言)
+-->
+<!--行内样式:把样式写在标签的style里面-->
+<div style="background: red;" onclick="alert(100)">welcome to 珠峰培训~~</div>
+
+<!--内嵌式引入JS-->
+<script type="text/javascript">
+    //写我们的js代码
+    alert("珠峰培训!!");
+</script>
+
+<!--外链式引入JS-->
+<script type="text/javascript" src="js/test.js">
+    //编写的JS代码都不起作用
+    alert("2015");
+</script>
+</body>
+</html>

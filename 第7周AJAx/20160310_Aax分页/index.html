@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训Ajax分页</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        span {
+            display: block;
+        }
+
+        .box {
+            margin: 10px auto;
+            padding: 10px;
+            width: 600px;
+            border: 1px solid #2B93D2;
+            overflow: hidden;
+
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px 0 #ccc;
+        }
+
+        .box h2 {
+            height: 35px;
+            background: #2B93D2;
+            overflow: hidden;
+        }
+
+        .box h2 span {
+            float: left;
+            width: 200px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        .box .dataList {
+            height: 300px;
+        }
+
+        .box .dataList li {
+            height: 30px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        /*使用CSS3实现奇数行和偶数行变颜色*/
+        .box .dataList li:nth-child(even) {
+            background: #ccc;
+        }
+
+        .box .dataList li:hover {
+            background: #98E0E6;
+        }
+
+        .box .dataList li:active {
+            background: #6D84B4;
+        }
+
+        .box .dataList li span {
+            float: left;
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .box .page {
+            margin-top: 10px;
+            float: right;
+            overflow: hidden;
+        }
+
+        .box .page div, .box .page ul, .box .page input {
+            float: left;
+        }
+
+        .box .page div {
+            margin-left: 5px;
+            width: 45px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #FF5500;
+        }
+
+        .box .page ul {
+            margin-left: 5px;
+            overflow: hidden;
+        }
+
+        .box .page ul li {
+            float: left;
+            margin-left: 5px;
+            width: 20px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #FF5500;
+        }
+
+        .box .page ul li.bg {
+            background: #2B93D2;
+        }
+
+        .box .page input {
+            margin-left: 5px;
+            width: 40px;
+            height: 18px;
+            text-align: center;
+            border: 1px solid #FF5500;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <!--分页表头-->
+    <h2><span>学号</span><span>性别</span><span>分数</span></h2>
+
+    <!--分页列表-->
+    <ul class="dataList" id="dataList">
+
+    </ul>
+
+    <!--分页按钮-->
+    <div class="page" id="page">
+        <div class="fir">首页</div>
+        <div class="pre">上一页</div>
+        <ul id="pageList">
+
+        </ul>
+        <div class="next">下一页</div>
+        <div class="last">尾页</div>
+        <input type="text" class="goTo" id="inputTo"/>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var $ajax = function (url, callback) {
+        var xhr = new XMLHttpRequest;
+        //->判断传递进来的URL是否存在?,存在的话我们使用&_=,没有问号的话,我们使用?_=
+        url.indexOf("?") > -1 ? url += "&_=" + Math.random() : url += "?_=" + Math.random();
+        xhr.open("get", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+                var con = xhr.responseText;
+                con = JSON.parse(con);
+                typeof callback === "function" ? callback(con) : null;
+            }
+        };
+        xhr.send(null);
+    };
+
+    var page = 1, count = 10, totalPage = 0;
+
+    //->开始加载页面的时候,首先把第一页的数据请求回来,然后分别的把第一页的内容和分页页码进行动态绑定
+    $ajax("/getInfo?count=" + count + "&page=" + page, function (con) {
+        bindList(con.list);
+
+        totalPage = con.totalPage;
+        bindPage(totalPage);
+
+        changePage();
+    });
+
+    //->绑定列表的数据
+    function bindList(data) {
+        var str = "";
+        for (var i = 0; i < data.length; i++) {
+            var cur = data[i];
+            var sex = cur.sex === 1 ? "男" : "女";
+            str += "<li num='" + cur.num + "'>";
+            str += "<span>" + cur.num + "</span>";
+            str += "<span>" + sex + "</span>";
+            str += "<span>" + cur.score + "</span>";
+            str += "</li>";
+        }
+        var dataList = document.getElementById("dataList");
+        dataList.innerHTML = str;
+
+        var oLis = dataList.getElementsByTagName("li");
+        for (var i = 0; i < oLis.length; i++) {
+            oLis[i].onclick = function () {
+                //window.location.href = "detail.html"; //->在当前窗口打开新的页面
+                window.open("detail.html?num=" + this.getAttribute("num"));//->在一个新的窗口打开新页面
+            }
+        }
+    }
+
+    //->绑定分页页码数据
+    function bindPage(totalPage) {
+        var str = "";
+        for (var i = 1; i <= totalPage; i++) {
+            str += "<li>" + i + "</li>";
+        }
+        document.getElementById("pageList").innerHTML = str;
+    }
+
+    //->让当前页的页码选中
+    function changePage() {
+        var oLis = document.getElementById("pageList").getElementsByTagName("li");
+        for (var i = 0; i < oLis.length; i++) {
+            oLis[i].className = (i + 1) == page ? "bg" : null;
+        }
+    }
+
+
+    //->用事件委托实现我们的分页逻辑
+    document.getElementById("page").onclick = function (e) {
+        e = e || window.event;
+        var tar = e.target || e.srcElement;
+
+        //->说明点击的是每一个LI页码
+        if (tar.tagName.toLowerCase() === "li") {
+            page = Number(tar.innerHTML);
+            getInfoModel();
+            return;
+        }
+
+        //->fir:首页 pre:上一页 next:下一页 last:尾页
+        if (tar.className === "fir") {
+            page = 1;
+            getInfoModel();
+            return;
+        }
+
+        if (tar.className === "last") {
+            page = totalPage;
+            getInfoModel();
+            return;
+        }
+
+        if (tar.className === "pre") {
+            if (page == 1) {
+                return;
+            }
+            page--;
+            getInfoModel();
+            return;
+        }
+
+        if (tar.className === "next") {
+            if (page == totalPage) {
+                return;
+            }
+            page++;
+            getInfoModel();
+            return;
+			
+        }
+    };
+
+    //->文本框输入内容跳转
+    document.getElementById("inputTo").onkeyup = function (e) {
+        e = e || window.event;
+        if (e.keyCode === 13) {
+            //->按下的是Enter键
+            var val = this.value.replace(/(^ +| +$)/g, "");
+
+            if (isNaN(val)) {//->输入的不是数字,我们认为是无效的操作
+                this.value = "";
+                return;
+            }
+
+            if (val < 1) {
+                page = 1;
+                this.value = "1";
+            } else if (val > totalPage) {
+                page = totalPage;
+                this.value = totalPage;
+            } else {
+                page = Number(val);
+            }
+            getInfoModel();
+        }
+    };
+
+    function getInfoModel() {
+        $ajax("/getInfo?count=" + count + "&page=" + page, function (con) {
+            bindList(con.list);
+            changePage();
+        });
+    }
+</script>
+</body>
+</html>

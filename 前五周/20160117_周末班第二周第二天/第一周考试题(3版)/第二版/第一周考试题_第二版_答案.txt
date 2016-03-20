@@ -1,0 +1,6 @@
+1¡¢undefined   undefined
+2¡¢'Öé·å' 5000    'Öé·å' undefined 
+3¡¢{age: 5000}    {name: "ÖĞ¹ú", age: 7}
+4¡¢15  33  48  100
+5¡¢4  5  14  22
+6¡¢true 20 NaN Object

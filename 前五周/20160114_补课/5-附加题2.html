@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var i = 10;
+    function fn() {
+        return function (n) {
+            console.log(n + (++i));
+        }
+    }
+    var f = fn();
+    f(20);//->31
+    fn()(20);//->32
+    fn()(30);//->30+(++i) window.i=13 30+13->43
+    f(30);//->30+(++i) window.i=14 30+14->44
+</script>
+</body>
+</html>

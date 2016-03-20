@@ -1,0 +1,3 @@
+数组及常用的方法 (含义、参数、返回值、原有数组是否改变)
+字符串、Math、Date常用的方法
+DOM常用的方法(获取的方法、节点nodeType...、节点关系的属性childNodes...、操作元素的方法createElements...)

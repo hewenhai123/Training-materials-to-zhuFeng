@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <li>
+        <ul>
+            <li>第二级</li>
+            <li>第二级</li>
+        </ul>
+    </li>
+    <li></li>
+    <li></li>
+    <div></div>
+    <div></div>
+    <p></p>
+
+    <p></p>
+</ul>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+
+    //console.log(oUl.getElementsByTagName("li"));//->getElementsByTagName获取当前元素下所有的li(不管是儿子级还是孙子级...都能获取到)
+
+    //console.log(oUl.childNodes);//->所有的子节点
+    //console.log(oUl.children);//->所有的元素子节点 在IE6~8中获取的不准确
+
+    //获取当前元素下所有的元素子节点
+    //->思路:首先获取所有的子节点,在遍历的过程中,把所有的元素子节点单独的筛选出来
+    function children(curEle, tag) {
+        var nodeList = curEle.childNodes, ary = [];
+        for (var i = 0; i < nodeList.length; i++) {
+            var curNode = nodeList[i];
+            if (curNode.nodeType === 1) {
+                if (typeof tag !== "undefined") {
+                    if (curNode.tagName.toLowerCase() === tag.toLowerCase()) {
+                        ary[ary.length] = curNode;
+                    }
+                } else {
+                    ary[ary.length] = curNode;
+                }
+            }
+        }
+        return ary;
+    }
+
+    var res = children(oUl, "div");
+    console.log(res);
+
+
+</script>
+
+
+</body>
+</html>

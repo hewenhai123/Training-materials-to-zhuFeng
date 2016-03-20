@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+        }
+
+        html, body {
+            width: 100%;
+        }
+
+        #timeBox {
+            margin: 10px auto;
+            width: 50%;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px dashed green;
+            /*CSS3属性*/
+            border-radius: 50px; /*盒子圆角*/
+            box-shadow: 3px 3px 10px 0 lightcoral; /*盒子阴影*/
+            background: -webkit-linear-gradient(top left, lightblue, lightcoral, lawngreen); /*背景颜色渐变 从左上角开始按照三个颜色逐步的渐变*/
+        }
+    </style>
+</head>
+<body>
+<div id="timeBox"></div>
+
+<script type="text/javascript">
+    //不足十位在前面补充零
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+
+    function getNowTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();//0-6
+        var weekStr = "日一二三四五六";
+
+        return year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + weekStr[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+
+
+    var timeBox = document.getElementById("timeBox");
+    timeBox.innerHTML = getNowTime();//->把方法执行的返回结果(我们当前时间的字符串)赋值给#timeBox这个盒子
+
+    //用定时器实现自己运动
+    window.setInterval(function () {
+        timeBox.innerHTML = getNowTime();
+    }, 1000);
+</script>
+</body>
+</html>

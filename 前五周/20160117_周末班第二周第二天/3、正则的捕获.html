@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //正则的修饰符:i、m、g
+    //g(global):全局匹配
+    //i(ignoreCase):忽略大小写进行匹配
+    //m(multiline):匹配换行
+
+    //1、exec
+    //1)首先验证当前的字符串是否和正则匹配,如果不匹配,捕获的结果是null;
+    //2)如果匹配,接下来把符合正则的内容捕获到
+    //->结果是一个数组
+    //数组中的第一项是捕获的内容
+    //index是捕获内容开始的索引
+    //input是捕获的原始字符串
+
+    //2、执行一次exec只把第一个和正则匹配的捕获到;但是在默认的情况下,我们执行第二次捕获的内容还是第一个匹配的; ->正则捕获的"懒惰性"
+    //->reg.lastIndex:下一次正则捕获的开始查找的索引位置 ->正则的懒惰新就是因为默认情况下lastIndex值都是0,我们不管执行几次exec,都是从字符串的开始位置查找,那么每一次捕获到的都是第一个符合的内容
+
+    //->如何解决正则的懒惰性?->在正则末尾增加修饰符g
+    //    var reg = /\d+/g;//->new RegExp("\\d+", "g");
+    //    var str = "zhufeng2015peixun2016,2017 is good year,2018 is good good year~~";
+    //    var res = reg.exec(str);
+    //    console.log(res);//->["2015"...]
+    //
+    //    console.log(reg.lastIndex);//->11
+    //    res = reg.exec(str);
+    //    console.log(res);//->["2016"...]
+
+    //想要捕获一个字符串中所有和正则匹配的,我们首先需要加一个全局修饰符g,解决捕获的懒惰性,然后想要捕获几次就执行几次exec(可以用while循环)
+    //    var reg = /\d+/g;
+    //    var str = "zhufeng2015peixun2016,2017 is good year,2018 is good good year~~";
+    //    var ary = [];
+    //    var res = reg.exec(str);
+    //    while (res) {//->res!==null
+    //        ary[ary.length] = res[0];
+    //        res = reg.exec(str);
+    //    }
+    //    console.log(ary);
+
+    //其实生活没有这么麻烦,我们需要简单的处理?
+    //    var reg = /\d+/g;
+    //    var str = "zhufeng2015peixun2016,2017 is good year,2018 is good good year~~";
+    //    var ary = str.match(reg);//->exec是正则方法 reg.exec(str) ->match是字符串的方法 str.match(reg) 都是一个意思:把所有和正则相匹配的都捕获到(前提条件,正则中必须加全局修饰符g)
+    //    console.log(ary);//->["2015", "2016", "2017", "2018"]
+
+
+    //下述是分析过程:
+    //    //console.log(reg.lastIndex);//->0
+    //    var res = reg.exec(str);
+    //    console.log(res);//->["2015", index: 7, input: "zhufeng2015peixun2016"]
+    //
+    //    //console.log(reg.lastIndex);//->0 第一次捕获完成后,我们的lastIndex还是0,那么第二次捕获的时候还是从字符串开始位置查找
+    //    //reg.lastIndex = 11;//->我们手动修改lastIndex的值是起不到任何的作用的
+    //
+    //    res = reg.exec(str);
+    //    console.log(res);//->["2015", index: 7, input: "zhufeng2015peixun2016"]
+
+    //3、正则捕获除了懒惰性以外还有贪婪性->每一次捕获的时候是按照当前匹配最长的结果捕获的,例如：2和2015都符合\d+,但是我们捕获的是"2015"而不是"2"
+    //    var reg = /\d+/g;
+    //    var str = "zhufeng2015";
+    //    console.log(str.match(reg));//->["2015"]
+
+    //解决贪婪性?->在量词元字符后面加一个?,代表取消捕获时候的贪婪性;
+    //    var reg = /\d+?/g;
+    //    var str = "zhufeng2015";
+    //    console.log(str.match(reg));//->["2", "0", "1", "5"]
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- saved from url=(0175)http://localhost:63342/%E7%AC%AC%E4%B9%9D%E6%9C%9F/20160123_%E5%91%A8%E6%9C%AB%E7%8F%AD%E7%AC%AC%E4%B8%89%E5%91%A8%E7%AC%AC%E4%B8%80%E5%A4%A9/2%E3%80%81%E4%BC%AA%E7%B1%BB.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, p {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        #p1 {
+            margin: 20px auto;
+            width: 50%;
+            height: 35px;
+            line-height: 35px;
+            background: #ffe470;
+        }
+
+        /*伪类:通过CSS样式给它伪造出来一块内容(在HTML页面标签中不存在) 我们伪造出来的东西默认是行内标签*/
+
+        #p1::before {
+            content: "#我是在前面伪造出来的#";
+            color: lightcoral;
+        }
+
+        #p1::after{
+            content: "#我是在后面伪造出来的#";
+            color: lightcoral;
+        }
+
+    </style>
+</head>
+<body>
+<p id="p1">欢迎大家来到珠峰培训~~</p>
+
+
+</body></html>

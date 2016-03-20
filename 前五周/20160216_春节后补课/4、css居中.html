@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        #box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+
+            width: 200px;
+            height: 200px;
+            background: #008000;
+        }
+
+        #mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+
+            padding: 20px;
+            width: 1000px;
+            height: 400px;
+            background: #08BECE;
+        }
+    </style>
+</head>
+<body>
+<!--<div id="box"></div>-->
+<div id="mark">最简单的去重方法， 实现思路：新建一新数组，遍历传入数组，值不在新数组就加入该新数组中；注意点：判断值是否在数组的方法“indexOf”是ECMAScript5
+    方法，IE8以下不支持，需多写一些兼容低版本浏览器代码，源码如下：
+</div>
+</body>
+</html>

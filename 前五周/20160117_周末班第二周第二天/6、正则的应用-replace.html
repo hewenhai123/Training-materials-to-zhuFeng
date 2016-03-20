@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、实现字符串的替换我们使用replace方法
+
+    //var str = "zhufeng2015zhufeng2016";
+    //str = str.replace("zhufeng", "珠峰");
+    //console.log(str);//->"珠峰2015zhufeng2016" 在不使用正则表达式的情况下,我们执行一次replace只能替换一次
+
+    //str = str.replace("zhufeng", "珠峰").replace("zhufeng", "珠峰");
+    //console.log(str);//->"珠峰2015珠峰2016"
+
+    //var str = "zhufeng2015zhufeng2016";
+    //把zhufeng替换成zhufengpeixun
+    //str = str.replace("zhufeng", "zhufengpeixun").replace("zhufeng", "zhufengpeixun");
+    // ->"zhufengpeixun2015zhufeng2016"
+    // ->"zhufengpeixunpeixun2015zhufeng2016"
+    // ->有些时候执行多次也实现不了我们的需求,此时我们就要使用正则了
+
+    //str = str.replace(/zhufeng/g, "zhufengpeixun");
+    //console.log(str);//->"zhufengpeixun2015zhufengpeixun2016"
+
+
+    //2、replace在项目中我们一般都是基于正则来替换的
+    //->str.replace(reg,newStr)
+    //->原理:先让正则在字符串中进行匹配和捕获,把正则每一次捕获到的内容,替换成我们新的内容
+    var str = "zf2015zf2016";
+    //    str = str.replace(/zf/g, "珠峰");
+    //    console.log(str);//->"珠峰2015珠峰2016"
+
+    //1)匿名函数执行多少次?->我们正则在该字符串中捕获多少次,匿名函数就执行多少次,例如：当前案例中我们的正则在字符串中捕获两次,所以匿名函数执行两次
+
+    //2)匿名函数中的参数是什么?->每一次捕获都要执行一次匿名函数,不仅仅执行这个函数,而且还传递了参数的值:
+    //通过分析arguments发现,传递进来的值和每一次通过exec捕获得到的结果是一样的
+    //第一项是当前正则捕获的内容
+    //第二项是当前捕获内容的开始索引
+    //第三项是原始字符串
+
+    //3)匿名函数中的返回中是用来做什么的?
+    //->我们return的是啥,相当于把当前正则捕获的内容替换成啥,例如:
+    //第一捕获,执行匿名函数函数,把捕获的内容传递进来,捕获的内容是"zf",我们返回的是"珠峰",相当于让"珠峰"把开始的"zf"进行了替换...
+    //    str = str.replace(/zf/g, function () {
+    //        return "珠峰";
+    //    });
+    //->这个操作其实就是我们str = str.replace(/zf/g, "珠峰")内核实现的原理
+
+
+    //    var str = "459876";
+    //    var ary = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    //    var reg = /\d/g;
+    //    str = str.replace(reg, function () {
+    //        //console.dir(arguments);
+    //        //1 ->"4" ->"肆" ary[4]
+    //        //2 ->"5" ->"伍" ary[5]
+    //        var val = parseFloat(arguments[0]);
+    //        return ary[val];
+    //    });
+    //    console.log(str);//->"肆伍玖捌柒陆"
+
+
+    //实战2：模板引擎实现的简易原理
+    //    var ary = ["令狐冲", "25", "china", "独孤九剑"];
+    //    var str = "my name is {0}，my age is {1}，i com from {2}，i can do {3}~~";
+    //    //->"my name is 令狐冲，my age is 25，i com from china，i can do 独孤九剑~~";
+    //    var reg = /{(\d)}/g;
+    //    str = str.replace(reg, function () {
+    //        //arguments[0] ->"{0}"
+    //        //arguments[1] ->"0"
+    //        return ary[arguments[1]];
+    //    });
+    //    console.log(str);//->"my name is 令狐冲，my age is 25，i com from china，i can do 独孤九剑~~"
+</script>
+</body>
+</html>

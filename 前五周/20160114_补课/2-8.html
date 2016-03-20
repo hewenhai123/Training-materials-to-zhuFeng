@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var a = 4;
+    //    function b(x, y, a) {
+    //        alert(a);//->3
+    //        arguments[2] = 10;
+    //        //->arguments存放的是形参集合,[2]是第三个形参的值
+    //        //在非严格模式下,我们的arguments和形参是映射关系的->一个改变,另外一个也会跟着发生改变,例如：arguments[2] = 10;把第三个参数的值修改为10,所以形参a的值也变为了10
+    //        alert(a);//->10
+    //
+    //        a = 100;//->把形参的值修改为100,由于映射的关系,arguments[2]也会跟着变为100
+    //        alert(arguments[2]);//->100
+    //    }
+    //    a = b(1, 2, 3);//->把b函数执行的返回结果赋值给全局变量a,但是在b函数中没有写return,所以默认的返回值是undefined->window.a=undefined;
+    //    alert(a);//->undefined
+
+    "use strict";//->告诉浏览器的我们的JS代码采用严格模式(JS代码更加的严谨一些)
+    var a = 4;
+    function b(x, y, a) {
+//        alert(a);//->3
+//        arguments[2] = 10;
+//        //在严格模式下,我们的arguments和形参是没有映射关系的->两者的操作互不影响
+//        alert(a);//->3
+
+        a = 100;
+        alert(arguments[2]);//->3
+        alert(a);//->100
+    }
+    a = b(1, 2, 3);
+    alert(a);//->undefined
+</script>
+</body>
+</html>

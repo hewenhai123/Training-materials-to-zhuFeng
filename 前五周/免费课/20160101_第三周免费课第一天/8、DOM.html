@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="w1" name="zhufeng"></div>
+<div class="w1 w2"></div>
+<div class="w2"></div>
+<div></div>
+<div name="zhufeng"></div>
+<script type="text/javascript">
+    //DOM:document object model 文档对象模型 ->里面提供了JS操作页面上元素的相关的属性和方法
+
+    //1、获取页面中元素的方法
+
+    //1)document.getElementById("") ->在整个文档中,通过元素的ID获取这个元素
+    //document是限定了获取的范围,我们称它为上下文(context)
+    //getElementById这个方法的上下文只能是document,因为一个页面中理论上ID是唯一的,不能重复的
+    //但是一旦不小心ID重复了,我们获取的也只是第一个元素
+
+    //2)context.getElementsByTagName ->在指定的范围内(context)通过元素的标签名来获取一组元素集合
+
+    //3)context.getElementsByClassName ->在指定的范围内(context)通过元素的样式类名来获取一组元素集合
+    //console.log(document.getElementsByClassName("w1"));//->把所有具有w1这个样式类名的元素都获取到
+    //在IE6~8下是不兼容这个方法的(正式课第三周带着大家写一套兼容的办法->"get")
+
+    //4)document.getElementsByName ->在整个文档中(它的上下文也只能是document)通过元素的name属性的值获取一组元素
+    //console.log(document.getElementsByName("zhufeng"));//->把页面中所有name='zhufeng'的都获取到
+    //在IE浏览器中,只对表单元素起作用,div这类的非表单元素是获取不到的->这个方法通常只用来处理表单元素
+
+    //5)document.documentElement ->获取整个HTML
+    //document.body ->获取整个body
+
+    //获取当前浏览器屏幕的宽高
+    //var curW = document.documentElement.clientWidth || document.body.clientWidth;
+    //var curH = document.documentElement.clientHeight || document.body.clientHeight;
+
+
+    //6)context.querySelector/context.querySelectorAll ->通过选择器来获取一个/多个元素
+    //    document.querySelector("#div1") ->把ID为div1的元素获取到
+    //    document.querySelectorAll(".w1") ->把类名有w1的所有元素获取到
+    //    document.querySelectorAll("div") ->把标签名是div的都获取到
+    //    document.querySelectorAll("div[name='zhufeng']") ->把div中name是zhufeng的都获取到
+    //    document.querySelectorAll("div:nth-child(3)") 把div中的第三个div获取到
+    //......
+    //常用的CSS选择器它都支持
+    //在E6~8下不兼容,这两个方法是移动端常用的方法
+</script>
+</body>
+</html>

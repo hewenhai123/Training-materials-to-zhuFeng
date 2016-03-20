@@ -1,0 +1,22 @@
+什么是url？
+统一资源定位符
+这个资源在整个web上的唯一地址信息
+?:分隔符，用于分隔请求路径和参数信息的，一个url上最多只能存在一个问号
+&:连接符，用于连接多个参数信息的，多个参数之间必须用&来分隔，不能使用其他分隔符
+#:锚点信息，不往服务器传输锚点信息(因为他是给浏览器看的，不是给服务器看的)
+angular react avalon
+注意：当url传的参数中含有非英文字符时，需要格式化成URI的格式。
+encode：encodeURI() encodeURIComponent()
+decode: decodeURI() decodeURIComponent()
+warn:前面的方法不会格式化url组件(? & # / :)而后面的方法会格式化这些URL组件
+http://username:password@www.baidu.com:80/path/image.png?address=北京name=zyt&age=18...#a
+1、<scheme://>url方案，http、https、smtp、ftp、Telnet
+2、<hostname> 域名
+3、<:port>端口 http默认为80、https默认为443
+4、<path>路径
+5、<param>参数信息
+6、<hash>锚点信息
+
+什么是URI？
+URI是统一资源标识符，它是URL的一个超集。
+URI包含URL和URN(统一资源名称)

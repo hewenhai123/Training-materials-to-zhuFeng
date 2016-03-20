@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JSONP</title>
+</head>
+<body>
+<!--<script type="text/javascript" src="http://note.youdao.com/share/bower_components/jquery/dist/jquery.min.js"></script>-->
+<script type="text/javascript">
+    //->JSONP是最常用的跨域请求(非同源策略)技术  ->更多的跨域方式:http://note.youdao.com/share/web/file.html?id=d4fd79b9bdeb3cb98133a2f443bbe081&type=note
+
+    //->所有的跨域请求数据(JSONP)都需要后台特殊进行处理,给予支持才可以
+
+    //-><script>既可以引入自己的JS文件,也可以引入别人的JS文件"script不存在域的概念"
+    //-><img> <iframe> ...和<script>一样也可以引入别人的文件
+
+    //->JSONP就是利用了<script>不存在域的概念实现的:把我们需要请求的数据地址放在<script>的src属性中,去请求数据
+    //->JSONP请求都是GET请求方式,需要传递给服务器的内容只能通过URL问号传参传递过去
+    //->前端需要和后台协商:
+    //1)地址后面的参数需要传递哪些,每一个参数什么意思
+    //->我们需要把自己写的方法传递给后台,有的要求是?callback=方法名,有的要求是cb=方法名,到底是callback还是cb还是wenhai...需要我们和后台协商制定
+
+    function wangHaoYu(data) {
+        //->定义的形参data就是我们想要的数据
+        console.log(data);
+    }
+
+    //->后台接收到我们的请求后,准备数据(JSON格式),然后执行我们传递过去的wangHaoYu这个方法,并且把准备好的数据传递给wangHaoYu这个函数
+</script>
+<script type="text/javascript"
+        src="http://matchweb.sports.qq.com/kbs/list?callback=wangHaoYu&columnId=100000&startTime=2016-02-28&endTime=2016-03-05"></script>
+
+
+<script type="text/javascript">
+    function fn(data) {
+        console.log(data);
+    }
+</script>
+<script type="text/javascript" src="http://suggestion.baidu.com/su?wd=zhufeng&cb=fn"></script>
+</body>
+</html>

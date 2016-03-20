@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //后台语言 C# .net java  php...
+    //    int num=12;
+    //    float num=12.3;
+    //    double num=12.34;
+    //    String str
+    //    Array  ary
+    //    Object obj
+    //    Boolean boo
+
+    //前端的变量是松散类型的 ->不管你存储的是什么样的数据类型值,定义变量都用var
+    //    var num = 12;
+    //    var str = "珠峰";
+    //    var boo = true;
+    //    var n = null;
+    //    var u = undefined;
+    //
+    //    var obj = {name: "珠峰", age: 7};
+    //    var ary = [12, 2, 34];
+    //    var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?$/;
+    //    var fn = function () {
+    //
+    //    };
+
+    //1、JS中的数据类型分为
+    //基本数据类型(值类型)
+    //number(数字)、string(字符串)、boolean(布尔)、null(空)、undefined(未定义)
+
+    //引用数据类型
+    //对象数据类型:{}对象 []数组  /^$/正则 ...
+    //函数数据类型
+
+    //2、JS中数据类型的检测的方式
+    //typeof ->用来检测数据类型的运算符
+    //1)语法: typeof value
+    //返回值首先是一个字符串,其次字符串里面包含了我们对应的数据类型,例如:"number"、"boolean"、"string"、"undefined"、"object"、"function"
+    //console.log(typeof 12);//->"number"
+    //console.log(typeof true);//->"boolean"
+
+    //2)注意点
+    //typeof null ->"object"  因为null是空对象指针
+    //用typeof来检测对象数据类型中具体细分的那几个值(对象、数组、正则...)返回的结果都是"object" ->局限性:typeof不能具体的细分对象数据类型中的值,比如用它不能区分是数组还是正则,因为返回的都是"object"
+
+    //3)
+    //var num = 13;
+    //console.log(typeof num);//->后面放到的是一个变量名而不是一个值,它的意思是:把num这个变量存储的值13拿出来检测其数据类型 ->"number"
+
+    //腾讯面试题:
+    //console.log(typeof typeof typeof [12, 13]);//->"string"
+    //typeof [12, 13] ->"object"
+    //typeof "object" ->"string"
+    //typeof "string" ->"string"
+    //如果遇到两个及以上typeof同时检测的时候,最后的结果肯定都是"string",因为typeof返回的值不管是啥,首先都是一个字符串
+
+    //instanceof
+    //constructor
+    //Object.prototype.toString.call()
+
+
+</script>
+</body>
+</html>

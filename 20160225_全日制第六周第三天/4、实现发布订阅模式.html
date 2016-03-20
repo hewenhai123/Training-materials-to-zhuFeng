@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //click、mouseove、mouseout...这些都是内置的行为
+
+    //->给当前元素的某一个行为(自定义的行为,自己起的名字)关联一些不相关的方法->做计划:当前这个自定义行为发生的之后,需要执行那些方法,我们都先把它们记录下来->订阅
+    function on(curEle, type, fn) {
+        if (!curEle["book" + type]) {
+            curEle["book" + type] = [];
+        }
+        var ary = curEle["book" + type];
+        for (var i = 0; i < ary.length; i++) {
+            if (ary[i] === fn) {
+                return;
+            }
+        }
+        ary.push(fn);
+    }
+
+    //->fire:把上述我们制定的计划表发布出去,并且雇一个秘书随时关注这个计划,当计划发生(自定义这个行为发生的时候),我们把之前写在纸上的计划依次的执行
+    function fire(type, e) {
+        //->this需要是当前操作的这个元素
+        var ary = this["book" + type];
+        if (ary && ary instanceof Array) {
+            for (var i = 0; i < ary.length; i++) {
+                var tempFn = ary[i];
+                if (typeof tempFn === "function") {
+                    tempFn.call(this, e);
+                }
+            }
+        }
+    }
+
+
+    function 耿老师吃鸡蛋灌饼() {
+
+    }
+
+    on("珠峰培训", "上市", 耿老师吃鸡蛋灌饼);
+    on("珠峰培训", "上市", 秦梦娇吃饭);
+    on("珠峰培训", "上市", 赵守涛跳舞);
+    on("珠峰培训", "上市", 何文海掏钱);
+
+    on("珠峰培训", "游玩", 赵守涛跳舞);
+    on("珠峰培训", "游玩", 何文海掏钱);
+
+
+</script>
+</body>
+</html>

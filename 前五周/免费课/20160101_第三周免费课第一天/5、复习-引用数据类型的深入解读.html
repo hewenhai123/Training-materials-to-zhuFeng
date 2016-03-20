@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            /*让一个盒子在整个页面居中的位置*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    //可以改变背景颜色
+    //var oDiv = document.getElementById("div1");
+    //oDiv.style.backgroundColor = "green";
+
+    //可以改变背景颜色
+    //var oDivSty = document.getElementById("div1").style;
+    //oDivSty.backgroundColor = "yellow";
+
+    //不可以改变背景颜色
+    //var oDivStyBg = document.getElementById("div1").style.backgroundColor;
+    //oDivStyBg = "green";
+
+    var oDiv = document.getElementById("div1");
+    //->typeof oDiv ="object"  我们获取的oDiv是一个对象数据类型的值
+    //->typeof oDiv.style ="object" 当前元素的style属性值也是一个对象数据类型的,里面存储了当前元素的所有的行内样式值
+</script>
+</body>
+</html>

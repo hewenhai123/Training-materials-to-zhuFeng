@@ -1,0 +1,80 @@
+1、JS实现动画的四条优化法则
+  1)如果使用的是setTimeout实现的轮询动画,在每一次执行方法之前需要把前面的设置的定时器清除掉
+    var timer=null;
+    function move(){
+        window.clearTimeout(timer);
+        <js code>
+        timer=window.setTimeout(move,15);
+    }
+    move();
+
+  2)为了防止全局变量的污染,我们把定时器的返回值赋值给当前操作元素的自定义属性;这样做还有一个好处,就是如果当前动画没有完成,执行了下一个动画,由于我们每一次都是给自己的自定义属性,那么下一个动画开始的时候默认的把当前的动画的结束了;
+    function move(){
+        window.clearTimeout(curEle.timer);
+        <js code>
+        curEle.timer=window.setTimeout(move,15);
+    }
+    move();
+
+  3)关于作用域累积的问题->在move中编写一个_move来执行我们的动画操作,_move里面不需要传递参数,每一次都用move中存储下来的值即可
+    function move(target){
+        ~function _move(){
+           window.clearTimeout(curEle.timer);
+           <js code>
+           curEle.timer=window.setTimeout(_move,15);
+           //_move这里不建议使用arguments.callee因为在严格模式下不兼容这个属性,而写在项目中一般都是需要使用严格模式编写代码的
+        }();
+    }
+    move();
+
+  4)为了防止走一步超了,不走还到不了边界,我们在做边界判断的时候需要加上步长来做
+    function move(target){
+        var step=10;
+
+        ~function _move(){
+           window.clearTimeout(curEle.timer);
+
+           var curL=utils.getCss(curEle,"left");
+           if(curL+step>=target){
+              utils.setCss(curEle,"left",target);
+              return;
+           }
+           utils.setCss(curEle,"left",curL+step);
+
+           curEle.timer=window.setTimeout(_move,15);
+        }();
+    }
+    move();
+
+2、tween算法的动画库
+   ->需要自己回去看耿老的代码,自己也能写出来
+   ->回调函数(JS中这个知识太重要了)
+
+3、实现我们的轮播图
+   ->自动轮播的
+   ->有焦点的
+   ->左右切换的
+   ->用原生的JS和jQuery都可以写出来
+
+4、研究一下自己用JS实现加速、减速、反弹等特殊效果的动画(不要太花时间)
+
+5、轮播图特殊处理-百叶窗效果(不要太花时间)
+
+建议自己回去后拿一两个大网站中真实的动画案例去研究,模仿人家的用原生的JS做的一模一样即可,动画还有一部分非常中重要的是CSS3动画;
+
+6、jQuery
+ 1)jQuery实现的原理和一些核心的内容
+ 2)jQuery中常用的方法都有哪些?怎么用?
+ 3)熟练使用jQuery中的选择器
+ 4)熟练使用jQuery实现一些我们的网站常用效果
+ 5)了解一写常用的jQuery插件,自己多搜一些jQuery的面试题
+ 6)看jQuery源码分析里面的思想,自己可以模仿写写简单的类库,写写常用的插件
+
+
+
+
+
+
+
+
+

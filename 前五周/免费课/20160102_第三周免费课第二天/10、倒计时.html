@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+        }
+
+        html, body {
+            width: 100%;
+        }
+
+        #timeBox {
+            margin: 10px auto;
+            width: 50%;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px dashed green;
+            /*CSS3属性*/
+            border-radius: 50px; /*盒子圆角*/
+            box-shadow: 3px 3px 10px 0 lightcoral; /*盒子阴影*/
+            background: -webkit-linear-gradient(top left, lightblue, lightcoral, lawngreen); /*背景颜色渐变 从左上角开始按照三个颜色逐步的渐变*/
+        }
+
+        #timeSpan {
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="timeBox">距离下课还有:[ <span id="timeSpan">00:00:00</span> ]</div>
+
+<script type="text/javascript">
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+
+    function getRemainTime() {
+        var nowTime = new Date();
+        var tarTime = new Date("2016/01/02 17:10:40");
+        var spanTime = tarTime - nowTime;//->目标时间和当前时间之间相差的毫秒数
+
+        //如果当前的时间已经超过目标时间了,我们就不在计算了
+        if (spanTime <= 0) {
+            window.clearInterval(timer);//->当到达目标时间后我们停止定时器,不在倒计时了
+            return "下课了";//->如果只写一个return后面什么都没有写的话,返回的是undefined
+        }
+
+        //1、计算总相差时间中包含了多少个小时
+        var hour = Math.floor(spanTime / (1000 * 60 * 60));
+
+        //2、计算相差时间中包含了多少个分钟(需要把小时占用的时间减去,剩下的时间里在计算还有多少个分钟)
+        spanTime = spanTime - (hour * 60 * 60 * 1000);
+        var minute = Math.floor(spanTime / (1000 * 60));
+
+        //3、计算相差时间中包含了多少个秒(需要把分钟占用的时间减去,剩下的时间里在计算还有多少个秒)
+        spanTime = spanTime - (minute * 60 * 1000);
+        var second = Math.floor(spanTime / 1000);
+
+        return addZero(hour) + ":" + addZero(minute) + ":" + addZero(second);
+    }
+
+    var timeSpan = document.getElementById("timeSpan");
+    timeSpan.innerHTML = getRemainTime();
+
+    var timer = window.setInterval(function () {
+        timeSpan.innerHTML = getRemainTime();
+    }, 1000);
+</script>
+</body>
+</html>

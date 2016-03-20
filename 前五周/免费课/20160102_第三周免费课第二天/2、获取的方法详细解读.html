@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -171px 0 0 -171px;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+        }
+
+        #box li {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px dashed #999;
+        }
+    </style>
+</head>
+<body>
+
+<div id="box">
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <!--我们都是LI-->
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>
+            <ul>
+                <li>9-1</li>
+                <li>9-2</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    //var box = document.getElementById("box");
+
+    //document.getElementById()
+    //->它的上下文只能是document
+    //->如果ID重复了,我们只能获取第一个
+    //->在IE6~7下会把表单元素的name属性值当做ID来使用,所以以后在项目中不要把id和name的值起成一样的
+    //->在IE6~7下不区分id大小写,所以以后在项目中不要拿大小写来区分我们的id
+    //->在JS中我们可以直接的拿id当做当前的这个元素(不需要获取->不推荐这样的写法)
+    //console.log(box);
+    //box.style.backgroundColor="green";
+
+    //document.getElementsByTagName()
+    //在整个文档中,通过元素的标签名来获取一组元素集合(获取的是子子孙孙级别的所有的元素)
+    //var oLis = box.getElementsByTagName("li");
+    //console.dir(oLis);
+
+    //document.getElementsByName()
+    //->IE只对表单元素起作用
+
+    //document.getElementsByClassName()
+    //->IE6~8不兼容
+
+    //document.documentElement / document.body
+
+    //document.querySelector() / document.querySelectorAll()
+    //->IE6~8不兼容
+
+
+    //1、想获取#box这个盒子,有几种办法?
+    //document.getElementById("box")
+    //document.getElementsByTagName("div")[0]//->我们获取的是一个集合,哪怕里面只有一个,如果我们想操作这个div的话也需要从集合中拿出来使用,例如：冰箱里面只有一个苹果,你要是想吃这个苹果的话,你也需要拿出来吃,也不能抱起冰箱就啃
+    //document.querySelector("#box")
+    //document.querySelector("div")//->获取所有div中的第一个
+    //document.querySelectorAll("div")[0]
+
+
+</script>
+</body>
+</html>

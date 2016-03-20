@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //BAT面试题
+    var num1 = 12;
+    var num2 = num1;//->把num1这个变量存储的值,赋值给我们的num2这个变量
+    num2 = 13;
+    console.log(num1);//->12
+
+    var obj1 = {age: 18};
+    var obj2 = obj1;//->把obj1这个变量存储的值赋值给我们的obj2这个变量
+    obj2.age = 20;
+    console.log(obj1.age);//->20 obj1和obj2操作的是同一个内存空间
+
+    //1、当浏览器加载我们页面的时候，首先会形成一个供JS代码执行的环境->全局作用域
+    //2、JS代码开始从上到下执行
+    //3、区别
+    //1)基本数据类型也叫做值类型,因为它是直接的按照值来操作的,例如:var num1=12;它是直接的把12这个值赋值给我们的num1变量
+
+    //2)引用数据类型是按照引用地址来操作的，而不是按照值来操作
+    //var obj1={age:18};
+    //a、"开空间,分地址":首先开辟一个新的内容空间,然后浏览器为其分配一个16进制的地址
+    //b、"存内容":接下来把对象中的所有的属性名和属性值分别依次存储到对应的空间中
+    //c、"赋值":把新开辟的内存空间的地址xxxfff000,赋值给我们的变量obj1
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

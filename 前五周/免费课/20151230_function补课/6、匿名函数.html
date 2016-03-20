@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //匿名函数：没有名字的函数
+    //给body绑定一个点击事件
+    //1)我们是把匿名函数定义的部分赋值给onclick ->此时的"alert(i)"都只是字符串,i不是变量而是字符
+
+    //2)只有当我们能点击body的时候函数才会被执行 ->当点击的时候我们的i才是变量,才会找对应的值
+    document.body.onclick = function () {
+        alert(i);
+    };
+
+    //->选项卡循环绑定事件为啥不行的原因?(继续思考)
+</script>
+</body>
+</html>

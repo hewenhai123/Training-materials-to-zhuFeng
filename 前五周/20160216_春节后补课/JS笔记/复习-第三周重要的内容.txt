@@ -1,0 +1,23 @@
+1、盒子模型的常用的13个属性
+
+2、getComputedStyle获取经过浏览器计算的样式->getCss
+
+3、关于盒子偏移量
+  1)offsetParent和parentNode的区别
+  2)如何修改offsetParent
+  3)offset ->获取任意元素距离body的上/左偏移量
+
+4、scrollTop/scrollLeft的综合实战应用
+   ->跑马灯
+   ->回到顶部
+
+5、定时器及异步加载 ->异步编程的总结
+
+6、综合实战之图片延迟加载
+
+7、DOM库的编写 -> utils.js里面的45个方法
+
+8、选项卡插件
+
+
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //构造函数模式：实例识别;通过构造函数模式我们还可以自己创建类;
+
+    //    //在工厂模式中createJsPerson是一个普通函数名而已
+    //    function createJsPerson(name, age) {
+    //        var obj = {};
+    //        obj.name = name;
+    //        obj.age = age;
+    //        obj.writeJs = function () {
+    //            console.log("my name is " + this.name + ",my age is " + this.age + ",i can write js la~~~");
+    //        };
+    //        return obj;
+    //    }
+    //    var jsPerson1 = createJsPerson("王浩宇", 16);//->执行函数,把函数的返回值用jsPerson1来接收
+    //    jsPerson1.writeJs();
+
+    //构造函数模式
+    //1)执行:普通的函数是createJsPerson()，而构造函数模式是new CreateJsPerson()来执行的,如果是new这样来执行的,我们的CreateJsPerson就叫做类,返回的jsPerson1是当前这个类的一个实例
+    //a、类其实也是一个函数,只不过执行的时候多加了一个new而已,typeof CreateJsPerson->"function" 类也是函数数据类型的
+    //b、jsPerson1是当前类的一个实例,它是对象数据类型的,typeof jsPerson1->"object"
+
+    //2)运行:普通的函数执行会形成一个私有的作用域,然后形参赋值->预解释->代码从上到下执行,通过new来执行,除了拥有普通函数执行这些操作以外,还有一些自己特殊的操作:
+    //a、不需要自己在手动的创建一个对象,浏览器会默认的给它创建一个对象,并且默认的返回到函数的外面->浏览器默认创建的这个对象就是我们当前类的一个实例
+    //b、在代码从上到下执行的时候,以实例为执行的主体(函数中的this就是当前类的一个实例),分别把对应的属性名和属性值赋值给当前实例 ->在构造函数模式中,函数体中的this.xxx=xxx中的this是当前类的一个实例
+    //    function CreateJsPerson(name, age) {
+    //        //->浏览器自己创建一个对象(实例) this
+    //        this.name = name;
+    //        this.age = age;
+    //        this.writeJs = function () {
+    //            console.log("my name is " + this.name + ",my age is " + this.age + ",i can write js la~~~");
+    //        };
+    //    }
+    //    var jsPerson1 =new CreateJsPerson("王浩宇", 16);
+    //    jsPerson1.writeJs();
+
+    //    var jsPerson2 =new CreateJsPerson("张宏逸", 61);
+    //    jsPerson2.writeJs();
+
+    //2、关于构造函数模式中的细节问题
+    //1)this问题
+    //    function Fn() {
+    //        this.x = 100;//this->当前Fn这个类的一个实例f,因为构造函数模式中的this.xxx=xxx中的this就是当前类的实例
+    //        this.getX = function () {
+    //            console.log(this.x);
+    //        }
+    //    }
+    //    var f = new Fn();
+    //    console.log(f.x);
+    //    f.getX();//->this是f,因为getX方法执行前面有".","."前面是f,所以this就是f
+
+    //2)关于一个函数的多面性
+    //Fn在这里既是一个类,也是一个普通的函数
+    //类:f是它的一个实例,而且this.x=100中的this就是f,this.xxx=xxx才相当于给我们的实例f增加的属性名和属性值
+    //普通函数:形成了一个私有的作用域,而num是它的一个私有的变量,私有的变量和实例是没有任何的关系的
+    //函数拥有多面性,而且每一种角色之间是不影响的
+    //    function Fn() {
+    //        var num = 10;
+    //        this.x = 100;
+    //        this.getX = function () {
+    //            console.log(this.x);
+    //        }
+    //    }
+    //    var f = new Fn;//->如果当前的类不需要传递任何的参数值的话,我们的小括号可加可不加 new Fn()
+    //    console.log(f.num);//->undefined
+
+    //3)instanceof 用来检测某一个实例是否属于这个类
+    //    function Fn() {
+    //        var num = 10;
+    //        this.x = 100;
+    //        this.getX = function () {
+    //            console.log(this.x);
+    //        }
+    //    }
+    //    var f = new Fn;
+    //console.log(f instanceof Fn);//->true f是Fn这个类的一个实例
+    //console.log(f instanceof String);//->false
+    //console.log(f instanceof Object);//->true
+
+    //instanceof来处理typeof实现不了的数据类型检测
+    //var ary = [12, 23];
+    //我想检测ary是否为一个数组,用typeof实现不了(因为检测的结果是“object”)
+    //console.log(ary instanceof Array);//->true
+    //console.log(ary instanceof RegExp);//->false
+    //console.log(ary instanceof Object);//->true
+
+
+    //4)浏览器会默认的把当前类的实例返回;但是如果我们自己在手动写了return返回值，有可能会对最后的实例产生影响:
+    //如果返回的是一个基本数据类型值,对原来的实例是没有任何的影响的
+    //如果返回的是一个引用数据类型值,会把默认返回的实例给覆盖掉
+    //    function Fn() {
+    //        this.x = 100;
+    //        this.getX = function () {
+    //            console.log(this.x);
+    //        };
+    //        //浏览器默认返回一个当前类的实例(一个对象数据类型值)
+    //        //return 100;
+    //        return {};
+    //    }
+    //    var f = new Fn;
+    //    console.log(f);//->{} f就不在是Fn的一个实例了
+    //    console.log(f instanceof Fn);//->false
+
+    //5、在构造函数模式中,我们创建的实例是单独的个体,而且在函数体中通过this.xxx=xxx给实例增加的属性都是自己私有的属性,每一个实例之间的属性是不一样的
+    function Fn() {
+        this.x = 100;
+        this.getX = function () {
+            console.log(this.x);
+        };
+        //私有的属性
+    }
+    var f1 = new Fn;
+    var f2 = new Fn;
+    //console.log(f1.getX === f2.getX);//->false
+
+    //in:用来检测某一个属性是否属于这个对象,它既可以检测当前对象的私有的属性,也可以检测公有的属性
+    //console.log("getX" in f1);//->true
+
+    //hasOwnProperty:用来检测某一个属性是否属于这个对象的私有的属性,不管公有还是没有,只要私有的没有返回false,有的话返回true
+    //console.log(f1.hasOwnProperty("getX"));//->true
+
+    //思考题:
+    //我们自己编写一个方法hasPubProperty,用来检测某一个属性是否属于这个对象的公有的属性,和我们的hasOwnProperty对应
+    //    function hasPubProperty(obj, attr) {
+    //        //return true/false;
+    //    }
+    //    var res = hasPubProperty(f1, "getX");
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+        }
+
+        a:hover, a:active, a:target {
+            text-decoration: none;
+            color: #000;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            border-top: 1px solid transparent;
+        }
+
+        .box {
+            margin: 20px auto;
+            width: 500px;
+        }
+
+        .box input {
+            padding: 0 10px;
+            width: 300px;
+            height: 35px;
+            border: 1px solid #008000;
+        }
+
+        .box ul {
+            display: none;
+            position: relative;
+            top: -1px;
+            border: 1px solid #008000;
+        }
+
+        .box ul li, .box ul li a {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .box ul li a {
+            padding: 0 10px;
+        }
+
+        .box ul li a:hover {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text" id="searchInp"/>
+    <ul id="searchList">
+
+    </ul>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    var searchInp = document.getElementById("searchInp"), searchList = document.getElementById("searchList");
+
+    searchInp.onfocus = searchInp.onkeyup = function () {
+        var val = this.value.replace(/(^ +| +$)/g, "");
+        if (val.length > 0) {
+            searchList.style.display = "block";
+            //->把百度后台返回的匹配数据展示在列表中
+            $.ajax({
+                url: "http://suggestion.baidu.com/su?wd=" + val + "&_=" + Math.random(),
+                type: "get",
+                dataType: "jsonp",
+                jsonp: "cb",
+                jsonpCallback: "fn",
+                success: function (data) {
+                    if (data) {
+                        var ary = data["s"];
+                        var str = "";
+                        for (var i = 0; i < ary.length; i++) {
+                            str += "<li><a href='javascript:;'>" + ary[i] + "</a></li>";
+                        }
+                        searchList.innerHTML = str;
+                    }
+                }
+            });
+        } else {
+            searchList.style.display = "none";
+        }
+    };
+
+    document.body.onclick = function (e) {
+        e = e || window.event;
+        e.target = e.target || e.srcElement;
+
+        if (e.target.tagName.toLowerCase() === "a" && e.target.parentNode.parentNode.id === "searchList") {
+            searchList.style.display = "none";
+            searchInp.value = e.target.innerHTML;
+            return;
+        }
+        searchList.style.display = "none";
+    };
+
+    searchInp.onclick = function (e) {
+        e = e || window.event;
+        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+    };
+</script>
+</body>
+</html>

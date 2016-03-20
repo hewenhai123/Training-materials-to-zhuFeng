@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //第4题:
+    //    var i = 5;
+    //    function fn() {
+    //        i += 5;
+    //        return function (n) {
+    //            console.log(n + (i++));
+    //        }
+    //    }
+    //    var f = fn();
+    //    f(5);
+    //    fn()(10);
+    //    fn()(10);
+    //    f(5);
+
+    //第5题:
+    var num = 10;  var obj = {num: 15};
+    obj.fn = (function () {
+        this.num = num * 2;
+        num*=2;
+        return function (n) {
+            this.num = num*n;
+            num++;
+            console.log(num);
+        }
+    })();
+    var fn = obj.fn;  fn(3);  obj.fn(4);
+    console.log(num, obj.num);
+
+
+</script>
+</body>
+</html>

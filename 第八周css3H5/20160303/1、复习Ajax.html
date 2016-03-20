@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax-同源策略</title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var xhr = new XMLHttpRequest;//->在IE7以下浏览器中是不兼容的
+    //    xhr=new ActiveXObject("Microsoft.XMLHTTP");
+    //    xhr=new ActiveXObject("Msxml2.XMLHTTP");
+    //    xhr=new ActiveXObject("Msxml3.XMLHTTP");
+
+    //->惰性思想
+    var getXHR = (function () {
+        //->存放我们需要的几个获取Ajax对象的方法
+        var ajaxAry = [
+            function () {
+                return new XMLHttpRequest;
+            },
+            function () {
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            },
+            function () {
+                return new ActiveXObject("Msxml2.XMLHTTP");
+            },
+            function () {
+                return new ActiveXObject("Msxml3.XMLHTTP");
+            }
+        ];
+        //->循环数组,把四个方法依次的执行
+        var xhr = null;
+        for (var i = 0; i < ajaxAry.length; i++) {
+            //->标准浏览器:i=0,获取的是第一个函数function(){return new XMLHttpRequest;}(A1),执行的时候没有报错,xhr是它的返回值也是我们的Ajax对象,没有报错不会走catch,执行getXHR = A1,这样把外面的getXHR重写了,遇到break循环结束
+            //->IE6浏览器:i=0,获取第一个函数执行,IE6不支持XMLHttpRequest,所以会报错,执行catch中的continue继续下一次的循环,i=1,获取第二个函数 function(){return new ActiveXObject("Microsoft.XMLHTTP");}(A2),执行没有报错,那么开始执行getXHR = A2,遇到break结束整个循环,此时外面的getXHR = A2
+            var tempFn = ajaxAry[i];
+            try {
+                xhr = tempFn();
+            } catch (e) {
+                continue;
+            }
+            getXHR = tempFn;
+            break;
+        }
+        if (!xhr) {
+            throw new Error("你的浏览器版本也太LOW了吧,还能不能愉快的玩耍~~");
+        }
+        return getXHR;
+    })();
+
+    var xhr = getXHR();
+    xhr.open("get", "test.txt?_=" + Math.random(), true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+            var val = xhr.responseText;
+            console.log(val);
+        }
+    };
+    xhr.send(null);
+
+    //1、避免返回的数据是乱码的
+    //->前端页面是UTF-8编码,如果我们从服务器请求回来的数据不是UTF-8编码格式,那么获取到的内容中,中文汉字会出现乱码
+    //->需要我们使用"UTF-8到底的原则":前端页面、JS、CSS、后台代码、数据库、请求传递的数据统一都采用一个编码UTF-8
+    //->[RESPONSE] Content-Type:text/plain(纯文本)、application/json(JSON格式的)...设定响应主体中内容的格式
+
+    //2、
+    //前端：设置请求头,获取响应头
+    //->在前端的JS中我们可以使用 xhr.setRequestHeader([name],[value]) 设置请求头的信息；可以使用 xhr.getResponseHeader([name])/xhr.getAllResponseHeaders() 获取响应头信息；
+
+    //服务器端：获取请求头,设置响应头
+    //->在NODE中我们可以使用 response.writeHead(200, {'content-type': 'application/json'}); 设置响应头信息
+    //->在NODE中我们可以使用 request 这个对象获取到请求信息(起始行、首部、主体)中的都可以获取到
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .stage{
+            width: 367px;
+            height: 297px;
+            background: url(images/bg-grid.jpg) no-repeat;
+            position:relative;
+            -webkit-transform-style: preserve-3d;/*元素在3d空间里运行*/
+            perspective: 800px;/*视距*/
+
+        }
+        .stage img{
+            width: 142px;
+            height: 200px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin: -100px 0 0 -71px;
+        }
+        .stage img:nth-child(1){/*获取div.stag下面的第一个子元素,并且标记名img*/
+            opacity: 0.5;
+
+        }
+        .stage img:nth-child(2){
+            /*-webkit-transform: scale(2);*//*默认值是1*/
+            /*-webkit-transform: skew(30deg,0deg);*/
+            /*-webkit-transform: scale(0.5);*/
+            /*-webkit-transform-origin: right;*/
+            -webkit-transform: translateZ(-100px);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <img src="images/pic.jpg">
+        <img src="images/pic.jpg">
+    </div>
+</body>
+</html>

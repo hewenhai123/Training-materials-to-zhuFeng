@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+    var obj = {};
+    function on(type, fn) {
+        if (!obj.type) {
+            obj.type = [];
+        }
+        var a = obj.type;
+        a.push(fn);
+    }
+
+    function fire(type) {
+        var a = obj.type;
+        for (var i = 0; i < a.length; i++) {
+            a[i]();
+        }
+    }
+
+    on("waterOk", drink);
+    on("waterOk", shower);
+    on("waterOk", cook);
+
+    boilWater();
+
+    function boilWater() {
+        console.log("水烧开了!!");
+        //->报警器响了
+        fire("waterOk");//->安装了一个报警器,当水开了报警,执行对应的喝水、洗澡、做饭...
+    }
+
+    function drink() {
+        console.log("感冒了，多喝水；发烧了，多喝水；肚子疼，多喝水~~");
+    }
+
+    function shower() {
+        console.log("我爱洗澡，皮肤好好，欧欧欧~~");
+    }
+
+    function cook() {
+        console.log("我会做饭，泡方便面~~");
+    }
+
+
+</script>
+</body>
+</html>

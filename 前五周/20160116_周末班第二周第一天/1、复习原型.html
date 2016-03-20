@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1"></div>
+<!--
+    div1 -- HTMLDivElement -- HTMLElement -- Element -- Node -- EventTarget -- Object
+
+    ary -- Array -- Object
+
+    obj -- Object
+
+    不管是div1还是ary还是obj都是对象数据类型的值,都是Object这类的一个实例;但是不一定都是直接的指向Object的原型,有很多都是先指向自己最近的所属类,然后通过__proto__一级级向上查找,最后总会找到Object.prototype
+-->
+<script type="text/javascript">
+    //函数具有多面性
+
+    //普通函数:执行形成一个私有的作用域,形参赋值->预解释(私有的变量、作用域链)->JS代码执行->作用域的释放问题
+
+    //构造函数:类、实例、prototype、constructor、__proto__、私有的属性和公有的属性....
+
+    //普通的对象:和我们var obj={}中的obj是一样的,作为一个普通的对象,有自己的属性名和属性值
+    //prototype : 自己作为一个类这个角色的原型
+    //name : "Fn"  console.log(Fn.name/Fn["name"])
+    //__proto__ : Function.prototype
+
+
+    //多种角色之间是没有任何的影响的
+    function Fn() {
+        var num = 200;
+        this.x = 100;
+        //console.log(x);//->输出x这个变量的值,而且不是私有的变量,往上级作用域window下查找,window下也没有,报错
+        //console.log(zhuFeng)//->报错
+    }
+    Fn.prototype.y = 300;
+    Fn.zhuFeng = "珠峰培训";//->把Fn当做一个对象增加的属性名,和实例/私有的变量都没有任何的关系
+
+    var f = new Fn;
+    //f.x ->100
+    //f.y ->300 构造函数中类的角色出现的
+
+    //f.num ->函数体中的sum是作为普通函数角色出现的私有的变量和实例没有关系 ->undefined
+
+    //f.zhuFeng - > undefined
+
+    //Fn.zhuFeng ->"珠峰培训"
+
+</script>
+</body>
+</html>

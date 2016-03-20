@@ -1,0 +1,6 @@
+1、undefined   undefined
+2、'帷桁' 5000   undefined 5000
+3、"300"  "100"            
+4、9 16 36 64
+5、4  5  14  22
+6、true 20 NaN Object

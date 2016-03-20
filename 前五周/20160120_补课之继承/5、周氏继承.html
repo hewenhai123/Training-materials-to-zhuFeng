@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //周氏继承法不兼容IE,因为IE下屏蔽了__proto__的使用
+
+    //arguments:
+    //私有->索引和对应的参数值、length、callee
+    //arguments.__proto__=Object.prototype
+
+    //arguments.sort();//->因为作为arguments私有中没有sort方法,所属类的原型上也没有这个方法 ->arguments.sort=undefined 报错:arguments.sort is not a function
+    function avgFn() {
+        arguments.__proto__ = Array.prototype;
+
+        arguments.sort(function (a, b) {
+            return a - b;
+        });
+        arguments.shift();
+        arguments.pop();
+        return (eval(arguments.join("+")) / arguments.length).toFixed(2);
+    }
+    var res = avgFn(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+    console.log(res);
+</script>
+</body>
+</html>

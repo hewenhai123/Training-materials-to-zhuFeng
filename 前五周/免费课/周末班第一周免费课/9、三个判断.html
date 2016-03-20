@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>三个判断</title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、if、else if、else ->在JS中可以解决一切的判断需求(最常用)
+    //条件可以是由多个小条件组成的,中间用&& ||隔开
+    //&&:所有的子条件都成立整体才成立
+    //||:只要有一个子条件成立整体就成立
+    //    var num = 10;
+    //    if (num < 0) {
+    //        console.log("小于0");
+    //    } else if (num >= 0 && num <= 10) {
+    //        console.log("ok");
+    //    } else {
+    //        //以上的条件都不成立则执行我们的else
+    //        console.log("啥也不是~~!");
+    //    }
+
+
+    //2、三元运算符 ->一般来说我们都应用于简单的if else
+    //var num = 10;
+    //    if (num < 0) {
+    //        num++;//-> num+=1  num=num+1 ->在num这个变量原有值的基础上累加1
+    //    } else {
+    //        num--;
+    //    }
+    //num < 0 ? num++ : num--;//->条件?条件成立执行:条件不成立执行
+
+    //num < 0 ? (num > -10 ? num++ : num--) : (num < 10 ? num++ : null);
+    //    if (num < 0) {
+    //        if (num > -10) {
+    //            num++;
+    //        } else {
+    //            num--;
+    //        }
+    //    } else {
+    //        if (num < 10) {
+    //            num++;
+    //        }
+    //    }
+
+
+    //3、switch case ->一个变量在不同值情况下的不同的操作
+    //每一种case情况其实都是相当于在用"==="进行比较,我们需要保证数据类型也一样
+    var num = "10";
+    if (num == 0) {
+        console.log(0);
+    } else if (num == 5) {
+        console.log(5);
+    } else if (num == 10) {
+        console.log(10);
+    } else {
+        console.log(-1);
+    }
+    //->10
+
+    switch (num) {
+        case 0:
+            console.log(0);
+            break;//->每一种case结束后都不要忘记加break
+        case 5:
+            console.log(5);
+            break;
+        case 10:
+            console.log(10);
+            break;
+        default://->以上每一种case情况都不成立,相当于else
+            console.log(-1);
+    }
+    //->-1
+
+    //思考题:回去后研究一下不加break会出现什么样的效果
+</script>
+</body>
+</html>

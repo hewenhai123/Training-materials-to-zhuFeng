@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+
+        /*
+          CSS手写的顺序规范
+
+          display
+          position ->top/left/z-index
+          float
+          margin/padding
+          width/height
+
+          [下面的顺序就可以不太纠结了]
+          line-height/text-align
+          font
+          background
+          border
+          ...
+        */
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>

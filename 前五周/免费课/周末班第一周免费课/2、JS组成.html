@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //JS属于一门轻量级的脚本编程语言(JS是面向对象开发的,需要我们掌握关于类的继承、封装、多态)
+    //JS是由三部分组成的：
+    //ECMAScript:定义了我们JS的基本语法、命名规范、变量、数据类型、操作语句等最为基础也是最为核心的知识
+    //DOM:document object model 文档对象模型  提供了我们JS操作页面上元素常用的属性和方法  ->document文档对象(代表的是整个文档)
+    //BOM:browser object model浏览器对象模型 提供了我们JS操作浏览器的常用的属性和方法 ->window浏览器对象(代表的是整个浏览器)
+
+
+    //1、变量 ->可变的量   常量 ->不可变的量(一个固定的值)
+    //JS中定义变量的方式: var 变量名=值;
+    //JS中的变量就是用来存储值的
+    //var num = 12;//->定义一个变量num给它存储一个值12
+    //num = 13;//->把之前存储的值12替换为13,此时num存储的值就是13了
+
+    //2、命名规范
+    //1)JS是严格区分大小写的
+    //var num = 12;
+    //alert(Num);//->Uncaught ReferenceError: Num is not defined  Num这个名字没用定义过
+
+    //2)起的名字要有一定的意义,并且遵循我们的"驼峰命名法"
+    //"驼峰命名法":一个名字如果是由多个单词拼起来的,第一个单词的首字母小写,其余每一个有意义的单词的首字母都要大写
+    //学生信息 var studentInfo = "";
+    //人员重要信息 var personImportInfo
+    //xueshengXinxi  xueshengInfo xsXx (不能这样写的)
+
+    //扩展一些命名的技巧
+    //add/create ->代表的是增加或者创建  createElement->创建一个元素标签
+    //update/replace ->代表修改或者替换
+    //del/remove/rm/delete ->代表删除或者移除
+    //get/query ->代表获取和查询的
+    //set ->代表设置的
+    //...
+    //    num ->number
+    //    str ->string
+    //    boo ->boolean
+    //    obj ->object
+    //    ary ->array
+    //    fn ->function
+
+    //"驼峰命名法"规定我们命名的时候可以使用 数字、字母、下划线、$ 来命名,但是数字不能作为开头
+    //var num1=12;
+    //var 1num=12;(报错)
+
+    //一般来说
+    //$num ->代表的是jQuery变量或者其他常用类库的变量
+    //_num ->代表的是全局公用的变量
+
+    //3)不能使用关键字和保留字
+    //关键字:在JS中有特殊意义的词,例如:var 是用来定义变量的,它就是个关键字
+    //保留字:在JS中未来可能会成为关键字的
+
+
+
+
+</script>
+</body>
+</html>

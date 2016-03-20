@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        #div1 {
+            margin: 100px;
+            padding: 20px;
+            width: 200px;
+            height: 200px;
+            border: 5px solid #008000;
+            line-height: 25px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="height: 200px;">
+    站在台风口上,猪都能飞起来~~;要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子;
+</div>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+
+    //1、通过 "curEle.style.attr" 获取具体的某一个样式的值
+    //->只能获取行内样式:但是这种方式只能获取所有在行内上编写的样式,只要没有在行内上写,不管在样式表中是否写了,都获取不到
+    //console.log(oDiv.style.width);//->""
+    //console.log(oDiv.style.height);//->"200px"
+
+    //2、通过JS提供的方法getComputedStyle:获取所有经过浏览器计算的样式
+    //->只要当前的元素在页面中呈现出来了,那么它的所有的样式都是经过浏览器计算的,不管写在行内还是样式表中,也不管你写没写,都可以获取到
+    //->window.getComputedStyle(当前要操作的元素, 要操作元素的伪类(我们一般都不用,第二个参数写null即可))
+    //->通过其获取的是一个样式对象集合(它是CSSStyleDeclaration这个类的一个实例),里面存储了我们当前元素的所有样式信息
+    //console.log(window.getComputedStyle(oDiv, null)["width"]);
+
+    //3、但是在IE6~8下不兼容
+    //->报错:对象不支持“getComputedStyle”属性或方法 ->说明window这个浏览器对象中是不存在getComputedStyle这个属性的
+    //->console.log(window.getComputedStyle);//->undefined
+    //虽然不支持getComputedStyle,但是IE提供了另外一个方法来代替它:currentStyle
+    //->curEle.currentStyle
+    //console.log(oDiv.currentStyle["width"]);
+
+    //getCss:获取指定元素的样式属性值
+    //curEle要操作的当前的元素 attr要获取的样式属性的名字
+    //    function getCss(curEle, attr) {
+    //        var val = null;
+    //        try {
+    //            val = window.getComputedStyle(curEle, null)[attr];
+    //        } catch (e) {
+    //            val = curEle.currentStyle[attr];
+    //        }
+    //        return val;
+    //    }
+    //    var val = getCss(oDiv, "width");
+
+    //console.log(navigator.userAgent);
+    //IE9 Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+    //IE8 Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)
+    //IE7  Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)
+    //火狐 Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    //谷歌 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.10 Safari/537.36
+</script>
+</body>
+</html>

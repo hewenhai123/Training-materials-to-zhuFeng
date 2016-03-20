@@ -1,0 +1,78 @@
+1、jQuery的实现原理
+    var jQuery=function(selector, context){
+       return new jQuery.fn.init( selector, context );
+    };
+    //1)jQuery采用的是构造函数模式进行开发的,jQuery是一个类
+    //2)上面说的常用的方法(CSS、属性、筛选、事件、动画、文档处理)都是定义在jQuery.prototype上的 ->只有jQuery的实例才能使用这些方法
+
+
+2、选择器/筛选
+   1)我们的选择器其实就是创造jQuery类的一个实例 ->获取页面中元素用的
+   jQuery(); -> $()
+   $()就是jQuery的选择器,就是创建jQuery这个类的一个实例
+
+   2)执行的时候需要传递两个参数
+     selector->选择器的类型 一般都是"string"类型
+     context->获取的上下文  第二个参数一般不传,不传默认为document
+     $("#div1")
+     $(".box")
+     $("#div1 span") -> $("span",div1)
+     console.log($("#div1 span:first"));
+
+   3)通过选择器获取的是一个jQuery类的实例->jQuery对象
+     console.log($("#div1"));
+
+     [jQuery对象的私有的属性]
+     $("#div1")[0] ->div1这个元素对象
+     $("#div1").selector -> "#div1"
+     $("#div1").context -> document
+     $("#div1").length ->1 获取元素的个数
+
+     [jQuery对象的公有的属性]
+     jQuery.prototype
+
+   4)我们获取的是jQuery对象(他是jQuery的实例)不是我们的原生js对象
+    jQuery:$("#div1")
+    JS:document.getElementById("div1")
+    //原生JS的对象不能直接的使用jQuery的方法,同理,jQuery的对象也不能使用原生js的方法
+    //$("#div1").className = "box"; no
+    //document.getElementById("div1").addClass(); no
+
+   5)互相转化
+     var $oDiv = $("#div1");
+     var oDiv = document.getElementById("div1");
+     JS->jQuery : $(oDiv).addClass()
+     jQuery->JS : $oDiv[0] / $oDiv.get(0)
+
+
+3、核心
+   $(document).ready(function () {
+      //HTML结构加载完成就执行这里的代码
+   });
+   $(function () {
+
+   });
+
+   each
+   $("selector").each(function(){}) 遍历获取的这些元素 jQuery.prototype
+   $.each(ary) 遍历数组中的每一项  jQuery.each
+
+   我们的jQuery不仅仅是一个类(在它的原型上定义了很多的方法,每一个jQuery的实例都可以使用这些方法),它还是一个普通的对象,在jQuery本身的属性中还增加了一系列的方法:Ajax、each、工具
+    $.unique(ary)
+    $.ajax()
+
+    //$.extend() -> 把jQuery当做一个对象,给它扩展属性 ->完善类库
+    //$.fn.extend() ->在jQuery的原型上扩展属性和方法 ->编写jQuery插件
+    //    $.extend({
+    //        a: function () {
+    //
+    //        }
+    //    });
+    //    $.a();
+    //
+    //    $.fn.extend({
+    //        b: function () {
+    //
+    //        }
+    //    });
+    //    $().b();

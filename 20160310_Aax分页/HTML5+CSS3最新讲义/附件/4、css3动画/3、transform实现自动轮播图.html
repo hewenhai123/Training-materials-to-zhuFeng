@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        .box {
+            margin: 20px auto;
+            width: 1000px;
+            overflow: hidden;
+        }
+
+        .box .inner {
+            margin-left: 0;
+            width: 3000px;
+            height: 300px;
+
+            /*设置css3运动的动画*/
+            -webkit-transition: all 1s ease-in-out 0s;
+            transition: all 1s ease-in-out 0s;
+        }
+
+        /*测试：这样的话,当我们鼠标滑过的时候，整体向左移动一张图片的距离*/
+        /*.box .inner:hover {
+            /!*-webkit-transform: translate(-1000px, 0);*!/
+            /!*transform: translate(-1000px, 0);*!/
+
+            -webkit-transform: translateX(-1000px); /!*这样写和上面的写法等价*!/
+            transform: translateX(-1000px);
+        }*/
+
+        /*测试：但是我们发现，即使不使用translate，由于我们在transition设置的是all，我们只需要噶变一下margin-left的值也可以实现*/
+        /* .box .inner:hover {
+             margin-left: -1000px;
+         }*/
+
+        .box .inner img {
+            float: left;
+            width: 1000px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="inner" id="inner">
+        <img src="img/banner1.jpg"/>
+        <img src="img/banner2.jpg"/>
+        <img src="img/banner3.jpg"/>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var oInner = document.querySelector("#inner");
+    var num = 0;
+    var interval = 3000;
+    window.setInterval(function () {
+        num++;
+        interval = 4000;
+        if (num >= 3) {
+            oInner.style.marginLeft = "0px";
+            num = 0;
+            return;
+        }
+        oInner.style.marginLeft = -(num * 1000) + "px";
+    }, interval);
+
+    //1、时间因子设置为1000是不可以的，第一次没问题，1000ms后触发动画，1s运动完成，但是定时器也在进行中，下一次立马执行了动画，没有间隔的时间，到第三次基本上就看不到了
+    //2、所以我们需要把时间因子动态的控制，第一次3000ms，但是后期的每一次，需要把动画运行的1s减去
+
+    //扩展：回去后做一个点击左右按钮实现css3动画运动的轮播图
+</script>
+</body>
+</html>

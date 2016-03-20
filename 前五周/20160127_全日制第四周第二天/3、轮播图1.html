@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训-轮播图</title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        .outer {
+            position: relative;
+            margin: 0 auto;
+            width: 1000px;
+            height: 300px;
+            overflow: hidden;
+            box-shadow: 3px 3px 10px 0 #ccc;
+        }
+
+        .inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 300px;
+        }
+
+        .inner div {
+            float: left;
+            width: 1000px;
+            height: 300px;
+            background: url("img/default.gif") no-repeat center center;
+        }
+
+        .inner div img {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="inner" id="inner">
+
+    </div>
+</div>
+
+<script charset="utf-8" type="text/javascript" src="js/animate.js"></script>
+<script type="text/javascript">
+    var inner = document.getElementById("inner");
+    var imgList = inner.getElementsByTagName("img");
+
+    //->动态的绑定数据
+    var ary = ["img/banner1.jpg", "img/banner2.jpg", "img/banner3.jpg", "img/banner4.jpg"];
+    function bindData() {
+        var str = "";
+        for (var i = 0; i < ary.length; i++) {
+            str += "<div><img src='' trueImg='" + ary[i] + "'/></div>";
+        }
+        inner.innerHTML = str;
+        inner.style.width = ary.length * 1000 + "px";
+    }
+    bindData();
+
+    //->图片延迟加载
+    function lazyImg() {
+        for (var i = 0; i < imgList.length; i++) {
+            ~function (i) {
+                var curImg = imgList[i];
+                var oImg = new Image;
+                oImg.src = curImg.getAttribute("trueImg");
+                oImg.onload = function () {
+                    curImg.src = this.src;
+                    animate(curImg, {opacity: 1}, 500);
+                }
+            }(i);
+        }
+    }
+    window.setTimeout(lazyImg, 500);
+
+    //->实现自动轮播
+    var step = 0;//->存储当前显示的是第几张图片 0显示第一张 1显示第二张...
+    var autoTimer = null;
+    function moveImg() {
+        step++;
+        animate(inner, {left: -step * 1000}, 500);
+
+        if (step === (ary.length - 1)) {
+            window.clearInterval(autoTimer);
+        }
+    }
+    autoTimer = window.setInterval(moveImg, 3000);
+</script>
+</body>
+</html>

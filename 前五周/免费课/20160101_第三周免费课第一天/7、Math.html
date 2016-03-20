@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Math</title>
+</head>
+<body>
+<script type="text/javascript">
+    //Math是一个对象,里面提供了很多操作数字的相关方法
+    //->typeof Math ->"object"
+    //->console.dir(Math)
+    //->相当于
+    //    var Math = {
+    //        abs: function () {
+    //        }
+    //    };
+
+    //1、Math.abs ->获取绝对值
+    //Math.abs(-100); ->100
+
+    //2、Math.ceil ->向上取整
+    //    Math.ceil(12.6) ->13
+    //    Math.ceil(12.000001) ->13
+    //    Math.ceil(12) ->12
+    //    Math.ceil(-12.6) ->-12
+
+    //3、Math.floor ->向下取整
+    //    Math.floor(12.6) ->12
+    //    Math.floor(12.9999) ->12
+    //    Math.floor(13) ->13
+    //    Math.floor(-12.6) ->-13
+
+    //4、Math.round ->四舍五入
+    //    Math.round(12.6) ->13
+    //    Math.round(12.5) ->13
+    //    Math.round(12.4) ->12
+    //    Math.round(-12.6) ->-13
+    //    Math.round(-12.4) ->-12
+    //    Math.round(-12.5) ->-12
+
+    //5、Math.max / Math.min ->获取一堆数中的最大值和最小值
+    //    Math.max(12, 23, 13, 24, 23, 24, 25, 34, 15); ->34
+    //    Math.min(12, 23, 13, 24, 23, 24, 25, 34, 15); ->12
+
+    //6、Math.random ->获取[0-1)之间的随机小数
+    //扩展:获取[n-m]之间的随机整数
+    //Math.round(Math.random()*(m-n)+n)
+
+    //例如：获取[1-100]之间的随机整数
+    //var ran = Math.round(Math.random() * (100 - 1) + 1);
+    //console.log(ran);
+
+
+    //面试题:
+    //在[0-61]之间随机获取四个整数
+    //    var ary = [];
+    //    for (var i = 0; i < 4; i++) {
+    //        var ran = Math.round(Math.random() * (61 - 0) + 0);
+    //        ary[ary.length] = ran;//->ary.push(ran); 向数组末尾增加元素
+    //    }
+    //    console.log(ary);
+
+    //在[0-61]之间随机获取四个不重复的整数
+    //    var ary = [];
+    //    for (var i = 0; i < 4; i++) {
+    //        var ran = Math.round(Math.random() * 61);//->随机获取值
+    //        //判断我们本次循环得到的值是否在数组中存在,存在的话从新的获取,不存在的话才存进去
+    //        if (ary.indexOf(ran) > -1) {//->数组中已经存在这一项了
+    //            i--;
+    //            continue;
+    //        }
+    //        ary[ary.length] = ran;
+    //    }
+    //    console.log(ary);
+
+    //这个需求我们用while循环来处理：for循环通常应用于知道具体的循环次数(开始和结束的值都知道)、对于不知道具体要循环多少次的情况下我们使用while循环
+    //    for (var i = 0; i < 5; i++) {
+    //        console.log(i);
+    //    }
+    //    var i = 0;
+    //    while (i < 5) {
+    //        console.log(i);
+    //        i++;
+    //    }
+
+    var ary = [];
+    while (ary.length < 4) {
+        var ran = Math.round(Math.random() * 61);
+        if (ary.indexOf(ran) === -1) {
+            //->数组中还没有这一项
+            ary[ary.length] = ran;
+        }
+    }
+    console.log(ary);
+
+</script>
+</body>
+</html>

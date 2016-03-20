@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数组类型转换</title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、把其他的数据类型转换为number类型
+    //Number()->严格
+    //parseFloat/parseInt ->非严格
+    //isNaN(value) 如果value值不是数字类型的,它是首先调用Number转换为数字类型然后在判断是否为有效的数字
+    //例如:
+    //Number("12px"); ->NaN
+    //parseInt("12px"); ->12
+    //isNaN("12"); ->false
+
+    //规律:
+    //1)把布尔类型转换为数字的话 true->1  false->0
+    //2)把null/undefined转换为数字 null->0  undefined->NaN
+    //10+null=10   10+undefined=NaN
+    //3)把[]转换为数字 首先调用数组的toString方法把[]->""，然后在使用Number方法把""->0
+
+
+    //2、把其他的数据类型转换为布尔类型
+    //Boolean
+    // !!
+    // ! 先转换为布尔类型,然后在取反
+
+    //例如:
+    //!!1->true
+    //!!0->false
+    // ![]->false  !![]->true
+
+    //规律:
+    //只有0、NaN、null、undefined、""这五个转换为布尔类型的时候是false,其余的转换完成都是true
+
+    //特殊情况:
+    //如果你的条件判断中只是单独的一个值,它是首先把1转换布尔类型(->true),在判断是真还是假,如果是真条件成立,反之条件不成立
+    //    if (1) {
+    //
+    //    }
+
+    //    if ("3px" * 3) {//->条件不成立  "3px" * 3=NaN  ->false
+    //    }
+    //
+    //    if ("3px" + 3) {//->条件成立  "3px" + 3="3px3"  ->true
+    //    }
+    //"+"在JS中不仅仅是数学运算,遇到字符串的时候属于字符串拼接
+    //"-、*、/"在JS中只能是数学运算,遇到不是number类型的要强制转换为number进行数学性运算
+
+
+    //3、两个值进行比较(==比较的,===比较数据类型不一样不会进行默认的转换)，如果左右两边的数据类型不一样,我们需要遵循一套法则,进行默认的数据类型转换
+    //value1==value2
+    //1)对象==对象  比较的是自己存储的内存地址,如果内存地址不一样就不相等  []==[]->false 每一个空数组都是一个单独的内存地址
+
+    //2)对象==字符串 调用toString方法,将对象转换为字符串  []==""->true
+
+    //3)对象==布尔  对象转换为数字(toString-Number),布尔也转换为数字(true->1 false->0)
+    //[]==false ->true  []->0 false->0 0==0->true
+    //![]==false -> ![]先把空数组转换为布尔类型然后在取反->false   false==false->true
+
+    //4)对象==数字 对象转换为数字  []==0->true  []==1->false
+
+    //5)字符串==布尔  两者都转换为数字   "3"==true->false  "1"==true->true
+
+    //6)字符串==数字  字符串转换为数字  ""==0->true
+
+    //7)布尔==数字  布尔转换为数字  true==1->true  true==2->false
+
+    //8)null==undefined ->true   null===undefined ->false
+    //null/undefined和其他的任何值都不相等  null==0->false
+
+    //9)NaN==NaN ->false  NaN和任何的值(包括自己)都不相等
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>获取数组的最大值和最小值</title>
+</head>
+<body>
+<script type="text/javascript">
+    var ary = [12, 23, 34, 14, 35, 16];
+
+    //2、利用obj存储(仅作参考)
+    //    var min = max = null;
+    //    var obj = {};
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        obj[cur] = cur;
+    //    }
+    //    var count = 0;
+    //    for (var key in obj) {
+    //        count++;
+    //        if (count === 1) {
+    //            min = key;
+    //        }
+    //    }//console.log(key);//->for in循环结束后,key此时存储的值就是最后一次循环的key的值
+    //    max = key;
+    //    console.log(min, max);
+
+
+    //1、先排序,然后掐头去尾
+    //    ary.sort(function (a, b) {
+    //        return a - b;
+    //    });
+    //    var max = ary[ary.length - 1];
+    //    var min = ary[0];
+    //    console.log(max, min);
+
+    //3、假设法
+    //我们假设数组中的第一个值是最大的,然后和剩下的项进行依次的比较,如果比我们假设的值还要大,说明假设的值是错误的,把当前的项的值从新设置为当前假设的最大值
+    //    var max = min = ary[0];
+    //    for (var i = 1; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        cur > max ? max = cur : null;
+    //        cur < min ? min = cur : null;
+    //    }
+    //    console.log(max, min);
+
+    //4、借用Math的max/min方法实现数组的最大值和最小值的获取
+    //Math.max/Math.min 获取一堆数中的最大值和最小值,需要把比较的数字一个个的传递进来才可以
+    //Math.max(12,23,34,14,35,16) ->35
+
+    //原理:apply在操作的时候,虽然传递进来的是一个数组,但是和call一样相当于一个个的给max方法传递的参数值
+    var max = Math.max.apply(null, ary);
+    var min = Math.min.apply(null, ary);
+    console.log(max, min);
+
+    //不行的
+    //    var str = ary.toString();//->"12,23,34,14,35,16"
+    //    var max = Math.max("12,23,34,14,35,16");//->NaN
+
+    //eval:把字符串转换为JS表达式执行 ->用它也不行
+    //console.log(eval("12+23+34"));//->69
+    //eval("12,23,34,14,35,16") ->16
+    //括号表达式
+    //一个括号中有多项值(中间用逗号隔开),最后的我们获取到的结果只有最后一项的值
+    //(function(){console.log(1)},function(){console.log(2)})();//->2
+</script>
+</body>
+</html>

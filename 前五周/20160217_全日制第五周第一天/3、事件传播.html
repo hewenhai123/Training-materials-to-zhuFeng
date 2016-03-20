@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+
+        #inner {
+            padding: 20px;
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+
+        #center {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var outer = document.getElementById("outer"), inner = document.getElementById("inner"), center = document.getElementById("center");
+
+    //    document.body.onclick = function () {
+    //        console.log("body");
+    //    };
+    //
+    //    outer.onclick = function () {
+    //        console.log("outer");
+    //    };
+    //
+    //    inner.onclick = function () {
+    //        console.log("inner");
+    //    };
+    //
+    //    center.onclick = function (e) {
+    ////        e = e || window.event;
+    ////        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+    //        console.log("center");
+    //    };
+
+    //->当我触发当前元素的某个行为，它父级所有元素的相关行为也都会被触发->我们把这种机制叫做事件冒泡传播(冒泡传播机制是浏览器天生自带的)
+    //->使用它来阻止元素默认的冒泡传播机制：e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+
+
+    //->浏览器默认的事件传播机制：冒泡阶段、捕获阶段、目标阶段(有的说是只有捕获和冒泡，也有的认为是先捕获，在目标，在冒泡)
+    //->冒泡传播指的是在冒泡阶段发生
+
+    //->我们使用DOM2级事件绑定可以控制在捕获阶段发生
+    //center.addEventListener("click",function(){},false); ->第一个参数是行为，第二个参数是给行为绑定的方法，第三个参数false:在冒泡阶段发生,true:在捕获阶段发生
+    document.body.addEventListener("click", function () {
+        console.log("body");
+    }, false);
+
+    outer.addEventListener("click", function () {
+        console.log("outer");
+    }, true);
+
+    inner.addEventListener("click", function () {
+        console.log("inner");
+    }, false);
+
+    center.addEventListener("click", function () {
+        console.log("center");
+    }, false);
+
+    //->当我点击center分别输出什么:outer center inner body
+    //->DOM0级事件绑定默认都是在冒泡阶段发生
+</script>
+</body>
+</html>

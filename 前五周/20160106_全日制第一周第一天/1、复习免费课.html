@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>不要在还没有开始的时候就把自己吓死</title>
+</head>
+<body>
+<script type="text/javascript">
+    //一、
+    //1、基本数据类型(number、string、boolean、null、undefined)和引用数据类型(object:{}、[]、/^$/、Math...  function)
+    //基本数据类型是直接的操作的值的(值类型)  引用数据类型操作的是内存空间的引用地址
+    //2、typeof instanceof constructor Object.prototype.toString.call
+    //3、isNaN
+    //4、形参、arguments
+    //5、Number() parseInt/parseFloat
+
+    //二、
+    //1、getElementById("div1")  getElementsByClassName("w")[0]  getElementsByName("h")[0]  getElementsByTagName("div")[0]  querySelector/querySelectorAll...
+    //2、document.documentElement.clientWidth || document.body.clientWidth  (clientHeight)
+    //3、previousElementSibling
+
+    //"previousElementSibling" in curEle 判断previousElementSibling是否为curEle这个元素对象的一个属性，是它的属性返回true，不是返回false
+    //例如：
+    //    var obj = {name: "珠峰"};
+    //    console.log("name" in obj);//->true
+    //    console.log("age" in obj);//->false
+
+    //    function prev(curEle) {
+    //        if ("previousElementSibling" in curEle) {//->当前的浏览器支持previousElementSibling获取上一个哥哥元素节点
+    //            return curEle.previousElementSibling;
+    //        }
+    //        var pre = curEle.previousSibling;
+    //        while (pre && pre.nodeType !== 1) {
+    //            pre = pre.previousSibling;
+    //        }
+    //        return pre;
+    //    }
+
+    //4、var oDiv=document.createElement("div"); document.body.appendChild(oDiv);
+    //5、var oDiv2=oDiv.cloneNode(true);  document.body.insertBefore(oDiv2,oDiv);
+
+    //三、
+    //1、ary.pop()、ary.splice(ary.length-1,1)、ary.length--;
+    //2、ary.push(100)、ary.splice(ary.length,0,100)、ary[ary.length]=100
+    //3、ary.slice()/ary.slice(0)、ary.concat()、ary.splice(0)
+    //4、ary.sort(function(a,b){return a-b;});
+    //5、ary.slice(n-1,m)
+
+    //四、
+    //true、true、true、false、51、"false"、"true"、"ok"、""、true
+
+    //[]==false 两者都转换为数字0 ->相等
+    //![]==false 首先把![]->false  false==false ->相等
+    //[]==![] 首先把![]->false  []==false ->相等
+    //alert是把要输出的内容转换为字符串然后在进行输出的
+
+
+    //学习建议：把免费课的基础知识(尤其是我上课重点强调和我们的考试题)自己进行归纳总结，手写在一个笔记本上，以后每天晚上睡觉前看那么半个~一个小时就够了
+
+
+    //五、
+    //var ary = [12, 23, 23, 12, 24, 34, 34, 23, 34, 5, 21, 2];
+    //解决方案二:
+    //一个对象中的属性名是不允许重复的,如果之前有的话,我后面增加的都相当于把之前的值进行修改
+    //在使用for in循环遍历一个对象的属性名和属性值的时候,对于数字的属性名是提前优先遍历的,并且按照由小到大的顺序遍历
+    //1)把数组中每一项的值都分别的存储到我们的对象中,此时对象中是不会出现重复的属性名的
+    //    var newAry = [];
+    //    var obj = {};
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        obj[cur] = cur;
+    //    }
+    //2)循环我们上面的对象,把对象中的属性名在重新的添加到数组中
+    //    for (var key in obj) {
+    //        newAry[newAry.length] = obj[key];
+    //    }
+    //    obj = null;
+    //    console.log(newAry, ary);
+
+    //解决方法一：
+    //去重
+    //    var obj = {};
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        if (obj[cur] == cur) {
+    //            ary[i] = ary[ary.length - 1];
+    //            ary.length--;
+    //            i--;
+    //            continue;
+    //        }
+    //        obj[cur] = cur;
+    //    }
+    //    obj = null;
+    //    console.log(ary);
+
+    //排序
+    //    var temp = null;
+    //    for (var i = 0; i < ary.length - 1; i++) {
+    //        for (var j = 0; j < ary.length - 1 - i; j++) {
+    //            if (ary[j] > ary[j + 1]) {
+    //                temp = ary[j];
+    //                ary[j] = ary[j + 1];
+    //                ary[j + 1] = temp;
+    //            }
+    //        }
+    //    }
+    //    ary.reverse();
+    //    console.log(ary);
+
+    //六、
+    //    function sum() {
+    //        var total = null;//->0和null的区别? 0/""虽然也是没有但是他们是占一个内存位置的，而null是连内存位置都没有占；例如：0/""种树的时候我们先挖了个坑但是啥都没种，但是坑是有的，而null是连坑都没有挖；
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            var cur = Number(arguments[i]);
+    //            if (!isNaN(cur)) {
+    //                total += cur;
+    //            }
+    //        }
+    //        return total;
+    //    }
+    //    var total = sum(12, 23, 34, 45, "56", "珠峰");
+    //    console.log(total);
+
+    //七、
+    //    function getRandom(n, m) {
+    //        n = Number(n);
+    //        m = Number(m);//->强制转换后n/m只有两种情况:有效数字、NaN
+    //
+    //        //只要n/m有一个不是有效的数字我们就返回[0~1)之间的随机小数
+    //        if (isNaN(n) || isNaN(m)) {
+    //            return Math.random();
+    //        }
+    //
+    //        //如果n的值大于m的中让n和m互换值
+    //        if (n > m) {
+    ////            var temp = n;
+    ////            n = m;
+    ////            m = temp;
+    //
+    ////            a-12 b-13
+    ////            a=a+b; ->25
+    ////            b=a-b; ->12
+    ////            a=a-b; ->13
+    //            n = n + m;
+    //            m = n - m;
+    //            n = n - m;
+    //        }
+    //        return Math.round(Math.random() * (m - n) + n);
+    //    }
+    //    getRandom("a", 100);
+    //    getRandom();//n->undefined m->undefined
+</script>
+</body>
+</html>

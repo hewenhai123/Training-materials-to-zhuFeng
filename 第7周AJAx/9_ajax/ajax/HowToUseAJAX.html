@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--当你实现任何一个功能之前，都需要先考虑兼容性-->
+    <!--1、渐进增强；2、优雅降级-->
+    <script>
+        // 在标准浏览器中
+        // XMLHttpRequest这对象中封装了http的一些相关操作
+        // chrome firefox opera safari ie7+
+        var xhr = new XMLHttpRequest();
+
+        // ActiveXObject这个对象是封装了一些系统内部多媒体接口，通过传参数调用指定的多媒体对象，来实现响应的功能
+        //ie6+
+        var ieXHR1 = new ActiveXObject('Microsoft.XMLHTTP');
+        var ieXHR2 = new ActiveXObject('Msxml2.XMLHTTP');
+        var ieXHR3 = new ActiveXObject('Msxml3.XMLHTTP');
+
+        var log = function () {
+            console.log('if');
+            return true;
+        };
+        /**
+         * 根据用户浏览器，自动生成合适的ajax对象
+         */
+        var getXHR = function () {
+
+            if (window.XMLHttpRequest && log()) {
+
+                return new XMLHttpRequest();
+            }
+            return new ActiveXObject('Microsoft.XMLHTTP');
+        };
+        console.log(getXHR());
+
+        var sj_getXHR = function () {
+            if (window.XMLHttpRequest && log()) {
+                sj_getXHR = function () {
+                    return new XMLHttpRequest();
+                };
+                return new XMLHttpRequest();
+            }
+            return new ActiveXObject('Microsoft.XMLHTTP');
+        };
+
+        var zsj_getXHR = (function () {
+            if (window.XMLHttpRequest) {
+                return function () {
+                    return new XMLHttpRequest;
+                }
+            }
+            return function () {
+                return new ActiveXObject('Microsoft.XMLHTTP');
+            }
+        })();
+
+        // 这种写法就叫做惰性函数
+
+        //1、获取ajax对象的实例
+
+        var xhr = zsj_getXHR();
+
+        // 开始初始化http request
+        /**
+         * 第一个参数 http方法 {string} get|post|put|delete|head
+         * 第二个参数 请求的路径 {string}
+         * 第三个参数 是否为异步 {boolean} 默认为true
+         * 第四个参数 用户名 {string}
+         * 我五个参数 密码 {string}
+         */
+        xhr.open('get', '/', true, 'username', 'password');
+        /**
+         * 每当xhr对象的readyState改变的时候，都会触发一次这个方法
+         */
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+//            if(this.readyState===this.DONE){
+
+            }
+        };
+
+        // 什么是xhr对象的readyState?
+        // readyState表示的是当前xhr的状态都哪一步
+        /**
+         * 0、UNSENT 初始化ajax对象 默认值就是0
+         * 1、OPENED 已经执行ajax对象的open方法
+         * 2、HEAD_RECEIVED 开始接收响应首部
+         * 3、LOADING 响应首部接收完成 开始接受响应主体
+         * 4、DONE 全部完成
+         */
+
+        /**
+         * 发送已经准备好的http request
+         * send方法会把参数放到请求主体里
+         * 所以get系http方法都不需要传参数
+         */
+        xhr.send();
+
+        /**
+         * 当ajax为同步请求的时候，如果ajax的事务没有完成，则send方法后面的逻辑都不会执行
+         * 异步则不存在这种状况
+         */
+        console.log(1);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #008000;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>98</li>
+    <li>99</li>
+    <li>96</li>
+    <li>95</li>
+    <li>90</li>
+</ul>
+
+<script charset="utf-8" type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //1、获取需要排序的列表(元素集合)
+    var oUl = document.getElementById("ul1"), oLis = oUl.getElementsByTagName("li");
+
+    //2、把元素集合类数组转换为数组->之前的oLis对应的堆内存和我们ary对应的堆内存,虽然里面存储的是相同的li,但是不是同一个堆内存,ary的堆内存发生改变对oLis不会产生任何的影响
+    var ary = utils.listToArray(oLis);
+
+    //3、给存储每一个li的ary这个集合进行排序->按照每一个li中的内容从小到大进行排序
+    ary.sort(function (a, b) {
+        return parseFloat(a.innerHTML) - parseFloat(b.innerHTML);
+    });
+
+    //4、按照ary中最新的顺序在把我们的li重新添加到页面中
+    for (var i = 0; i < ary.length; i++) {
+        oUl.appendChild(ary[i]);
+    }
+</script>
+</body>
+</html>

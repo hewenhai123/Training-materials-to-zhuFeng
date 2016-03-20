@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 500%;
+
+            background: #ffe470;
+            background: -webkit-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: -moz-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: -ms-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: -o-linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+            background: linear-gradient(top left, #008000, #08BECE, #ff3333, #ffe470);
+        }
+
+        #div1 {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            cursor: pointer;
+
+            border-radius: 50%;
+            box-shadow: 3px 3px 10px 0 #000000;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //->直接回到顶部
+    //    var oDiv = document.getElementById("div1");
+    //    oDiv.onclick = function () {
+    //        utils.win("scrollTop", 0);
+    //    };
+
+    //->一秒钟匀速回到顶部
+    //每隔10ms走一步,步长=(总距离/1000)*10
+    var oDiv = document.getElementById("div1");
+    oDiv.onclick = function () {
+        //计算步长
+        //->utils.win("scrollTop") 当点击的时候获取当前的scrollTop值,减去目标值0,就是我们接下来要运动的总距离
+        var step = (utils.win("scrollTop") / 1000) * 10;
+
+        //每隔10ms在当前的scrollTop的基础上减去步长,就是我们每一步在向目标运动
+        var timer = window.setInterval(function () {
+            var curT = utils.win("scrollTop");//->每一次执行都先获取当前的scrollTop值
+
+            if (curT <= 0) {//->如果当前的scrollTop的值已经<=0,说明已经运动到目标位置了,结束动画
+                utils.win("scrollTop", 0);
+                window.clearInterval(timer);
+                return;
+            }
+
+            utils.win("scrollTop", curT - step);//->再让页面的scrollTop从当前基础上减去步长
+        }, 10);
+    };
+
+
+    //前两章讲的11个盒子模型的属性都是"只读的":我们只能通过属性获取值,但是不能通过这些属性把元素的样式进行改变
+    //scrollTop/scrollLeft是"可读写"的属性:既可以获取,也可以修改
+    //->获取和操作的是滚动条卷去的高度/宽度
+
+    //->它们是存在最大值和最小值的
+    //最小值一般都是0,当我设置的值小于0的时候,不仅效果没有起到任何的作用,而且对应的值也不在发生变化
+    //    console.log(document.documentElement.scrollTop||document.body.scrollTop);//->0
+    //    document.documentElement.scrollTop=-100;
+    //    document.body.scrollTop=-100;
+    //    console.log(document.documentElement.scrollTop||document.body.scrollTop);//->0
+
+    //对于一整个页面来说最大值:页面的真实高度-一屏幕的高度
+    //var maxT = (document.documentElement.scrollHeight || document.body.scrollHeight) - (document.documentElement.clientHeight || document.body.clientHeight);
+</script>
+</body>
+</html>

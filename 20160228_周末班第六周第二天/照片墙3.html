@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训照片墙</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .box {
+            margin: 50px auto;
+            padding: 0 10px 10px 0;
+            width: 480px;
+            height: 480px;
+            background: #ffe470;
+        }
+
+        .box li {
+            float: left;
+            margin: 10px 0 0 10px;
+            width: 150px;
+            height: 150px;
+            background: lightblue;
+            cursor: move;
+        }
+
+        .box li img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<ul class="box" id="box">
+    <li><img src="img/1.png" alt=""></li>
+    <li><img src="img/2.png" alt=""></li>
+    <li><img src="img/3.png" alt=""></li>
+    <li><img src="img/4.png" alt=""></li>
+    <li><img src="img/5.png" alt=""></li>
+    <li><img src="img/6.png" alt=""></li>
+    <li><img src="img/7.png" alt=""></li>
+    <li><img src="img/8.png" alt=""></li>
+    <li><img src="img/9.png" alt=""></li>
+</ul>
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript" src="js/zhufengAnimate.js"></script>
+<script type="text/javascript" src="js/drag.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById("box"), boxList = box.getElementsByTagName("li");
+
+    for (var i = boxList.length - 1; i >= 0; i--) {
+        var curLi = boxList[i];
+        curLi.originLeft = curLi.offsetLeft;
+        curLi.originTop = curLi.offsetTop;
+        zhufengAnimate.setGroupCss(curLi, {
+            position: "absolute",
+            margin: 0,
+            top: curLi.originTop,
+            left: curLi.originLeft
+        });
+
+        zhufengEvent.on(curLi, "mousedown", down);
+        zhufengEvent.on(curLi, "zhufengDragStart", function (e) {
+            e.preventDefault();
+        });
+        zhufengEvent.on(curLi, "zhufengDragStart", increaseIndex);
+        zhufengEvent.on(curLi, "zhufengDragMove", boxMove);
+        zhufengEvent.on(curLi, "zhufengDragEnd", goHome);
+    }
+
+    //->在盒子移动的过程中进行碰撞检测:让当前移动的盒子和其它所有的盒子都做一下碰撞检测,如果碰上了,让碰撞的盒子的背景颜色都变为红色,否则没碰上的恢复原来的颜色
+    function boxMove() {
+        for (var i = 0; i < boxList.length; i++) {
+            var curLi = boxList[i];
+            if (this === curLi) {//->不用和自己检测
+                continue;
+            }
+            if (test(this, curLi)) {//->让当前这个和每一个li分别的检测,如果条件成立的话,说明碰上了
+                curLi.style.backgroundColor = "red";
+            } else {
+                curLi.style.backgroundColor = "lightBlue";
+            }
+        }
+    }
+
+    //->检测是否碰撞上 a->当前移动的盒子 b->当前需要碰撞检测的盒子
+    function test(a, b) {
+        //->没有碰撞上
+        if ((a.offsetLeft + a.offsetWidth) < b.offsetLeft || (a.offsetTop + a.offsetHeight) < b.offsetTop || a.offsetLeft > (b.offsetLeft + b.offsetWidth) || a.offsetTop > (b.offsetTop + b.offsetHeight)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function goHome() {
+        zhufengAnimate(this, {
+            left: this.originLeft,
+            top: this.originTop
+        }, 300, 3);
+        this.style.backgroundColor = "lightBlue";
+    }
+
+    var zIndex = 0;
+    function increaseIndex() {
+        zhufengAnimate.setGroupCss(this, {
+            zIndex: ++zIndex,
+            backgroundColor: "darkBlue"
+        });
+    }
+</script>
+</body>
+</html>

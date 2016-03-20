@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //一般默认情况下，函数执行里面的私有变量在函数的外面是无法获取到具体的值的
+    //但是JS中提供了返回值的机制,可以让我们获取到函数体中的内容
+
+    function sum() {
+        var total = 0;
+        total = 1 + 1;
+
+        return 100;//->return就是返回机制,想在外面用哪个值,我们就把哪个值返回 ->在这里我们是把私有变量total的值返回了 ->return 2; (return返回的其实都是一个值)
+        //例如：return 1 > 1 ? 2 : 0; 首先计算三元运算符的结果，发现是0，其实我们返回的是0 ->return 0;
+        console.log("哈哈哈~~");//->因为写在了return的后面所以这句话就不在执行了
+    }
+
+    //    var a = sum();//->sum执行,返回了一个值,我在函数的外面定义一个变量a来接收函数的返回的值 ->a=2
+    //    console.log(a);
+
+    var total = sum();//->函数体中的total是私有的变量和外面我们定义的total是没有任何的关系的,我们当前只是让外面的total等于sum执行给我们返回的值
+    console.log(total);//->100  想知道函数执行的返回结果是什么,只需要看函数体中是否有return,有的话，return的值是谁,那么函数的返回值就是谁；没有的话,默认的返回值是undefined（代表函数非常懒，执行一圈啥也没有返回）；
+
+    //在函数体中,return不仅仅可以返回值，而且return后面的代码是不在执行的
+</script>
+</body>
+</html>

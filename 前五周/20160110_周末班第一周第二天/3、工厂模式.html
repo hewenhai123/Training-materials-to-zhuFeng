@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var jsPerson1 = {
+    //        name: "王浩宇",
+    //        age: 16,
+    //        writeJs: function () {
+    //            console.log("my name is " + this.name + ",my age is " + this.age + ",i can write js la~~~");
+    //        }
+    //    };
+    //
+    //    var jsPerson2 = {
+    //        name: "张宏逸",
+    //        age: 61,
+    //        writeJS: function () {
+    //            console.log("my name is " + this.name + ",my age is " + this.age + ",i can write js la~~~");
+    //        }
+    //    };
+
+    //单例模式虽然解决了我们的分组问题,但是属于传统的手工作业模式,编写的时候需要一个个的编写,浪费时间,而且页面中存在大量的重复的垃圾代码(冗余代码)
+    //第二次工业革命:实现批量生产 ->"工厂模式"
+    //工厂模式其实就是把需要一个个的编写的对象,放在一个函数中统一的进行创建,这样的话,在想创建一个前端开发攻城狮,我们不需要再一个个的编写了,只需要执行这个函数即可
+    //    function createJsPerson(name, age) {
+    //        var obj = {};
+    //        obj.name = name;
+    //        obj.age = age;
+    //        obj.writeJs = function () {
+    //            console.log("my name is " + this.name + ",my age is " + this.age + ",i can write js la~~~");
+    //        };
+    //        return obj;
+    //    }
+    //    var jsPerson1 = createJsPerson("王浩宇", 16);
+    //    jsPerson1.writeJs();
+    //
+    //    var jsPerson2 = createJsPerson("张宏逸", 61);
+    //    jsPerson2.writeJs();
+
+    //工厂模式:把实现相同功能的JS代码封装到一个函数中,以后再想实现这个功能,不需要重新的编写这些JS代码了,只需要执行这个函数即可
+    //->低耦合高内聚:减少页面中的冗余代码，提高代码的重复利用率
+    //->我们把工厂模式的编写方式叫做"类的封装"
+
+
+    //类的多态->多种形态:重载、重写
+    //[后台]
+    //重载:方法名相同,参数的个数或者类型不同
+    //    public(private/static) void(String/int/float/double/Object/Array...) sum(int num1,int num2){
+    //
+    //    }
+
+    //    public void sum(int num1,int num2){
+    //        response.write("ok");//->后台语言的输出,等价于前台的document.write
+    //    }
+    //    public void sum(String num1){
+    //        response.write("no");
+    //    }
+    //    sum(100,200);//->ok
+    //    sum("haha");//->no
+
+    //[前台]
+    //JS中从严格意义上来讲的话,是不存在重载的,因为只要方法名重复了,后面的会把前面的覆盖掉,这样不管传递的是啥,有效的永远是最后一个函数
+    //    sum(100,200);//->no
+    //    function sum(num1, num2) {
+    //        console.log("ok");
+    //    }
+    //    function sum(num1){
+    //        console.log("no");
+    //    }
+    //    sum(100);//->no
+
+    //但是如果非要强行说JS有重载:同一个方法,很据传递参数的不一样实现不一样的操作功能
+    //    function sum(num1, num2) {
+    //        //通过判断num2是否传递了值来进行不同的操作的处理
+    //        if (typeof num2 === "undefined") {
+    //            return "ok";
+    //        }
+    //        return "no";
+    //    }
+    //    sum(100);
+    //    sum(100, 200);
+
+    //重写:子类重写父类的方法,JS中是存在重写的
+</script>
+</body>
+</html>

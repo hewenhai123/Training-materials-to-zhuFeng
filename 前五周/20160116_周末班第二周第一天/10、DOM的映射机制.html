@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #008000;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>98</li>
+    <li>99</li>
+    <li>96</li>
+    <li>95</li>
+    <li>90</li>
+</ul>
+
+<script charset="utf-8" type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //页面中的HTML标签和我们JS中的元素对象是紧紧的绑定在一起的,一个发生改变,另外一个也会跟着发生改变-->"DOM的映射机制"
+
+    var oUl = document.getElementById("ul1"), oLis = oUl.getElementsByTagName("li");
+
+    console.log(oLis.length);//->5
+
+    var oLi = document.createElement("li");
+    oUl.appendChild(oLi);
+
+    console.log(oLis.length);//->6 我们增加一个li后,不需要重新的获取,也可以获取到最新的长度值了;因为我们当前的这个oLis元素集合和我们页面中的oUl这个容器是存在映射机制的,当页面中ul中增加一个li,我们的oLis也会自动的跟着增加一个li...
+
+
+</script>
+</body>
+</html>

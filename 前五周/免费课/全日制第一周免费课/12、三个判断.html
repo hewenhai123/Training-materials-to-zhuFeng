@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //三个判断
+    //1、if、else if、else ->整个JS中最常用的一个判断,它能处理所有的判断需求
+    //&&:所有的小条件都成立,整个大条件才成立
+    //||:只要有一个条件成立,整个大条件就成立
+    //    var num = 12;
+    //    if (num < 0) {
+    //        console.log("负数");
+    //    } else if (num >= 0 && num <= 10) {
+    //        console.log("0-10");
+    //    } else {
+    //        //以上条件都不成立
+    //        console.log(">10");
+    //    }
+    //    //->">10"
+
+    //赵守涛下班回家，他媳妇说"老公啊,回来买三个馒头,遇到卖西瓜的买一个"
+    //赵守涛回到家,手里面拎着一个馒头
+    //他媳妇问为啥只卖一个,他说"我遇到卖西瓜的了"
+
+    //2、三元运算符->简单的if、else条件处理
+    //    var num = 13;
+    //    //    if (num > 13) {
+    //    //        num++;//num+=1 num=num+1 ->在自身的基础上累加1
+    //    //    } else {
+    //    //        num--;
+    //    //    }
+    //    num > 13 ? num++ : num--;//->条件?条件成立执行:条件不成立执行;
+    //    console.log(num);//->12
+
+    //3、switch case ->应用于一个变量在不同值情况下的不同的操作
+    var num = "5";
+    if (num == 0) {
+        console.log("0");
+    } else if (num == 5) {
+        console.log("5");
+    } else if (num == 10) {
+        console.log("10");
+    } else {
+        console.log("no");
+    }
+    //->5
+
+    //->每一种case情况结束后都不要忘记加break; 思考题:回去后分析不加break会出现什么情况?
+    num = "5";
+    switch (num) {
+        case 0:
+            console.log(0);
+            break;
+        case 5:
+            console.log(5);
+            break;
+        case 10:
+            console.log(10);
+            break;
+        default://->相当于else,以上都不成立执行的代码
+            console.log("no");
+    }
+    //->"no"
+    //每一种case情况都相当于用===进行比较,在真实的项目中,对于严谨的开发团队是要求比较的时候用===进行的
+</script>
+</body>
+</html>

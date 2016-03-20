@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var foo = 'hello';
+    //    (function (foo) {
+    //        //->给形参赋值 foo='hello'; ->在这个私有作用域中的foo都是私有的变量
+    //        console.log(foo);//->'hello'
+    //
+    //        foo = foo || 'world';//->'hello'||'word'
+    //
+    //        console.log(foo);//->'hello'
+    //
+    //    })(foo);//->把全局作用域下的foo的值'hello'赋值给自执行函数中的形参foo
+    //    console.log(foo);//->'hello'
+
+    //逻辑或 ||  逻辑与 &&
+    //1、在if判断中
+    //if(1==1 || 2==3){}//->两个条件中只要有一个条件为真,整体就为真 "或者"
+    //if(1==1 && 2==3){}//->两个条件中只有条件都为真,整体就为真 "并且"
+
+    //2、是两个值求其中一个的时候
+    //1||2 ->1 "逻辑或" 首先看左边的值是真还是假,如果是真,返回的是左边的值,如果是假返回的是右边的值
+
+    //1&&2 ->2 "逻辑与" 首先看左边的值是真还是假,如果是真,返回的是右边的值,如果是假返回的是左边的值
+
+    //如何看真假?
+    //只有 0、NaN、null、undefined、空字符串 为假,其余都是真
+
+    //我们在真实项目中应用逻辑或进行数据的初始化
+    //需求:求两个数的和,如果第二个数没有传递的话,我们默认加零
+    function sum(num1, num2) {
+//        if (typeof num2 === "undefined") {//->说明num2没有传递值,默认值是undefined,此时我们让它的值变为0
+//            num2 = 0;
+//        }
+        num2 = num2 || 0;//->undefined||0 ->num2=0 等价于上面的判断
+        console.log(num1 + num2);
+    }
+    //sum(100);//->num1=100 num2=undefined
+
+    //3、当||和&&同时出现的时候,&&的优先级大于||
+    console.log(0 || 1 && 2 || 3);
+    //1 && 2 ->2
+    //0 || 2 ->2
+    //2 || 3 ->2
+</script>
+</body>
+</html>

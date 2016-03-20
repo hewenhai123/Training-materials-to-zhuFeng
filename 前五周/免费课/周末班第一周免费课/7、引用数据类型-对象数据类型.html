@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、每一个对象数据类型都是由多个属性名和属性值组成的，我们把属性名:属性值称之为"键值对"(key:value)
+    //属性:描述一个对象的特征和特点的
+    //var obj = {name: "陈宏", age: 17};
+
+    //2、JS中规定我们一个对象的属性名是不能够重复的,如果重复了是以最后一个属性值为主,例如:下面的例子中age的值保留的是最后一个19
+    //var obj = {name: "陈宏", age: 17, age: 19};
+
+    //3、关于对象的属性名和属性值的 “增、删、改、查”
+    //var obj = {};
+    //增加
+    //obj.name = "张静怡";//->对象名.属性名=属性值
+    //obj["age"] = 18;//->对象名["属性名"]=属性值
+
+    //修改->之前没有这个属性名就是增加一个，之前有的话就是修改属性值
+    //obj.age = 19;
+    //obj["name"] = "大美女张静怡";
+
+    //获取指定属性名对应的属性值->写"="是增加或者修改,不写的话其实就是在获取值
+    //console.log(obj["name"]);//->"大美女张静怡"
+    //console.log(obj.age);//->19
+
+    //删除
+    //假删除:只是把属性值变为null,属性姓名还是存在的
+    //obj["age"] = null;
+
+    //真删除:把属性名和属性值都彻底删掉
+    //delete obj["age"];
+
+
+    //4、关于object中的一些细节知识点
+    //1)在获取的时候如果属性名在对象中不存在的话,获取的属性值是undefined
+    //var obj = {};
+    //console.log(obj.name);//->undefined
+
+    //2)一个对象中的属性名可以是纯数字
+    //var obj = {1: 100, 2: 200};//->1和2都是我们的属性名
+    //console.log(obj["1"]);//->100
+    //console.log(obj[1]);//->100 对于纯属字的属性名我们操作的时候""加或者不加都是可以的，但是对于name这种的,一定要加""
+    //console.log(obj.1);//->对于纯数字的属性名就不能用 对象.数字属性名 的方式来操作了,语法不支持
+
+    //3)对于属性名操作的时候加""和不加的区别
+    var obj = {num: 100};
+    console.log(obj["num"]);//->100 获取obj中叫做num名字的属性对应的值
+
+    var num = "zhufeng";
+    console.log(obj[num]);//->undefined 把num这个变量存储的值"zhufeng"作为属性名，获取对应的属性值
+    //->console.log(obj["zhufeng"])
+
+
+</script>
+</body>
+</html>

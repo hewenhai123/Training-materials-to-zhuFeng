@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、对象数据类型都是由属性名和属性值组成的
+    //"属性"->一个对象的特征
+
+    //一个对象是由多个属性名和属性值组成的(多组键值对 key:value)
+    //var obj = {name: "姜章涛", age: 71, height: "128cm", weight: "170kg"};
+
+
+    //2、给一个对象增加/修改 属性名和属性值
+    //重要:JS规定一个对象中的属性名是不能够重复的,如果重复了按照最后一个对应的值为主
+    //var obj={age:12,age:18};//->age:18
+
+    var obj = {num: "001"};
+    //增加：
+    obj.name = "王莹";//对象名.属性名=属性值
+    obj["age"] = 18;//对象名["属性名"]=属性值
+
+    //修改:和增加的语法一样,如果之前对象中没有这个属性,属于增加,如果之前有,属于把之前的值进行修改
+    obj.num = "002";//->obj["num"]="002"; ->这就是在修改之前的num属性的值为"002"
+
+    //3、获取
+    //console.log(obj.name);
+    //console.log(obj["name"]);
+
+    //4、删除
+    //假删除:没有把属性删除,只是把属性中变为空
+    //obj.num = null;//->obj["num"]=null
+
+    //真删除:把属性名都删除了
+    delete obj.num;//->delete obj["num"]
+
+    //console.log(obj);
+
+
+    //需要重点记忆:
+    //一个对象中的属性名可以为纯数字
+    var obj2 = {name: "珠峰", 7: 100};
+    //7是它的一个属性名,而100是7这个属性名对应的属性值
+    //console.log(obj2.7);//->Uncaught SyntaxError: missing ) after argument list 对于纯数字的属性名我们不能这样操作
+    console.log(obj2["name"]);//->"珠峰"
+    console.log(obj2["7"]);//->100
+    //对于纯数字属性名,我们的""可加可不加,但是对于name这样的非数字的""必须加
+    console.log(obj2[7]);//->100
+</script>
+</body>
+</html>

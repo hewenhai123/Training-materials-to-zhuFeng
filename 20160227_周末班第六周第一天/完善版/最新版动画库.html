@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            cursor: move;
+            background: #ff3333;
+
+            line-height: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="box"></div>
+
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript" src="js/zhufengAnimate.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById("box");
+
+    zhufengEvent.on(box, "click", move);
+    function move() {
+        zhufengAnimate(this, {left: 1000, top: 500}, 5000, 3);
+    }
+
+    zhufengEvent.on(box, "zhufengAnimateStart", write1);
+    zhufengEvent.on(box, "zhufengAnimateEnd", write2);
+    zhufengEvent.on(box, "zhufengAnimateEnd", changeBg);
+
+    function write1() {
+        this.innerHTML = "开始";
+    }
+
+    function write2() {
+        this.innerHTML = "结束";
+    }
+
+    function changeBg() {
+        this.style.backgroundColor = "green";
+    }
+</script>
+</body>
+</html>

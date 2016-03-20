@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <!---->
+    <li>1</li>
+    <li>2</li>
+    <!---->
+    <li id="li3">3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+<script type="text/javascript">
+    //获取所有的兄弟->获取所有的哥哥/弟弟->获取上一个哥哥元素节点...
+
+    var oLi3 = document.getElementById("li3");
+
+    //1、获取上一个哥哥元素节点:previousElementSibling这个属性在IE6~8下不兼容,我们只能通过previousSibling一级级的向上查找,直到找到哥哥元素节点为止...
+    function prev(curEle) {
+        if ("previousElementSibling" in curEle) {
+            return curEle.previousElementSibling;
+        }
+        //不兼容,自己编写循环一级级的查找
+        var pre = curEle.previousSibling;
+        while (pre && pre.nodeType !== 1) {
+            pre = pre.previousSibling;
+        }
+        return pre;
+    }
+
+    //->获取所有的哥哥:基于当前往上一直找,找到头为止,在查找的过程中把所有元素节点都放在一个容器中...
+    //    function prevAll(curEle) {
+    //        var ary = [];
+    //        var pre = curEle.previousSibling;
+    //        while (pre) {
+    //            if (pre.nodeType === 1) {
+    //                ary.unshift(pre);
+    //            }
+    //            pre = pre.previousSibling;
+    //        }
+    //        return ary;
+    //    }
+
+    function prevAll(curEle) {
+        var ary = [];
+        var pre = prev(curEle);
+        while (pre) {
+            ary.unshift(pre);
+            pre = prev(pre);
+        }
+        return ary;
+    }
+
+    var res = prevAll(oLi3);
+    console.log(res);
+</script>
+</body>
+</html>

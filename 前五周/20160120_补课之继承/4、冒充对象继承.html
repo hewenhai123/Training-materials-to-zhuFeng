@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->原理:在子类B的函数体中,创建父类A的一个实例temp(此时的temp就拥有了A的私有和公有的属性),接下来把temp当做一个普通的对象进行遍历,把遍历到的私有和公有的属性分别的添加给B的实例b(这样也相当于把父类中的克隆一份一样的拿到子类上了)...
+    //->父(公有+私有) 变为 子(私有)
+
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        //this->b
+        this.y = 200;
+
+        var temp = new A;//->创建A的一个实例temp,它是一个对象数据类型,temp就拥有了A这个类的私有和公有的属性和方法 x:100 getX:function...
+        for (var key in temp) {//->for in即可以循环temp私有的,也可以循环公有的
+            this[key] = temp[key];//->第一次 b.x=temp.x=100 ...
+        }
+        temp = null;
+    }
+    var b = new B;
+</script>
+</body>
+</html>

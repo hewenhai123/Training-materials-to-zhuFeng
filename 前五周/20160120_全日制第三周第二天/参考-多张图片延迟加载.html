@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!--移动端前面必须加viewport-->
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>图片延迟加载</title>
+    <style type="text/css">
+        body, div, span, ul, li, h2, p {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+        }
+
+        #newsList {
+            padding: 10px;
+        }
+
+        #newsList li {
+            position: relative;
+            padding: 10px 0;
+            height: 60px;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        #newsList li img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 75px;
+            height: 60px;
+        }
+
+        #newsList li div {
+            height: 60px;
+            margin-left: 80px;
+        }
+
+        #newsList li h2 {
+            height: 20px;
+            line-height: 20px;
+
+            /*当一行的内容超出的时候自动进行截取并且以...结束*/
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #newsList li p {
+            height: 40px;
+            line-height: 20px;
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<ul id="newsList">
+
+</ul>
+
+<script type="text/javascript" src="js/json.js"></script>
+<script type="text/javascript">
+    function offset(curEle) {
+        var l = curEle.offsetLeft, t = curEle.offsetTop;
+        var p = curEle.offsetParent;
+        while (p.tagName.toLowerCase() != "body") {
+            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                l += p.clientLeft;
+                t += p.clientTop;
+            }
+            l += p.offsetLeft;
+            t += p.offsetTop;
+            p = p.offsetParent;
+        }
+        return {left: l, top: t};
+    }
+
+    //1、获取所需处理的元素
+    var newsList = document.getElementById("newsList");
+    var imgList = newsList.getElementsByTagName("img");
+
+    //2、绑定数据
+    var str = "";
+    for (var i = 0; i < dataAry.length; i++) {
+        var cur = dataAry[i];
+        str += "<li>";
+        str += "<img src='img/default.jpg' trueImg='" + cur.logo + "'/>";
+        str += "<div>";
+        str += "<h2>" + cur.title + "</h2>";
+        str += "<p>" + cur.desc + "</p>";
+        str += "</div>";
+        str += "</li>";
+    }
+    newsList.innerHTML = str;
+
+    //3、实现图片延迟加载
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+
+    function delayImg() {
+        for (var i = 0; i < imgList.length; i++) {
+            ~function (i) {
+                delayImgCode(i);
+            }(i);
+        }
+    }
+
+    function delayImgCode(i) {
+        var curImg = imgList[i];
+        //->如果当前图片还没有加载真实的我们开始加载
+        if (!curImg.isLoad) {
+            //->获取的是当前每一张图片自己距离body的上偏移量
+            var curImgT = offset(curImg).top + curImg.offsetHeight;
+            //->获取浏览器当前底边框距离body的上偏移
+            var winT = (document.documentElement.scrollTop || document.body.scrollTop) + winH;
+            //->说明我们的图片已经出现在整个浏览器窗口中,开始加载真实的图片
+            if (winT >= curImgT) {
+                var trueImg = curImg.getAttribute("trueImg");
+                var oImg = new Image;
+                oImg.src = trueImg;
+                oImg.onload = function () {
+                    curImg.src = trueImg;
+                    oImg = null;
+                };
+                curImg.isLoad = true;
+            }
+        }
+    }
+    window.onscroll = delayImg;
+    window.onscroll();//->第一次打开页面先自己手动执行一次onscroll事件
+</script>
+</body>
+</html>

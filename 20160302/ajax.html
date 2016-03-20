@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--
+    通过webStorm运行我们的页面,会默认的把我们的电脑当做服务器,把当前项目当做一个产品发布
+    http://localhost:63342/%E7%AC%AC%E4%B9%9D%E6%9C%9F/20160302/ajax.html ->当前页面的地址
+    http://localhost:63342/%E7%AC%AC%E4%B9%9D%E6%9C%9F/20160302/json/data.txt ->当前我们要请求的数据地址
+-->
+
+<script type="text/javascript">
+    //Ajax:
+    //1、创建一个Ajax对象
+    //2、打开一个链接地址(链接地址就是我们接下来要请求数据的服务器地址),设定请求的方式,并且设置是同步请求还是异步请求
+    //3、监听请求的状态,根据状态获取需要的内容
+    //4、开始向指定的地址发送请求
+
+
+    //Ajax:async javascript and xml
+    var xhr = new XMLHttpRequest;
+
+    //->open(请求方式,请求地址,同步或者异步)
+    //请求方式:get/post/put/delete...
+    //请求地址:在真实项目中,地址就是我们要请求后台数据的地址,这个地址一般都是后台告诉给我们前端的;如果当前使用的是get请求,为了防止服务器的缓存,我们在请求的地址后面通过问号传递参数的方式,传递后台一个随机数,这样就可以清除get的缓存问题了;
+    //同步或者异步:可以不写这个参数,默认就是true->异步,如果写成false是同步,项目中我们尽量不用同步,都采用异步编程
+    //后面可能还会添加两个形参:username,password(一般不加)
+    xhr.open("get", "json/data.txt?_=" + Math.random(), true);
+
+    //->onreadystatechange:在请求的过程中只要状态发生改变了(从发送给后台Request开始到Response响应结束,这个阶段又可以分为几个小的阶段),我们的onreadystatechange行为都会被触发
+    //->阶段:0UNSENT请求还没有发送 1OPENED已经打开链接地址了 2HEADERS_RECEIVED我们已经得到了响应头信息 3LOADING响应的数据正在处理中 4DONE请求完成,我们已经获取到需要的数据了
+    xhr.onreadystatechange = function () {
+        //this->xhr
+        var state = this.readyState;
+        if (state === 2) {
+            console.log(this.getResponseHeader("Date"));
+            //this.getAllResponseHeaders()
+        }
+
+        //state等于4说明请求结束,但是服务器给我们的内容不一定是我们想要的,我们还需要结合HTTP状态码判断 ->this.status获取HTTP状态码
+        if (state === 4 && /^2\d{2}$/.test(this.status)) {
+            //->需要把服务反会给我们的内容获取输出
+            var val = this.responseText;//->获取响应的文本内容this.responseXML 获取响应的XML格式内容
+            console.log(val);
+        }
+    };
+
+    //->发送,get请求不需要传内容,因为它给服务器的内容都是通过URL后面拼接传递给后台的;但是如果是POST请求,我们需要把传递给后台的内容放在send中传递过去->send中存放的是请求主体的内容(字符串格式的)
+    xhr.send();
+
+    console.log("ok");
+
+
+    //响应头Content-Type:text/plain、application/json...
+
+    //倒计时:参考时间不能使用本地的,需要向服务器发送请求获取服务器的时间,Ajax/JSONP通过地址发送请求,在响应头信息中包含了需要的服务器时间; 导致一个问题：我们获取时间的过程需要一点点时间进行HTTP请求处理,这样时间和服务器就有一定的偏差了,也就是HTTP请求时间越短,我们的时间差越小;
+    //->在Ajax请求状态码为2(响应头已经得到了)我们就获取参考的服务器时间
+</script>
+</body>
+</html>

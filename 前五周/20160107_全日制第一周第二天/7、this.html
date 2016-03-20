@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1">有本事点我啊！！</div>
+<script type="text/javascript">
+    //我们一般只研究函数中的this
+    //this->当前函数执行的主体(这个函数是谁来执行的)
+    //    function eat(){}
+    //    王浩宇.eat(); eat方法中的this->王浩宇
+    //    赵守涛.eat(); eat方法中的this->赵守涛
+    //    eat(); eat方法中的this->window
+
+
+    //1、如何查找this?
+    //函数中的this是谁和函数在哪定义的或者是在哪执行的都没有任何的关系，想知道this是谁，我们只需要按照如下的规律查找即可
+
+    //1)自执行函数中的this永远是window
+    //    (function () {
+    //        console.log(this);//->window
+    //    })();
+    //    var obj = {
+    //        fn: (function () {
+    //            console.log(this);//->window
+    //            return function () {//->xxxfff111
+    //
+    //            }
+    //        })()//->在给obj下的fn赋值的时候，首先是把一个自执行函数执行，然后把函数执行的返回结果(小函数对应的堆内存的地址)赋值给我们的obj下的fn->obj.fn=xxxfff111
+    //    };
+
+    //2)给元素的某一个行为绑定方法,当行为触发,方法执行的时候,方法中的this是当前的这个元素
+    //    oDiv.onclick = function () {//->当手动的点击这个div的时候,匿名函数执行
+    //        console.log(this);//->oDiv
+    //    };
+
+    //3)方法执行，看方法名前面是否有".",有的话,"."前面是谁this就是谁;没有的话,this就是window
+    //    function fn() {
+    //        console.log(this);
+    //    }
+    //    var obj = {
+    //        fn: fn
+    //    };
+    //    fn();//->window
+    //    obj.fn();//->obj
+    //    function sum() {
+    //        fn();//->window
+    //    }
+    //    sum();
+
+    //->当我点击#div1的时候输出的this是谁(this是在fn函数中输出的)?
+    function fn() {
+        console.log(this);
+    }
+    document.getElementById("div1").onclick = function () {
+        console.log(this);//->#div1
+
+        fn();//this->window
+    };
+    //学好this记住这句话:你以为 你以为的 就是你以为的
+</script>
+</body>
+</html>

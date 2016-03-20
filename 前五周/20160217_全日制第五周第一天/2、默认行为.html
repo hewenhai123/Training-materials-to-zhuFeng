@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--
+在HTML中阻止默认行为
+<a href="javascript:;">珠峰培训</a>
+<a href="javascript:void 0;">珠峰培训</a>
+<a href="javascript:void 1;">珠峰培训</a>
+-->
+
+<a href="https://www.baidu.com/" id="link">珠峰培训</a>
+
+
+<script type="text/javascript">
+    //默认行为->浏览器天生就具有的行为
+    //例如：
+    //a标签天生具有跳转页面的行为
+    //input标签某些浏览器天生有记录用户输入内容的行为
+    //...
+
+    //阻止默认行为：
+    //->a标签有跳转页面的操作,但是我们很多时候实用了a标签,并不是要跳转页面,而是应用a的一些特殊样式和操作而已(例如：轮播图左右切换,只是应用a的hover伪类兼容所有浏览器而已)
+    //->此时需要把默认跳转的这个行为阻止掉才可以
+
+    var link = document.getElementById("link");
+
+    //    link.onclick = function () {
+    //        /*也是阻止默认行为*/
+    //        return false;
+    //    };
+
+    link.onclick = function (e) {
+        e = e || window.event;
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    };
+</script>
+</body>
+</html>

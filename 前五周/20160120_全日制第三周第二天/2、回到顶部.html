@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 28px;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 1000%;
+
+            /*CSS3中关于背景颜色的线性渐变,在IE浏览器中大部分都不兼容,不兼容我们使用一个纯色的背景颜色;如果在PC端想让更多的浏览器兼容的话,需要单独的加上特殊的前缀;*/
+            background: #ffe470;
+            background: -webkit-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: -moz-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: -ms-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: -o-linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+            background: linear-gradient(top left, #008000, #08BECE, #990099, #ff3333, #ffe470);
+        }
+
+        #goTo {
+            display: none;
+            position: fixed; /*固定定位，固定在当前页面的某一个位置*/
+            right: 50px;
+            bottom: 50px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+
+            /*以下是CSS3属性样式*/
+            border-radius: 50%; /*当前的盒子是正方形会变为了一个圆*/
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+    </style>
+</head>
+<body>
+<div id="goTo">&gt;</div>
+
+<script type="text/javascript">
+    //最简单的代码
+    //var goTo = document.getElementById("goTo");
+    //    goTo.onclick = function () {
+    //        //关于操作浏览器的盒子模型属性,设置的时候和获取的时候一样,想要兼容所有的浏览器的话,需要些两套
+    //        document.documentElement.scrollTop = 0;
+    //        document.body.scrollTop = 0;
+    //    };
+
+    //我们要优化:不管当前在第几屏幕,当我点击回到顶部按钮的时候,都是用1000ms的时间慢慢的回到顶部的(动画效果)
+    //总距离:当前的scrollTop-0
+    //步长：(总距离/总时间)*10 每10ms走的距离
+
+
+    var goTo = document.getElementById("goTo");
+    goTo.onclick = function () {
+        //4)当点击的时候,让回到顶部的按钮消失,但是只这样处理不够,因为让其消失后,我们的页面开始滚动,又触发了我们的滚动条滚动事件,在那个事件中重新让它又显示了->点击的时候先把我们的onscroll事件禁止,当回到顶部后在打开
+        this.style.display = "none";
+        window.onscroll = null;
+
+        //1)首先获取当前的scrollTop值
+        var target = document.documentElement.scrollTop || document.body.scrollTop;
+
+        //2)设定总时间和多长时间走一步,从而计算出我们步长:每一步走多远
+        var duration = 1000, interval = 10, step = (target / duration) * interval;
+
+        //3)设置一个定时器,让每隔10ms(interval)走一步
+        var timer = window.setInterval(function () {
+            //当到达终点的时候结束我们的动画
+            if (target <= 0) {
+                window.clearInterval(timer);
+                window.onscroll = scrollMove;
+                return;
+            }
+            //每一次都在原有目标值的基础上减去步长,计算出当前距离顶部还有多远
+            target -= step;
+            document.documentElement.scrollTop = target;
+            document.body.scrollTop = target;
+        }, interval);
+    };
+
+    //默认进入页面,回到顶部的按钮是没有的,只有当scrollTop的值大于半屏幕的高度,才让其显示
+    //window.onscroll:当前浏览器滚动条滚动事件(鼠标滚轮触发、手动拖动滚动条触发、按上下键触发...),只要滚动条滚动了,都会触发我们的window.onscroll事件
+    function scrollMove() {
+        var curT = document.documentElement.scrollTop || document.body.scrollTop;
+        var winH = document.documentElement.clientHeight || document.body.clientHeight;
+        if (curT >= (winH / 2)) {
+            goTo.style.display = "block";
+        } else {
+            goTo.style.display = "none";
+        }
+    }
+    window.onscroll = scrollMove;
+
+
+
+
+
+</script>
+</body>
+</html>

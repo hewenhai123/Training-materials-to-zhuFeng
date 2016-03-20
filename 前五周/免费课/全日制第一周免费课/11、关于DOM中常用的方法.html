@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000000;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" class="list" style="height: 200px;">欢迎来到珠峰培训~~</div>
+
+<script type="text/javascript">
+    //1、在JS中想要获取#div1的这个元素
+    //->document.getElementById:在整个文档中,通过元素的ID来获取一个元素
+    var oDiv = document.getElementById("div1");
+
+    //1)我们获取的结果是一个对象数据类型的值,所以我们把获取的结果也叫作"元素对象"
+    //console.log(typeof oDiv);//->"object"
+
+    //2)每一个对象数据类型都是由多组键值对组成的,所以我们的oDiv中也应该存在多组键值对
+    console.dir(oDiv);//->console.dir也是在控制台输出,只是比console.log输出的详细一些
+
+    //3)关于这个元素对象中常用到的部分属性的含义
+    //No1:
+    //className: "list" ->当前元素的样式类名 class='list'
+    //->获取属性值：
+    //oDiv.className
+    //oDiv["className"]
+    //->设置属性值
+    //oDiv.className="w100";
+    //oDiv["className"]="w100";
+
+    //No2:
+    //id: "div1" ->获取或者设置元素的对象的ID值
+
+    //No3:
+    //innerHTML: "" ->获取或者设置元素的内容
+    //console.log(oDiv.innerHTML);//->获取当前元素中的所有的内容,它是一个字符串格式的数据
+    //oDiv.innerHTML = "welcome to zhufeng~~,good good study,day day up~~";//->给元素增加新的内容(或者修改原来的内容)
+
+    //No4:
+    //onclick: null ->当前元素的点击事件,当我们点击的时候做什么事情
+    //->给当前oDiv这个元素对象的点击事件绑定了一个方法,当我们点击的时候执行这个方法
+    //    oDiv.onclick = function () {
+    //        alert("徐惠林是一个小美女~~");
+    //    };
+    //onmouseover：null ->当鼠标划上元素的时候
+    //onmouseout: null ->当鼠标离开元素的时候
+
+    //No5:
+    //style:CSSStyleDeclaration ->获取和设置元素的行内样式
+    //->设置元素的行内样式(直接的增加到了元素标签的style上)
+    //    oDiv.onclick = function () {
+    //        oDiv.style.backgroundColor = "red";//->当点击的时候我们把元素的背景颜色设置为红色
+    //    };
+
+    //->获取元素的行内样式
+    //"只能获取到在元素标签上写的行内样式的结果,不管你在什么地方设置了样式,只要没有在行内上编写,我们都是获取不到结果的"
+    //width是在内嵌样式表中编写的,我们获取不到
+    //console.log(oDiv.style.width);//->""
+
+    //height我们是在行内样式上编写的所以可以获取到
+    //console.log(oDiv.style.height);//->"200px"
+
+    //思考:不想只获取行内的样式,我们用getComputedStyle(自己回去查使用办法)
+</script>
+</body>
+</html>

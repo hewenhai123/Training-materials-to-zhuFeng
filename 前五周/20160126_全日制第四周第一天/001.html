@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #008000;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+
+    //width:200 height:200 left:100 background:red
+    //utils.setCss(oDiv,"width",200);
+    //utils.setCss(oDiv,"height",200);
+    utils.setGroupCss(oDiv, {
+        width: 200,
+        height: 200,
+        left: 100,
+        background: "red"
+    });
+
+    var tarLeft = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth;
+    var step = 7;
+    var timer = window.setInterval(function () {
+        var curL = utils.getCss(oDiv, "left");
+        if (curL >= tarLeft) {
+            utils.setCss(oDiv, "left", tarLeft);
+            window.clearInterval(timer);
+            return;
+        }
+        utils.setCss(oDiv, "left", curL + step);
+    }, 10);
+</script>
+</body>
+</html>

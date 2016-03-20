@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            border: 1px solid #008000;
+            overflow: hidden;
+        }
+
+        .box ul {
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .box ul li {
+            float: left;
+            width: 100px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        .box .btn {
+            margin: 0 20px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background: #E0F2BE;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <ul>
+        <li>佳能</li>
+        <li>索尼</li>
+        <li>三星</li>
+        <li>小米</li>
+        <li>苹果</li>
+        <li>华为</li>
+        <li>联想</li>
+        <li>魅族</li>
+        <li>opp</li>
+        <li>锤子</li>
+        <li>金立</li>
+        <li>步步高</li>
+        <li>诺基亚</li>
+        <li>其他品牌</li>
+    </ul>
+    <div class="btn">显示全部品牌</div>
+</div>
+
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //$(".box li:contains('三星'),.box li:contains('苹果'),.box li:contains('魅族')").css("color", "red");
+    //$(".box li:gt(5)").hide();
+
+    var $list = $(".box li");
+    $list.each(function (index) {
+        var reg = /(三星|苹果|魅族)/;
+        if (reg.test($(this).html())) {
+            $(this).css("color", "red");
+        }
+
+        if (index > 5 && index < 13) {
+            $(this).hide().attr("isH", "false");
+        }
+    });
+
+    $(".btn").click(function () {
+        var $show = $(".box li[isH]");
+        var flag = $show.attr("isH");
+        if (flag === "true") {
+            //当前展开,我们隐藏
+            $show.hide().attr("isH", "false");
+            $(this).html("显示全部品牌");
+        } else {
+            //当前隐藏,我们展开
+            $show.show().attr("isH", "true");
+            $(this).html("显示精简品牌");
+        }
+    });
+</script>
+</body>
+</html>

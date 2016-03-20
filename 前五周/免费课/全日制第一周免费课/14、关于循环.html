@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、for循环
+    //1)定义循环的起始值 ->var i=0;
+    //2)设置循环能够执行的条件 ->i<5 只要i的值小于5循环就一直执行
+    //3)执行循环体中的内容 ->用大括号包起来的就是循环体
+    //4)执行最后的累加操作 ->i++
+    //    for (var i = 0; i < 5; i++) {
+    //        console.log(i);//->输出五次分别是0-4
+    //    }
+    //    console.log(i);//->5
+
+    //在循环体中我们会遇到两个关键字：break、continue
+    //不管是哪一个,循环体中一但遇到了break或者continue,在循环体中两个关键字后面的代码都不在执行了
+    //break:结束整个循环,并且i++也不再执行了
+    //continue:结束本轮循环,继续执行下一轮循环,i++还是要执行的
+
+    //BAT面试题
+    //一共输出几次?结果分别是多少?
+    //    for (var i = 0; i < 10; i++) {
+    //        if (i <= 5) {
+    //            i += 2;
+    //            continue;
+    //        } else {
+    //            break;
+    //            i += 3;
+    //        }
+    //        console.log(i);
+    //    }
+    //    console.log(i);
+
+    //2、for in循环
+    //->遍历一个对象中所有的属性名和属性值的
+    //1)对象中存在多少组属性名和属性值,我们的循环就执行多少次
+    var obj = {name: "王浩宇", age: 81, height: "138cm", weight: "170g"};
+    for (var key in obj) {
+        //每一次循环key存储的值是属性名
+        //console.log(key);
+
+        //console.log(obj.key);//->获取obj的名字叫做key的属性名对应的属性值 (在for in循环中由于不知道属性名是否是数字,所以不能用obj.key的方式)
+        console.log(obj[key]);//->获取的是每一个属性名对应的属性值
+    }
+
+    //思考题：看视频学习，如果出现了纯数字的属性名,我们的循环顺序是什么样的
+</script>
+</body>
+</html>

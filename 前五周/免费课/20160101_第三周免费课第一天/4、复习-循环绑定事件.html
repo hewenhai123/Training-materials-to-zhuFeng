@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        input {
+            width: 150px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #999;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="按钮"/>
+<input type="button" value="按钮"/>
+<input type="button" value="按钮"/>
+<input type="button" value="按钮"/>
+<input type="button" value="按钮"/>
+
+<script type="text/javascript">
+    var oInps = document.getElementsByTagName("input");
+
+    //    for (var i = 0; i < oInps.length; i++) {
+    //        oInps[i].onclick = function () {
+    //            console.log(i);
+    //        };
+    //    }
+    //不行的原因:
+    //i=0 给第一个按钮绑定点击事件
+    //oInps[0].onclick=function(){"console.log(i)"} 我们只是把一个函数定义的本身赋值给按钮的点击事件，此时函数体中存储的都是代码字符串,我们看到的i不是变量而是一个字符i
+    //i=1 给第二个按钮绑定点击事件
+    //oInps[1].onclick=function(){"console.log(i)"}
+    //...
+    //循环完成后 i=5
+    //我们开始点击按钮了,执行对应的函数,把开始存储的字符串变为代码开始从上到下执行,执行的时候遇到了变量i，此时都变为5了
+
+    //如何修改：
+    //自定义属性的方式
+    //    for (var i = 0; i < oInps.length; i++) {
+    //        oInps[i].zhuFeng = i;//->把我们每一个按钮的索引分别的存储到自己的自定义的属性名为zhuFeng上
+    //        oInps[i].onclick = function () {
+    //            //this->当前点击的这个按钮
+    //            console.log("我是第" + (this.zhuFeng + 1) + "个按钮~~");//->把当前点击这个按钮之前存储的索引拿出来用
+    //        };
+    //    }
+
+
+    //使用闭包/作用域的原理进行解决
+    //    for (var i = 0; i < oInps.length; i++) {
+    //        oInps[i].onclick = (function (i) {
+    //            return function () {
+    //                console.log("我是第" + (i + 1) + "个按钮~~");
+    //            }
+    //        })(i);
+    //    }
+
+    for (var i = 0; i < oInps.length; i++) {
+        (function (i) {
+            oInps[i].onclick = function () {
+                console.log("我是第" + (i + 1) + "个按钮~~");
+            }
+        })(i);
+    }
+</script>
+</body>
+</html>

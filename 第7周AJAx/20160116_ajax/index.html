@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        /*
+         // 标准浏览器和ie7+
+         // 兼容性：chrome、firefox、opera、safari、ie7+
+         // 作用：使用这个对象可以执行ajax的操作
+         var xhr = new XMLHttpRequest();
+
+         //低版本ie
+         // 使用这个方法必须得传一个string参数
+         // version 1.0
+         var xhr2 = new ActiveXObject('Microsoft.XMLHTTP');
+         // version 2.0
+         var xmlhttp2 = new ActiveXObject("Msxml2.XMLHTTP");
+         // version 3.0
+         var xmlhttp3 = new ActiveXObject("Msxml3.XMLHTTP");
+         */
+
+        /**
+         * 获取当前浏览器最合适的那个ajax对象
+         * 这种判断方式就叫feature detection 功能判断
+         * 这是ajax的第一步(1/4)
+         */
+        var getXHR = function () {
+            if (window.XMLHttpRequest) {
+                return new XMLHttpRequest();
+            }
+            return new ActiveXObject('Microsoft.XMLHTTP');
+        };
+        // 1/4
+        var xhr = getXHR();
+        // 2/4
+        // 建立http连接
+        // 该方法有两个必传参数，3个可选参数
+        /**
+         * parameter1 必填 http方法 不区分大小写
+         * parameter2 必填 url 请求的路径
+         * parameter3 可选 是否为异步请求 默认为true
+         * parameter4 可选 服务器需要验证的username 默认为undefined
+         * parameter5 可选 服务器需要验证的password 默认为undefined
+         */
+        xhr.open('GET', 'data.json', false, 'zhangyatao', 'a123456');
+
+
+        /**
+         * 3/4
+         * 在onreadystatechange属性上注册一个方法
+         * 用于接收服务器的响应
+         * 有onreadystatechange，必定会有readyState
+         * 每当readyState改变的时候都会触发该方法
+         */
+        xhr.onreadystatechange = function () {
+            // 前面的判断：判断ajax事务是否完成
+            // 后面的判断：判断response的状态码是否为200
+            if (this.readyState === 4 && this.status === 200) {
+                // 拿到响应主体
+                console.log(this.responseText)
+            }
+        };
+
+        /**
+         * ajax对象的readyState属性
+         * 该属性表示当前ajax对象的状态(ajax执行到哪一步了)
+         * 默认为0
+         * 0 等于xhr.UNSENT ajax对象实例化完成
+         * 1 等于xhr.OPENED 已经执行open方法。
+         * 执行完open之后，readyState自动变成1
+         * 2 等于HEADERS_RECEIVED 已经开始接收到响应首部
+         * 3 等于xhr.LOADING 正在接受响应主体
+         * 4 等于xhr.DONE 整个ajax全部完成
+         */
+
+        /**
+         * 4/4
+         * 发送ajax请求
+         * 该方法的参数会放到请求主体里
+         */
+        xhr.send();
+
+
+        console.log('begin');
+    </script>
+</head>
+<body>
+form node
+</body>
+</html>

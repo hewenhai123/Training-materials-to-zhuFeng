@@ -1,0 +1,22 @@
+{
+  "code": 0, //->返回数据的状态
+  "data": {
+    "2016-03-07": [ //->把对应日期的数据返回
+      {
+        "matchType": "2", //->比赛类型
+        "mid": "100000:1467843", //->赛事ID
+        "leftId": "25", //->主队ID
+        "leftName": "\u96f7\u9706",//->主队名字
+        "leftBadge": "http:\/\/mat1.gtimg.com\/sports\/nba\/logo\/1602\/25.png",//->主队LOGO
+        "leftGoal": "104",//->主队分数
+        "rightId": "15",//->客队ID
+        "rightName": "\u96c4\u9e7f",//->客队名
+        "rightBadge": "http:\/\/mat1.gtimg.com\/sports\/nba\/logo\/1602\/15.png",//->客队LOGO
+        "rightGoal": "96",//->客队分数
+        "matchDesc": "NBA\u5e38\u89c4\u8d5b",//->比赛类型描述 NBA常规赛
+        "startTime": "2016-03-07 04:30:00"//->比赛开始时间
+      }
+      ...
+    ]
+  }
+}

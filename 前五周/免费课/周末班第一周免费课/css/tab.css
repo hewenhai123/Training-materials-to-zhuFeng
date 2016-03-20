@@ -1,0 +1,58 @@
+body, div, ul, li {
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    -webkit-user-select: none; /*禁止webkit内核的浏览器(谷歌、safari)文字选中*/
+}
+
+ul, li {
+    list-style: none;
+}
+
+#tab {
+    margin: 10px auto;
+    width: 500px;
+}
+
+/*设置上面的页卡*/
+#tab ul {
+    position: relative;
+    top: 1px;
+    overflow: hidden; /*清除子元素li的浮动对自己产生的影响*/
+}
+
+#tab ul li {
+    float: left;
+    margin-right: 10px;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border: 1px solid burlywood;
+    cursor: pointer;
+}
+
+#tab ul li.select {
+    background: paleturquoise;
+    border-bottom-color: paleturquoise;
+}
+
+/*设置下面的内容*/
+#tab div {
+    display: none;
+    padding: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 28px;
+    border: 1px solid burlywood;
+}
+
+#tab div.select {
+    display: block;
+    background: paleturquoise;
+}
+
+
+
+

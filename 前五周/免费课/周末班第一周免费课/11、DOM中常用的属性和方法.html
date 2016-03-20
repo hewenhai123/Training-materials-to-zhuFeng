@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            width: 70%;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #999999;
+        }
+    </style>
+</head>
+<body>
+
+<ul id="ul1" class="w" style="width: 70%;">
+    <li>第一个li</li>
+    <li>第二个li</li>
+    <li>第三个li</li>
+    <li>第四个li</li>
+    <li>第五个li</li>
+</ul>
+
+<script type="text/javascript">
+    //1、通过元素的ID来获取当前的这个元素标签 ->getElementById
+    //document.getElementById:在整个文档中,我们通过元素的ID来获取一个元素对象
+    //document在这里起到的是一个限定获取范围的作用,限定了获取的范围一定要在整个文档中获取,我们把其称之为"上下文"(context)
+    var oUl = document.getElementById("ul1");
+
+    //1)获取的元素是一个对象数据类型的
+    //console.log(typeof oUl);//->"object"
+
+    //2)学习元素对象中常用的属性名和属性值
+    //a、className: "w" ->当前元素的样式类名 class='w'
+    //获取:oUl.className/oUl["className"]
+    //设置:oUl.className="xxx"/oUl["className"]="xxx"
+
+    //b、id: "ul1" ->当前元素的ID值
+
+    //c、innerHTML: "..." ->当前元素的所有的内容
+    //设置:oUl.innerHTML="珠峰培训";
+
+    //d、onclick: null ->当前元素的点击事件,当点击的时候做什么事情
+
+    //e、style： ->当前元素的所有的行内样式
+    //通过style获取元素的width属性值，我们发现只能获取当前元素在行内上写的样式，只要你没有写在行内，不管是否在样式表中编写了，我们通过style都是获取不到的
+    console.log(oUl.style.width);//->"70%"
+
+    //通过style设置样式也是直接的设置在了元素的行内样式上
+    oUl.style.backgroundColor = "red";
+
+    //扩展:除了获取元素的行内样式,我们想获取元素的任何的样式的话不能使用style了,需要使用getComputedStyle方法
+    //    function css(curEle, attr, value) {
+    //        //get style
+    //        var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?(px|pt|em|rem)$/;
+    //        if (typeof value === "undefined") {
+    //            var val = "getComputedStyle" in window ? window.getComputedStyle(curEle, null)[attr] : curEle.currentStyle[attr];
+    //            return reg.test(val) ? parseFloat(val) : val;
+    //        }
+    //        //set style
+    //        reg = /^(width|height|top|left|right|bottom|((margin|padding)(Left|Top|Right|Bottom)?))$/;
+    //        if (attr === "opacity") {
+    //            if (value >= 0 && value <= 1) {
+    //                curEle["style"]["opacity"] = value;
+    //                curEle["style"]["filter"] = "alpha(opacity=" + value * 100 + ")";
+    //            }
+    //        } else if (attr === "float") {
+    //            curEle["style"]["cssFloat"] = value;
+    //            curEle["style"]["styleFloat"] = value;
+    //        } else if (reg.test(attr)) {
+    //            curEle["style"][attr] = isNaN(value) ? value : value + "px";
+    //        } else {
+    //            curEle["style"][attr] = value;
+    //        }
+    //    }
+
+    //2、通过元素的标签名来获取一组元素集合
+    // ->getElementsByTagName
+    var oLis = oUl.getElementsByTagName("li");//->获取#ul1下的所有的li
+    console.dir(oLis);
+
+    //我们获取的元素集合是以数字作为索引,索引从0开始的,逐级递增,索引0代表第一个li,索引1代表第二个li....
+    //还有一个属性叫做length,代表获取多少个li
+    //console.log(oLis[0]);//->获取集合中的第一个li
+    //console.log(oLis[1]);//->获取集合中的第二个li
+    //console.log(oLis[索引]);//->获取集合中索引对应的那个li,第索引+1个li
+    //console.log(oLis.length);//->获取集合的长度
+    //我们把具有上述特点的元素集合称之为我们的“类数组”(长得像数组但是不是数组)
+
+
+
+
+
+</script>
+</body>
+</html>

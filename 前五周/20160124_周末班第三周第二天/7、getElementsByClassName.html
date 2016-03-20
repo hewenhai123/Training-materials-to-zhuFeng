@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="   w1 w2 w3   ">1</div>
+<div class="w2 w3">2</div>
+<div class="w1 w2">3</div>
+<div class="w1 w3">4</div>
+<div class="w3">5</div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //通过元素的样式类名来获取元素集合->document.getElementsByClassName
+    //    console.log(document.getElementsByClassName("w1"));
+    //    console.log(document.getElementsByClassName("w100"));
+    //    console.log(document.getElementsByClassName("w1 w3"));
+    //    console.log(document.getElementsByClassName("w3 w1"));
+    //    console.log(document.getElementsByClassName("    w1      w3"));
+    //->内置的方法:
+    //1)我可以传递一个样式类名,也可以传递多个样式类名,多个->要求当前元素要同时拥有两个样式类名才可以(但是传递值中有几个空格或者顺序都是没有影响的)
+    //2)如果传递的样式类名不存在,返回的是空集合
+
+    //strClass->传递的是样式类名的字符串，例如:"w1"/"  w2 w1"/"w1 w2 w3"...
+    //context->上下文,当前获取元素的范围，例如：你传递的是document，就是在整个文档中获取(不传的话,默认值是document)，传递的是oDiv，意思是获取oDiv中具有该样式类名的...
+    function getElementsByClass(strClass, context) {
+        context = context || document;//->给上下文设置默认值
+
+        //->如果兼容内置的方法,我们直接用内置的就可以了
+        if ("getElementsByClassName" in document) {
+            //return context.getElementsByClassName(strClass); ->不兼容的情况下我们会自己进行处理,这样的话我们返回的是一个数组,但是内置方法获取的是一个类数组,两者的数据类型不统一,不方便后续操作,我们把类数组转换为数组
+            return utils.listToArray(context.getElementsByClassName(strClass));
+        }
+
+        //->如果不兼容内置的方法,我们自己来处理(IE6~8)
+        //->原理:首先获取指定范围内的所有的元素标签,然后进行循环,循环的过程中,我们把和传进来的样式类名相吻合的元素获取到,放在ary中
+
+        //->假设传递进来的是"  w3   w1  ",我要分别的获取到w3和w1,然后分别的拿这两个样类名和我们元素的className进行比较,如果className中这两个都有,那么当前的这个元素就是我们想要的,只要有一个不符合,就不是我们想要的
+
+        var ary = [];
+        var tagList = context.getElementsByTagName("*");//->通过通配符*获取指定范围内的所有的元素标签
+
+        //->把传递捡来的strClass中的每一个样式类名都分别的获取到
+        //"  w3   w1  "
+        //1)去除字符串的首尾空格
+        strClass = strClass.replace(/(^ +| +$)/g, "");//->"w3   w1"
+
+        //2)按照一到多个空格把我们的字符串拆分成数组,数组中的每一项就是我们的每一个传递进来的样式类名
+        strClass = strClass.split(/ +/);//->["w3","w1"]
+
+        for (var i = 0; i < tagList.length; i++) {
+            var curTag = tagList[i], curTagClass = curTag.className;
+
+            //->假设法:我先假设,当前的标签curTag是我们想要的(传递进来的样式类名和标签是符合的)，接下来我们只需要假设的是否正确即可
+            var flag = true;
+
+            //->假设的验证:拿出strClass中每一个样式类名分别的去curTagClass中验证是否存在,在验证的过程中只要传递进来的那堆样式类名中有一个没有,说明假设的就是失败的
+            for (var k = 0; k < strClass.length; k++) {
+                //->k=0 "w3" ->/(?:^| +)w3(?: +|$)/
+                var reg = new RegExp("(?:^| +)" + strClass[k] + "(?: +|$)");
+                if (!reg.test(curTagClass)) {//->说明当前strClass[k]存储的样式类名在当前元素标签的className中不存在,假设的是错误的
+                    flag = false;
+                    break;//->跳出这个小循环,因为下面的样式类名就没有必要在比较了
+                }
+            }
+
+            //->如果flag为true,说明假设的是成功的,我们把当前的标签放在容器中
+            flag ? ary[ary.length] = curTag : null;
+        }
+        return ary;
+    }
+
+    var res = getElementsByClass("  w3   w1  ");
+    console.dir(res[0].innerHTML);
+    console.dir(res[1].innerHTML);
+</script>
+</body>
+</html>

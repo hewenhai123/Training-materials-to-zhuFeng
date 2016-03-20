@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var num = 10;//->num是一个全局的变量也是window的一个属性名
+    var obj = {
+        num: 20,//->num是obj的属性名,它不是变量 obj.num
+        fn: (function (num) {//->自执行函数执行形成的私有作用域中的私有的变量
+            this.num *= 2;
+            num += 10;
+            return function () {
+                this.num *= 3;
+                num += 1;
+                console.log(num);
+            }
+        })(num)//->在给自执行函数的形参赋值,把全局变量num的值10赋值给形参
+    };
+    var fn = obj.fn;//->把obj下的fn对应的值赋值给了fn这个全局变量一份
+    fn();//->21
+    obj.fn();//->22
+    console.log(window.num, obj.num);//->60 60
+</script>
+</body>
+</html>

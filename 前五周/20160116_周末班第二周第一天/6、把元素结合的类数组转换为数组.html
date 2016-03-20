@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+<script type="text/javascript">
+    //    var oUl = document.getElementById("ul1");
+    //    var oLis = oUl.getElementsByTagName("li");
+    //console.dir(oLis);//->它是一个元素集合(类数组),它属于HTMLCollection这个类的一个实例
+
+
+    //对于arguments来说,借用数组的slice方法将类数组转换为数组兼容所有的浏览器；但是对于元素结合来说,在IE6~8下是不兼容的,出现了浏览器的异常错误:Array.prototype.slice: 'this' 不是 JavaScript 对象
+
+    //    var ary = [];
+    //    try {
+    //        //兼容情况下这样处理,不兼容会报错
+    //        ary = Array.prototype.slice.call(oLis);
+    //    } catch (e) {
+    //        //不兼容的情况下处理
+    //        for (var i = 0; i < oLis.length; i++) {
+    //            ary[ary.length] = oLis[i];
+    //        }
+    //    }
+    //    console.log(ary);
+</script>
+
+<script charset="utf-8" type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+
+    var ary = utils.listToArray(oLis);
+    console.log(ary);//->ary中每一项存储的都是当前对应的每一个li元素对象
+</script>
+</body>
+</html>

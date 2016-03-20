@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -171px 0 0 -171px;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+        }
+
+        #box li {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px dashed #999;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul id="boxUl">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li id="li4">4</li>
+        <!--我们都是LI-->
+        <li id="li5">5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>
+            <ul>
+                <li>9-1</li>
+                <li>9-2</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    var oLi4 = document.getElementById("li4");
+    var oLi5 = document.getElementById("li5");
+
+    //parentNode:获取父亲节点
+    //console.log(oLi4.parentNode);
+
+    //previousSibling:获取上一个哥哥节点(可能是元素也可能文本或者注释)
+    //previousElementSibling:获取上一个元素哥哥节点(肯定是元素节点) ->在IE6~8下不兼容
+    //console.log(oLi5.previousSibling);//->#text
+    //console.log(oLi5.previousElementSibling);//->#li4
+
+    //nextSibling:获取下一个弟弟节点
+    //nextElementSibling:获取下一个元素弟弟节点 ->在IE6~8下不兼容
+
+    //firstChild:获取所有子节点中的第一个(不一定是元素)
+    //firstElementChild:获取所有元素子节点中的第一个(一定是元素节点) ->在IE6~8下不兼容
+
+    //lastChild:获取所有子节点中的最后一个(不一定是元素)
+    //lastElementChild:获取所有元素子节点中的最后一个(一定是元素节点) ->在IE6~8下不兼容
+
+
+    //2、自己编写方法
+    //jQuery中有这样几个方法:prev->获取上一个哥哥元素节点  prevAll->获取所有的哥哥元素节点 next->获取下一个弟弟元素节点  nextAll->获取所有的弟弟元素节点  siblings->获取所有的兄弟元素节点 ...
+
+    function prev(curEle) {
+        //兼容的话直接用,函数体中遇到return就不在执行了
+        if (curEle.previousElementSibling) {
+            return curEle.previousElementSibling;
+        }
+
+        //不兼容我们自己用while循环一级级的查找
+        var pre = curEle.previousSibling;
+        while (pre && pre.nodeType !== 1) {//->获取的节点存在并且不是元素节点,我们就一直循环向上找
+            pre = pre.previousSibling;
+        }
+        return pre;
+    }
+    var res = prev(oLi5);
+    console.log(res);
+
+    //    var a = oLi5.previousSibling;//->#text
+    //    a = a.previousSibling;//->基于上一次的文本继续往上找 #comment
+    //    a = a.previousSibling;//->基于上一次的文本继续往上找 #text
+    //    a = a.previousSibling;//->基于上一次的文本继续往上找 #li4
+    //    console.log(a);
+</script>
+</body>
+</html>

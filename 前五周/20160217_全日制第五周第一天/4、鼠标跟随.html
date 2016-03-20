@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: relative;
+            margin: 20px auto;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+
+        /*让#mark针对于#box定位*/
+        #mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100px;
+            height: 100px;
+            background: #ff3333;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    
+</div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var offL = box.offsetLeft, offT = box.offsetTop;
+
+    //->onmouseenter相对于onmouseover把冒泡传播默认的阻止掉了
+    box.onmouseenter = function (e) {
+        e = e || window.event;
+        var mark = document.createElement("div");
+        mark.id = "mark";
+        mark.style.left = e.clientX - offL + 5 + "px";
+        mark.style.top = e.clientY - offT + 5 + "px";
+        this.appendChild(mark);
+    };
+
+    box.onmousemove = function (e) {
+        e = e || window.event;
+        var mark = document.getElementById("mark");
+        if (mark) {
+            mark.style.left = e.clientX - offL + 5 + "px";
+            mark.style.top = e.clientY - offT + 5 + "px";
+        }
+    };
+
+    box.onmouseleave = function (e) {
+        var mark = document.getElementById("mark");
+        if (mark) {
+            this.removeChild(mark);
+        }
+    };
+
+
+    //    //->鼠标滑到大盒子中的时候,创建mark小盒子,并且给其一个初始位置
+    //    box.onmouseover = function (e) {
+    //        e = e || window.event;
+    //
+    //        var mark = document.createElement("div");
+    //        mark.id = "mark";
+    //        this.appendChild(mark);
+    //
+    //        //->给mark绑定onmouseover事件,并且阻止其冒泡传播的行为，防止鼠标快速移动滑到mark上,触发mark的onmouseover行为的同时，也把box的onmouseover行为也触发了，导致重复的在创建mark
+    //        mark.onmouseover = function (ev) {
+    //            ev = ev || window.event;
+    //            ev.stopPropagation ? ev.stopPropagation() : ev.cancelBubble = true;
+    //        };
+    //
+    //        mark.style.left = e.clientX - offL + 5 + "px";
+    //        mark.style.top = e.clientY - offT + 5 + "px";
+    //    };
+    //
+    //    //->鼠标在box中移动的时候,让mark的top和left值随时跟着改变
+    //    box.onmousemove = function (e) {
+    //        e = e || window.event;
+    //
+    //        var mark = document.getElementById("mark");
+    //        if (mark) {
+    //            mark.style.left = e.clientX - offL + 5 + "px";
+    //            mark.style.top = e.clientY - offT + 5 + "px";
+    //        }
+    //    };
+    //
+    //    box.onmouseout = function (e) {
+    //        var mark = document.getElementById("mark");
+    //        if (mark) {
+    //            this.removeChild(mark);
+    //        }
+    //    };
+</script>
+</body>
+</html>

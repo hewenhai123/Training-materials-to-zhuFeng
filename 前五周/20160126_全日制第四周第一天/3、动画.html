@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 400px;
+            width: 100px;
+            height: 100px;
+            background: #008000;
+        }
+
+        input {
+            display: block;
+            outline: none;
+
+            position: absolute;
+            top: 200px;
+            left: 100px;
+
+            width: 100px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        #btnRight {
+            left: 300px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<input type="button" value="向左" id="btnLeft"/>
+<input type="button" value="向右" id="btnRight"/>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var btnLeft = document.getElementById("btnLeft"), btnRight = document.getElementById("btnRight");
+    btnLeft.onclick = function () {
+        move(0);
+    };
+    btnRight.onclick = function () {
+        var tarR = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth;
+        move(tarR);
+    };
+
+
+    function move(tar) {
+        var _move = function () {
+            window.clearTimeout(oDiv.timer);
+            var curL = utils.getCss(oDiv, "left");
+            if (curL < tar) {
+                if (curL + 15 >= tar) {
+                    utils.setCss(oDiv, "left", tar);
+                    return;
+                }
+                utils.setCss(oDiv, "left", curL + 15);
+            } else if (curL > tar) {
+                if (curL - 15 <= tar) {
+                    utils.setCss(oDiv, "left", tar);
+                    return;
+                }
+                utils.setCss(oDiv, "left", curL - 15);
+            } else {
+                return;
+            }
+            oDiv.timer = window.setTimeout(_move, 10);
+        };
+        _move();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            margin: 20px auto;
+            width: 100px;
+            height: 100px;
+            background: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="div1"></div>
+
+<script type="text/javascript" src="js/zhufengEvent.js"></script>
+<script type="text/javascript">
+    var n = 0;
+    function fn1() {
+        console.log(1);
+    }
+    function fn2() {
+        console.log(2);
+    }
+    function fn3() {
+        console.log(3);
+        n++;
+        if (n === 2) {
+            zhufengEvent.off(this, "click", fn1);
+            zhufengEvent.off(this, "click", fn2);
+            zhufengEvent.off(this, "click", fn3);
+        }
+    }
+
+    //1  2  3  4  5  6  7  8
+         //(2) ->把 1 2 3从数组中删除了  4  5  6  7  8
+            //(3)                             (3)
+
+    function fn4() {
+        console.log(4);
+    }
+    function fn5() {
+        console.log(5);
+    }
+    function fn6() {
+        console.log(6);
+    }
+    function fn7() {
+        console.log(7);
+    }
+    function fn8() {
+        console.log(8);
+    }
+
+    var oDiv = document.getElementById("div1");
+    zhufengEvent.on(oDiv, "click", fn1);
+    zhufengEvent.on(oDiv, "click", fn2);
+    zhufengEvent.on(oDiv, "click", fn3);
+    zhufengEvent.on(oDiv, "click", fn4);
+    zhufengEvent.on(oDiv, "click", fn5);
+    zhufengEvent.on(oDiv, "click", fn6);
+    zhufengEvent.on(oDiv, "click", fn7);
+    zhufengEvent.on(oDiv, "click", fn8);
+</script>
+</body>
+</html>

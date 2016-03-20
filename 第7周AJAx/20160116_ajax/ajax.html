@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ajax.js"></script>
+    <script>
+        ajax({
+            url: 'data.json',
+            method: 'post',
+            async: true,
+            callback: function (content) {
+                console.log(content);
+            },
+            cache: false,
+            // 因为ajax传参数只能传string ，所以如果参数是object的话，
+            // 就需要解析成string
+            data: {a: '水电费', b: 2}
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

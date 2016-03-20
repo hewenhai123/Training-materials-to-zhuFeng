@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商品信息页</title>
+    <style>
+        table td {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<p>当前查询类型为:<span id="type">全部查询</span></p>
+
+<div id="panel">
+    <button node-type="1" type="button">食品查询</button>
+    <button node-type="2" type="button">用品查询</button>
+    <button node-type="" type="button">全部查询</button>
+</div>
+
+<table id="content">
+    <thead>
+    <tr>
+        <th>类别</th>
+        <th>名称</th>
+        <th>价格</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+</body>
+</html>
+<script src="../ajax.js"></script>
+<!--他是一堆帮助函数的集合-->
+<script src="//apps.bdimg.com/libs/underscore.js/1.7.0/underscore-min.js"></script>
+<script>
+    window.onload = function () {
+        var tbody = document.getElementById('content').getElementsByTagName('tbody')[0];
+        var template = "<% for (var i=0;i<items.length;i++) " +
+                "{ var item=items[i]%><tr><td><%= item.type %></td><td>" +
+                "<%= item.name %></td><td>" +
+                "<%= item.price %></td></tr><% } %>";
+        var panel = document.getElementById('panel');
+        var spanType = document.getElementById('type');
+        panel.onclick = function (e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            getInfoHelper(target.getAttribute('node-type'));
+            if (target.nodeName === 'BUTTON') {
+                spanType.innerHTML = target.innerHTML;
+            }
+
+        };
+        var tpl= _.template(template);
+        var getInfoHelper = function (type) {
+            ajax({
+                url: '/getInfo',
+                data: {type: type || ''},
+                async: true,
+                cache: false,
+                method: 'get',
+                success: function (data) {
+                    var html = '';
+                    if (data.errno === 0) {
+                        tbody.innerHTML =tpl(data);
+                    }
+                },
+                error: function () {
+                    console.error('failure')
+                },
+                dataType: 'json'
+            })
+        };
+        getInfoHelper('');
+    }
+
+</script>
+
+<!--
+<% for (var i=0;i<items.length;i++){ %>
+<% var item=items[i]%>
+<tr>
+    <td><%= item.type %></td>
+    <td><%= item.name %></td>
+    <td><%= item.price %></td>
+</tr>
+<% } %>
+
+<tr>
+    <td>食品</td>
+    <td>汉堡包</td>
+    <td>9.5</td>
+</tr>
+-->

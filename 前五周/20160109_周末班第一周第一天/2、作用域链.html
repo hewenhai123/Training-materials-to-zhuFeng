@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //作用域链：
+    //在函数执行的时候,形成一个私有的作用域A,在A中出现一个变量,我们首先看它是否为A的私有变量
+    //是A自己私有的：那么当前这个私有的作用域A中出现的所有的这个变量都是私有的，而且和外面没有任何的关系
+    //不是A自己私有的：那么往当前作用域A的上级作用域进行查找，如果也不是上级的，则继续在向上查找...一直找到window为止 ->"这样的查找过程就是我们的作用域链机制"
+
+    console.log(num, str);//->undefined undefined
+    var num = 12;
+    var str = "叶茹";
+    function fn() {
+        console.log(num, str);//->undefined "叶茹"
+        str = "漂亮的叶茹";
+        num = 13;
+        var num = 14;
+        console.log(num, str);//->14 "漂亮的叶茹"
+    }
+    fn();
+    console.log(num, str);//->12 "漂亮的叶茹"
+
+
+</script>
+</body>
+</html>

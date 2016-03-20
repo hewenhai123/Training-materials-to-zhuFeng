@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //->Ajax
+    $.ajax({
+        url: "test.txt?_=" + Math.random(),
+        type: "get",
+        dataType: "json",//->text获取的是一个字符串 json获取的是一个对象
+        success: function (data) {
+            console.log(data);
+            //->解析数据和实现数据绑定都可以继续在这个方法中去操作了
+        }
+    });
+
+    //->JSONP
+    //    $.ajax({
+    //        url: "http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2016-02-28&endTime=2016-03-05&_=" + Math.random(),
+    //        type: "get",
+    //        dataType: "jsonp",
+    //        success: function (data) {
+    //            console.log(data);
+    //        }
+    //    });
+    //->使用jQuery的JSONP请求,我们不需要自己在URL后面加callback,也不需要自己事先写一个方法传给后台,因为jQuery把这些事情都帮我们做了,它默认在URL的末尾增加一个callback=,会自己随机创建一个函数jQuery1113026970771374180913_1456989781792,把这个函数传递给后台,后台也会把这个函数给执行了 ->success对应的那个匿名函数其实可以理解为就是随机创建的这个函数,data其实就是我们想要获取的数据
+    //http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2016-02-28&endTime=2016-03-05&_=1456989781793&callback=jQuery1113026970771374180913_1456989781792
+
+    $.ajax({
+        url: "http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2016-02-28&endTime=2016-03-05&_=" + Math.random(),
+        type: "get",
+        dataType: "jsonp",
+        jsonp: "cb",//->我们把callback这个名字也可以修改为自己想要的
+        jsonpCallback: "wangHaoYu",//->自己把callback后面传递的函数的名字修改为自己想要的名字,不使用自己随机生成的那个长名字
+        success: function (data) {
+            console.log(data);
+        }
+    });
+    //->....&cb=wangHaoYu
+
+
+    //    $.ajax({
+    //        url: "test.txt?_=" + Math.random(),
+    //        type: "get",
+    //        dataType: "text",
+    //        async: true,//默认就是true
+    //        success: function (data) {//->请求成功执行的方法,data就是服务器返回给前端的数据
+    //            console.log(data);
+    //        },
+    //        error: function (message) {//->请求失败执行的方法,message就是错误信息
+    //
+    //        }
+    //    });
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数组的操作深入</title>
+</head>
+<body>
+<script type="text/javascript">
+    var ary = [12, 23, 34, 45, 56, 67, 78];
+
+    //删除数组最后一项
+    //ary.pop();
+    //ary.splice(ary.length - 1, 1);//ary.splice(ary.length - 1)  //->ary.length-1最后一项的索引
+    //ary.length -= 1;// ary.length=ary.length-1;  ary.length--;
+
+    //在数组后面追加一项
+    //ary.push("陈红");
+    //ary.splice(ary.length, 0, "陈红");//splice在实现增加的时候是把当前的项放在指定索引位置的前面
+    //ary[ary.length] = "陈红";
+
+
+    //数组和对象的关系:数组也是对象数据类型的,它也是有属性名和属性值组成的,我们之前说的索引其实就是它的数字属性名
+    //0:12 1:23 2:34 .... 7:'陈红' length:8
+    //ary[2] 获取索引/属性名为2这一项的值
+    //ary[8]=100; 给对象/数组增加一个属性名为8,属性值是100的一组键值对
+
+
+    //把数组的[第n项,第m项]项提取出来
+    //ary.slice(n-1,m-1+1);//->ary.slice(n-1,m)
+
+
+</script>
+</body>
+</html>

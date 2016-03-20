@@ -1,0 +1,96 @@
+﻿函数中的this指向和当前函数在哪定义的或者在哪执行的都没有任何的关系
+分析this指向的规律如下:
+
+[非严格模式]
+1、自执行函数中的this永远是window
+ [案例1]
+ var obj={
+    fn:(function(i){
+       //this->window
+       return function(){
+          //this->obj
+       }
+    })(0)
+ };
+ obj.fn();
+
+2、给元素的某个行为绑定一个方法,当行为触发的时候,执行绑定的方法,此时方法中的this是当前的元素
+ [案例1]
+ oDiv.onclick=function(){
+    //this->oDiv
+ };
+
+ [案例2]
+ function fn(){
+    //this->window
+ }
+ oDiv.onclick=function(){
+     //this->oDiv
+     fn();
+ };
+
+3、方法执行,看方法名前面是否有".",有的话,"."前面是谁this就是谁,没有的话this就是window
+ [案例1]
+ var obj={fn:fn};
+ function fn(){}
+ fn.prototype.aa=function(){};
+ var f=new fn;
+
+ fn();//this->window
+ obj.fn();//this->obj
+ fn.prototype.aa();//this->fn.prototype
+ f.aa();//this->f
+ f.__proto__.aa();//this->f.__proto__->fn.prototype
+
+
+4、在构造函数模式中,函数体中的this.xxx=xxx中的this是当前类的一个实例
+ [案例1]
+ function Fn(){
+    this.x=100; //this->f
+    this.getX=function(){
+        console.log(this);//this->f 因为getX方法执行的时候,"."前面是f,所以this是f
+    }
+ }
+ var f=new Fn;
+ f.getX();
+
+5、使用call/apply来改变this的指向(一但遇到call/apply上述的四条都没用了)
+
+
+[严格模式]
+"use strict";//->告诉浏览器我们接下来编写的JS代码采用严格模式
+
+1、自执行函数中的this永远是undefined
+ [案例1]
+ var obj={
+    fn:(function(i){
+       //this->undefined
+       return function(){
+          //this->obj
+       }
+    })(0)
+ };
+ obj.fn();
+
+3、方法执行,看方法名前面是否有".",有的话,"."前面是谁this就是谁,没有的话this就是undefined
+ [案例1]
+ var obj={fn:fn};
+ function fn(){}
+
+ fn();//this->undefined
+ obj.fn();//this->obj
+
+我们发现严格模式下的this相对于非严格模式下的this主要区别在于：对于JS代码中没有写执行主体的情况下,非严格模式下默认都是window执行的,所以this指向的是window;但是在严格的模式下,没有写就是没有执行主体,this指向的是undefined;
+
+
+
+
+
+
+
+
+
+
+
+
+

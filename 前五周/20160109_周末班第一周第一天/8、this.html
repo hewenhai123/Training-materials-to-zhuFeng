@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1">有本事点我啊!!</div>
+<script type="text/javascript">
+    //console.log(this);//->window
+    //接下来我们研究的都是当函数执行的时候,私有作用域中的this指向问题
+
+    //context->上下文 当前这个行为/方法活动的范围
+    //this->当前这个行为/方法执行的主体,谁执行的这个方法,我们的this就是谁
+    //1)this是谁和当前的函数在哪执行的是没有任何的关系的->this和context没有必然的联系
+    //2)this是谁和当前的函数在哪定义也没有任何的关系
+
+    //    function 吃饭(){}
+    //    周慧琼.吃饭();//this->周慧琼  在全局下吃饭(上下文就是全局)
+    //    function 北京饭店(){
+    //        周慧琼.吃饭();//this->周慧琼  在北京饭店吃饭(上下文就是北京饭店)
+    //    }
+    //    北京饭店();
+
+
+    //this在JS中最简单,但是也是最难的,简单因为记住五句话就通关了,难就在于遇到实际的项目就把我的五句话忘光了...
+    //你以为 你以为的 就是你以为的~~
+
+    //1、自执行函数中的this永远是window
+    //    var obj = {
+    //        num: (function () {
+    //            console.log(this);//->window
+    //            return 100;
+    //        })()//obj.num=100;
+    //    };
+
+    //2、给元素的某一个行为绑定一个方法，当行为触发的时候执行对应的方法,此时方法中的this是当前的元素
+    //    oDiv.onclick = function () {
+    //        console.log(this);//->oDiv
+    //    };
+
+    //    oDiv.onclick = (function () {
+    //        console.log(this);//->window 自执行函数中的this是window
+    //        return function () {//->xxxfff111
+    //            console.log(this);//->oDiv 元素行为方法中的this是当前的元素
+    //        }
+    //    })();
+    //    //oDiv.onclick=xxxfff111;
+
+    //3、方法执行,看方法名前面是否有".",有的话,"."前面是谁this就是谁,没有的话,this就是window
+    function fn() {
+        console.log(this.innerHTML);
+    }
+    var innerHTML = "我是window";
+    var obj = {
+        innerHTML: "我是obj",
+        fn: fn
+    };
+    //fn();//this->window
+    //obj.fn();//this->obj
+    document.getElementById("div1").onclick = function () {
+        console.log(this.innerHTML);//this->#div1
+        fn();//fn中的this->window
+    };
+</script>
+</body>
+</html>

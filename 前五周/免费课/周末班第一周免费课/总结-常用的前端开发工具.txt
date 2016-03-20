@@ -1,0 +1,11 @@
+开发工具(IDE)
+1、DW ->Adobe Dream weaver
+2、sublime
+3、WebStorm (推荐)
+4、hBuilder
+
+浏览器
+我们前端最重要的就是处理浏览器兼容
+谷歌(必装)
+火狐
+IE

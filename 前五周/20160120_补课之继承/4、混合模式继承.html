@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //混合继承:call继承/冒充对象继承+原型继承
+
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        this.y = 200;
+        A.call(this);
+    }
+    B.prototype = new A;
+    var b = new B;
+
+    //b
+    //私有的 y:200 x:100
+    //b.__proto__-> x:100
+    //b.__proto__.__proto__-> getX:function...
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        #div1 {
+            margin: 100px;
+            padding: 20px;
+            width: 200px;
+            height: 200px;
+            border: 5px solid #008000;
+            line-height: 25px;
+
+            background: #ff3333;
+
+            /*opacity: 0.56789;*/
+            /*filter: alpha(opacity=56.789);*/
+            /*在css中设置透明度,兼容的用opacity,IE6~8使用filter,filter里面的值是opacity值的100倍*/
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="padding-left: 20px;">
+    要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子--何炅;
+    要得到你必须要付出,要付出你还需要学会坚持,如果你真的觉得很难,那你就放弃,但是一但放弃就不要在抱怨,我觉得人生就是这样,世界真的是平衡的,每个人都是通过自己的努力,去决定自己生活的样子--何炅;
+</div>
+
+
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+
+    //1、JS盒子模型和CSS盒子模型一样,我们只是通过JS来获取关于一个元素的相关的样式信息
+    //client:width、height、top、left
+    //offset:parent、width、height、top、left
+    //scroll:width、height、top、left
+
+    //2、client系列
+    //1)clientTop/clientLeft:当前盒子的边框信息,clientTop上边框的高度,clientLeft左边框的宽度
+
+    //2)clientWidth/clientHeight:当前盒子内容区域的信息
+    //->clientWidth:真实内容的宽度(width)+左右padding
+    //->clientHeight:真实内容的高度(height)+上下padding
+    //注意:盒子中的内容是否有溢出,对于我们的最终的结果是没有影响的
+
+    //->document.documentElement.clientWidth||document.body.clientWidth 获取当前浏览器可视窗口的宽度(一屏幕的宽度)
+    //->document.documentElement.clientHeight||document.body.clientHeight 获取当前浏览器可视窗口的高度(一屏幕的高度)
+    //注意:我们操作浏览器的相关盒子模型信息,想要兼容所有的浏览器的话,需要写两套,一个是document.documentElement,一个是document.body,并且document.documentElement在前
+
+    //3、offset系列
+    //->offsetWidth:clientWidth+左右border
+    //->offsetHeight:clientHeight+上下border
+    //注意:盒子中的内容是否有溢出,对于我们的最终的结果也是没有影响的
+
+    //jQuery:
+    //innerWidth/outerWidth outer比inner多算了边框
+    //innerWidth->clientWidth  outerWidth->offsetWidth
+
+
+    //4、scroll系列
+    //->scrollWidth/scrollHeight
+    //[内容没有溢出]
+    //和我们的clientWidth/clientHeight的值是一模一样的
+
+    //[内容有溢出]
+    //获取的值 "约等于" 真实内容的宽高(包含溢出部分的内容)+上padding(左padding)
+
+    //->document.documentElement.scrollHeight||document.body.scrollHeight 获取当前页面的真实高度(不管你有多少屏,获取的都是整个页面真实的高度)
+
+    //"约等于":
+    //->是否添加overflow='hidden'溢出隐藏的样式,对于最后的结果是有影响的
+    //->在不同浏览器中我们获取的结果也是不一样的
+    //    console.log(oDiv.scrollHeight);
+    //    oDiv.style.overflow = "hidden";//->把溢出的内容隐藏
+    //    console.log(oDiv.scrollHeight);
+
+
+    //上述八个属性获取的都是组合值,如果指向获取具体的某一个样式值,例如:我只想获取paddingLeft,用上述的属性是实现不了的
+
+    //5、获取元素的具体的样式信息值
+
+    //1)通过 curEle.style.attr 方式来获取
+    //->弊端:只能获取在行内上编写过的样式信息(不管在其它的地方是否编写,只要行内没写都获取不到),比如:oDiv的width是在样式表中设置的"200px",我们没有在行内上写
+    //    console.log(oDiv.style.width);//->"" 因为没在行内上写
+    //    console.log(oDiv.style.paddingLeft);//->"20px" 因为在行内上写过这个样式
+
+    //2)JS中提供了一个方法getComputedStyle:获取所有经过浏览器计算的样式
+    //->只要当前的元素在页面中呈现出来了,那么它的所有的样式信息都是经过浏览器计算的(不管你在什么地方写的样式,我都可以获取到,而且不管你写不写我也可以获取到)
+    //->window.getComputedStyle(当前的元素,当前元素的伪类(我们一般不用,所有写null)) ->获取的结果是CSSStyleDeclaration(样式信息详细描述类)这个类的一个实例,它是一个对象数据类型的,里面包含了当前元素的所有样式信息
+    //console.log(window.getComputedStyle(oDiv, null).paddingLeft);//->"20px"
+
+    //但是在IE6~8下不兼容(原因:window下没有getComputedStyle这个属性)
+    //console.log(window.getComputedStyle);//->谷歌下兼容,获取的是一个函数function getComputedStyle() { [native code] } ->IE6~8下不兼容,获取到的结果是一个undefined
+    //JS在IE6~8中提供了另外一个方法:currentStyle获取元素的样式信息
+    //->oDiv.currentStyle.paddingLeft
+    //console.log(oDiv.currentStyle.paddingLeft);//->"20px"
+
+    //检测浏览器
+    //console.log(window.navigator.userAgent);
+    //IE7  Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)
+    //IE8  Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E
+    //IE9 Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+
+
+    //6、写最后兼容的方法
+    //->把返回的结果中带单位的去掉
+    //    function getCss(curEle, attr) {
+    //        var val = reg = null;
+    //        if ("getComputedStyle" in window) {
+    //            val = window.getComputedStyle(curEle, null)[attr];
+    //        } else {
+    //            val = curEle.currentStyle[attr];
+    //        }
+    //        reg = /^-?\d+(\.\d+)?(px|pt|em|rem)?$/;
+    //        return reg.test(val) ? parseFloat(val) : val;
+    //    }
+    //    var res = getCss(oDiv, "border");
+    //    console.log(res);
+
+    //->处理透明度的兼容性
+    //    function getCss(curEle, attr) {
+    //        var val = reg = null;
+    //        if ("getComputedStyle" in window) {
+    //            val = window.getComputedStyle(curEle, null)[attr];
+    //        } else {
+    //            //如果执行else,说明当前的浏览器是IE6~8
+    //            //如果attr传递进来的是opacity,说明我们想获取的是透明度的值,而IE6~8下透明度是filter,在通过opacity是获取不到透明度的,所以需要针对于透明度单独的做处理
+    //            if (attr === "opacity") {
+    //                val = curEle.currentStyle["filter"];//->"alpha(opacity=56.789)" ->需要把56.789这个值获取到
+    //                reg = /^alpha\(opacity=(\d+(\.\d+)?)\)$/;
+    //                var temp = reg.exec(val);
+    //                //console.log(temp);//->["alpha(opacity=56.789)","56.789",".789"...]
+    //                val = reg.test(val) ? temp[1] / 100 : 1;
+    //            } else {
+    //                val = curEle.currentStyle[attr];
+    //            }
+    //        }
+    //        reg = /^-?\d+(\.\d+)?(px|pt|em|rem)?$/;
+    //        return reg.test(val) ? parseFloat(val) : val;
+    //    }
+    //    var res = getCss(oDiv, "opacity");
+    //    console.log(res);
+
+    function getCss(curEle, attr) {
+        var val = reg = null;
+        if ("getComputedStyle" in window) {
+            val = window.getComputedStyle(curEle, null)[attr];
+        } else {
+            if (attr === "opacity") {
+                val = curEle.currentStyle["filter"];
+                reg = /^alpha\(opacity=(\d+(\.\d+)?)\)$/;
+                val = reg.test(val) ? reg.exec(val)[1] / 100 : 1;//->为啥是1 如果我们获取的结果个正则不匹配,说明当前没有透明度,我们让默认的透明度的值为1(没有透明)
+            } else {
+                val = curEle.currentStyle[attr];
+            }
+        }
+        reg = /^-?\d+(\.\d+)?(px|pt|em|rem)?$/;
+        return reg.test(val) ? parseFloat(val) : val;
+    }
+    var res = getCss(oDiv, "opacity");
+    console.log(res);
+</script>
+</body>
+</html>

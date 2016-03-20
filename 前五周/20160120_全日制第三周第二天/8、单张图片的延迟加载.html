@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 500%;
+        }
+
+        #img1 {
+            display: block;
+            margin: 1000px auto 0;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #008000;
+        }
+    </style>
+</head>
+<body>
+<img src="img/default.gif" trueImg="img/jd.jpg" id="img1"/>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //对于图片没有在第一屏幕的,我们当滚动条滚动到对应的区域(图片的底边也完全显示在页面中了)我们在加载真实的图片
+    //1)随着滚动条滚动,我们浏览器底边框距离第一屏幕body的距离:当前屏幕的高度+滚动条卷去的高度
+    //2)当前图片底边框距离body的距离:用offset获取出当前元素的上边框距离body的上偏移+盒子本身的高度
+
+    var imgFir = document.getElementById("img1");
+    var imgDis = utils.offset(imgFir).top + imgFir.offsetHeight;//->获取当前图片底边距离body的上偏移
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;//->获取当前浏览器一屏幕的高度
+
+    window.onscroll = function () {
+        if (imgFir.isLoad) return;//->如果条件成立说明imgFir.isLoad的结果是true,图片加载完成了,下面的代码就不在重新的执行了(防止重复加载)
+
+        var curT = document.documentElement.scrollTop || document.body.scrollTop;//->获取当前浏览器滚动条卷去的高度
+        if ((winH + curT) >= imgDis) {//->说明当前的图片已经完全出现在视野中,开始加载我们的真实图片地址
+            var trueImg = imgFir.getAttribute("trueImg");
+            var oImg = new Image;
+            oImg.src = trueImg;
+            oImg.onload = function () {
+                console.log("ok");
+                imgFir.src = trueImg;
+                imgFir.isLoad = true;//->加载完成后就一个标识,代表已经把真实的图片加载完成了
+            };
+        }
+    };
+
+    //->当前的代码还是有问题的:只要发生滚动条滚动,就会触发我们的事件,不管真实图片是否加载完成了,都要重新的加载一遍...
+    //    window.onscroll = function () {
+    //        var curT = document.documentElement.scrollTop || document.body.scrollTop;//->获取当前浏览器滚动条卷去的高度
+    //
+    //        if ((winH + curT) >= imgDis) {//->说明当前的图片已经完全出现在视野中,开始加载我们的真实图片地址
+    //            var trueImg = imgFir.getAttribute("trueImg");
+    //            var oImg = new Image;
+    //            oImg.src = trueImg;
+    //            oImg.onload = function () {
+    //                imgFir.src = trueImg;
+    //            };
+    //        }
+    //    };
+
+
+</script>
+</body>
+</html>

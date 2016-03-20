@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #shop {
+            position: absolute;
+            top: 30px;
+            left: 100px;
+
+            width: 100px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border: 1px solid #ccc;
+            background: #FFCF78;
+        }
+
+        #shopDetail {
+            display: none;
+            position: absolute;
+            top: 36px;
+            left: 0;
+            width: 300px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+
+    </style>
+</head>
+<body>
+<!--第一种效果-->
+<!--<div id="shop">
+    购物车
+    <div id="shopDetail">购物车还没有内容</div>
+</div>
+<script type="text/javascript">
+    var shop = document.getElementById("shop"), shopDetail = document.getElementById("shopDetail");
+
+    shop.onmouseenter = function () {
+        console.log("ok");
+        shopDetail.style.display = "block";
+    };
+
+    shop.onmouseleave = function () {
+        shopDetail.style.display = "none";
+    };
+</script>-->
+
+<div id="shop">
+    购物车
+    <div id="shopDetail">购物车还没有内容</div>
+</div>
+
+<script type="text/javascript">
+    var shop = document.getElementById("shop"), shopDetail = document.getElementById("shopDetail");
+    document.body.onclick = function (e) {
+        e = e || window.event;
+        e.target = e.target || e.srcElement;
+        if (/^(shop|shopDetail)$/.test(e.target.id)) {
+            shopDetail.style.display = "block";
+            return;
+        }
+        shopDetail.style.display = "none";
+    };
+</script>
+</body>
+</html>

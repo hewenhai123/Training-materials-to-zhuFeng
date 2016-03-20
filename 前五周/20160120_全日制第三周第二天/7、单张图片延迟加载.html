@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 500%;
+        }
+
+        #img1 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #008000;
+        }
+    </style>
+</head>
+<body>
+<!--trueImg是我们自己临时定义的自定义属性,目的是存储真实图片的地址-->
+<img src="img/default.gif" trueImg="img/jd1.jpg" id="img1"/>
+
+<script type="text/javascript">
+    //图片的加载过程:当我们打开一个页面,HTML、CSS、JS代码会从上到下加载,如果遇到img标签,浏览器首先会通过src里面存储的url地址向服务器发送一个请求,服务器把对应的图片返回给浏览器,浏览器根据返回的内容把对应的图片渲染出来,代码继续向下执行...当所有的代码执行完成后,我们的页面才呈现给用户
+    //如果刚开始进来就把所图片加载了,会非常的浪费时间,所以就有了图片延迟/延后加载的技术"图片的懒加载"
+
+    //图片的延迟加载处理:先给img一个默认的图片(非常的小,最好维持在10kb以内),当当页面加载完成后,在把真实的图片进行加载 / 开始只加载第一屏幕的真实图片,当用户滚到对应的区域的时候在加载真实的图片
+
+    //window.onload->当页面上的HTML结构,图片,文字等所有的资源都加载完成,再执行对应的方法
+    //    window.onload = function () {
+    //        //在这里我们在加载真实的图片(我们放在一个定时器中也行)
+    //    };
+
+    //1、1000ms后加载真实的图片
+    //    window.setTimeout(function () {
+    //        //1s后在加载真实的图片
+    //        var imgOne = document.getElementById("img1");
+    //        var trueImg = imgOne.getAttribute("trueImg");
+    //        imgOne.src = trueImg;
+    //    }, 1000);
+    //问题:如果说真实的图片不能正常的加载,我们1000ms后,图片会变为一张碎图,在IE下更难看是一张叉...对于如果图片不正常的话,我们让其还显示的是默认图即可
+
+    //2、验证真实的图片地址能否正常的加载
+    window.setTimeout(function () {
+        var imgOne = document.getElementById("img1");
+        var trueImg = imgOne.getAttribute("trueImg");
+
+        //验证图片是否正常加载
+        var oImg = new Image;//->document.createElement("img") 创建一个image标签
+        oImg.src = trueImg;//->把真实的地址先赋值给我们新创建的标签,此时这个标签还为加载到页面中,错误也好正确也好在页面都看不见
+        oImg.onload = function () {
+            //如果图片能够正常的加载就会执行onload事件,我在这里把真实的地址赋值给我们的页面中的img标签
+            imgOne.src = trueImg;
+            console.log("完成");//->"完成" (2)
+        };
+        console.log("ok");//->"ok" (1)  因为所有的事件绑定都是异步的,当前图片加载需要时间,不等,继续执行下面的代码
+    }, 1000);
+</script>
+</body>
+</html>

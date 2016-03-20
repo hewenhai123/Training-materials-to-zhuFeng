@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 28px;
+        }
+
+        #div1 {
+            margin: 20px auto;
+            padding: 20px;
+            width: 600px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    var $ajax = function (url, callback) {
+        var xhr = new XMLHttpRequest;
+        url.indexOf("?") > -1 ? url += "&_=" + Math.random() : url += "?_=" + Math.random();
+        xhr.open("get", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+                var con = xhr.responseText;
+                con = JSON.parse(con);
+                typeof callback === "function" ? callback(con) : null;
+            }
+        };
+        xhr.send(null);
+    };
+
+    //1、获取页面地址栏中URL地址后面问号传递过来的参数值
+    var curURL = window.location.href;//->获取当前页面地址栏中的URL地址(包括问号后传递进来的参数)
+    function queryURLParameter(url) {
+        var obj = {};
+        var reg = /([^?=&]+)=([^?=&]+)/g;
+        url.replace(reg, function () {
+            obj[arguments[1]] = arguments[2];
+        });
+        return obj;
+    }
+    var urlObj = queryURLParameter(curURL);
+    var num = urlObj.num;
+
+    //2、通过这个值向后台请求详细数据
+    //3、把详细数据展示在当前的页面中
+    $ajax("/detailInfo?num=" + num, function (con) {
+        var str = "";
+        str += "学号是:" + con.num + "<br/><br/>";
+        str += "性别是:" + (con.sex === 1 ? "男" : "女") + "<br/><br/>";
+        str += "分数是:" + con.score + "<br/><br/>";
+        document.getElementById("div1").innerHTML = str;
+    });
+</script>
+</body>
+</html>

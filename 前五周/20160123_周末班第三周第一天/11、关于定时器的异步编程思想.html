@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->任务队列:一个容器,用来存储任务的容器;
+    //1)一个项目中要实现很多的任务,所有的任务都在浏览器的任务队列机制中
+    //2)JS是单线程的(脑子一根筋),一次只能做一件事情
+
+    //同步编程:比较符合JS是单线程的,在主线程中,我们一次只能做一件事情,当前的这件事情如果没有完成,主线程就空不出来,其他的事情也无法完成->在JS中大部分都是同步编程
+    //    for (var i = 0; i < 10000000; i++) {
+    //        if (i === 9999999) {
+    //            console.log(i);//->9999999 (1)
+    //        }
+    //    }
+    //    console.log("ok");//->"ok" (2)
+
+    //异步编程:主要是为了模拟后台语言的多线程机制(它绝对不是多线程),在JS中我们的"定时器"和"所有的事件绑定"都是异步编程,例如：
+
+    //设置一个定时器,10ms后执行,此时浏览器不等它,继续执行下面的代码,当下面代码都执行完成了(不管定时器有没有到时间,只有下面完成后才会在做其他的),才会在去任务队列中看定时器有没有到达时间,到达了执行对应的方法,没有到达继续等...
+
+    //->我们设定10ms执行，但是时间不一定10ms，可能比这个时间更长
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);//->1 (2)
+    //    }, 10);
+    //
+    //    for (var i = 0; i < 10000000; i++) {
+    //        if (i === 9999999) {
+    //            console.log(i);//->9999999 (1)
+    //        }
+    //    }
+
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);//->1 (2)
+    //    }, 10);
+    //    console.log(count);//->0 (1)
+
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);//->1 (2)
+    //    }, 0);//->定时器的等待时间写0也不是立即执行,浏览器都有自己最小的默认等待时间,谷歌5~6ms IE10~13ms..
+    //    console.log(count);//->0 (1)
+
+    //    for(var i=0;i<3;i++){
+    //        oLis[i].onclick=function(){
+    //            alert(i);//->i=3
+    //        };
+    //    }
+
+
+    //    window.setTimeout(function () {
+    //        console.log(1);
+    //    }, 3000);
+    //    window.setTimeout(function () {
+    //        console.log(2);
+    //    }, 10);
+    //    window.setTimeout(function () {
+    //        console.log(3);
+    //    }, 3000);
+    //    for (var i = 0; i < 90000000; i++) {
+    //        if (i === (90000000 - 1)) {
+    //            console.log("ok");
+    //        }
+    //    }
+    //    //"ok" 2 1 3
+
+
+    window.setTimeout(function () {
+        console.log(1);
+    }, 10);
+
+    window.setTimeout(function () {
+        console.log(2);
+    }, 9);
+
+    window.setTimeout(function () {
+        console.log(3);
+    }, 10);
+
+    for (var i = 0; i < 900000000; i++) {
+        if (i === (90000000 - 1)) {
+            console.log("ok");
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //回调函数:把函数A定义的部分当做一个值传递给函数B,在函数B执行过程中,把函数A执行了
+    //    function A() {//->xxxfffaaa
+    //        console.log("A");
+    //    }
+    //    function B(callBack) {
+    //        //->callBack:xxxfffaaa
+    //        console.log("B");
+    //        typeof callBack === "function" ? callBack() : null;
+    //    }
+    //    B(A);//->B(xxxfffaaa)
+
+
+    //2、回调函数的应用
+
+    //->把匿名函数当做一个值传递给方法sort,然后在sort方法执行的时候,把匿名函数也执行了
+    //    var ary = [12, 23, 24, 13, 24];
+    //    ary.sort(function (a, b) {
+    //        return a - b;
+    //    });
+    //    function fn(a, b) {
+    //        return a - b;
+    //    }
+    //    ary.sort(fn);
+
+    //->把匿名函数当做一个值,传递给我们的setTimeout这个方法,在setTimeout中根据规律执行了匿名函数
+    //    window.setTimeout(function () {
+    //
+    //    }, 1000);
+
+    //->把匿名函数当做一个值传递给replace,在replace中每一次拿正则去捕获我们的字符串,都把匿名函数执行一遍...不仅执行了,而且还给匿名函数传递了形参
+    //    var str = "zhufengpeixn";
+    //    str.replace(/./g, function () {
+    //
+    //    });
+
+    //3、数组中有一个方法:forEach->用来遍历数组中的每一项的(在IE6~8下不兼容)
+    var ary = [12, 23, 34, 45, 56, 67];
+    ary.forEach(function (item, index, input) {
+        //this->window 回调函数中,一般情况下this都是window,例如：replace、定时器、sort...
+
+        //当前的这个回调函数执行六次,因为数组中有六项->数组中有几项,我们的回调函数就执行几次
+
+        //不仅仅把我们的回调函数执行,而且每一次执行还传递进来的了一些参数值->
+        //item:每一次执行回调函数,数组中的当前项
+        //index:当前项的索引
+        //input:原始数组
+        //console.log(item, index, input);
+
+        //return "ok"; ->forEach中的回调函数不支持return,即使写了也没有什么作用->forEach只是用来遍历数组中的每一项的,不会对原有的数组进行更改(没有返回值的)
+    });
+
+    //->map也是遍历数组中的每一项,而且原理和我们的forEach一样;但是map的回调函数中支持return,return是啥,相当于把当前项修改为啥(在IE6~8下不兼容)
+    //    ary = ary.map(function (item, index, input) {
+    //        return item * 10;//->让数组中的每一项都在原有的基础上乘以10
+    //    });
+    //    console.log(ary);
+
+    //parseInt:把其他的值转化为数字 parseInt(value)  parseInt(value,转换为多少进制(2、8、10、16进制))
+    ary = ["12px", "23px", "34px", "45px", "56px", "67px"];
+    //    ary = ary.map(parseInt);
+    //    console.log(ary);//->[12, NaN, NaN, NaN, NaN, NaN]
+    //    //第一次:"12px" 执行parseInt,并且传递三个值 parseInt("12px",0,...)
+    //    //第二次:"23px" 执行parseInt,并且传递三个值 parseInt("23px",1,...)
+    ary = ary.map(function (item, index) {
+        console.log(this);//->ary
+        return parseInt(item);
+    }, ary);//->forEach、map第一个参数是回调函数,第二个参数是把回调函数中的this进行修改,不写默认是window,其他的写什么,回调函数中的this就是什么->回调函数中的this一般默认是window,但是我们是可以自己手动的控制和修改的
+    console.log(ary);
+</script>
+</body>
+</html>

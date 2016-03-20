@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>获取平均数</title>
+</head>
+<body>
+<script type="text/javascript">
+    //去掉一个最高分,去掉一个最低分,最后剩下的累加取平均值
+    //先给arguments排序,去掉第一个和最后一个,剩下的求和,在求平均数
+
+    //arguments是类数组(类似于数组但是不是数组)
+    //arguments instanceof Array ->false 不是数组的实例
+    //arguments不能直接的使用数组的方法
+    //arguments.sort();//->Uncaught TypeError: arguments.sort is not a function
+    //    function avgFn() {
+    //        //1、把类数组arguments转换为数组->相当于把arguments里面每一项的值克隆一份给数组
+    //        var ary = [];
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            ary.push(arguments[i]);
+    //        }
+    //
+    //        //2、排序,去开头结尾
+    //        ary.sort(function (a, b) {
+    //            return a - b;
+    //        }).shift();
+    //        ary.pop();
+    //
+    //        //3、求平均数
+    //        //console.log(ary.join("+"));//->"5+6+7+8+8+8+9+9"
+    //        //toFixed:数字的方法,保留当前数字小数点后面N位
+    //        return (eval(ary.join("+")) / ary.length).toFixed(2);
+    //    }
+    //    var res = avgFn(10, 8, 9, 6, 5, 7, 8, 9, 4, 8);
+    //    console.log(res);//->7.50
+
+
+    //优化
+    //模拟slice实现数组克隆
+    //    Array.prototype.slice = function () {
+    //        //this->当前要克隆的原有数组
+    //        //我我们自己模拟的slice内置的代码
+    //        var ary = [];
+    //        for (var i = 0; i < this.length; i++) {
+    //            ary.push(this[i])
+    //        }
+    //
+    //        //我们自己编写的把arguments克隆一份一模一样的给数组->把类数组转换为数组
+    //        var ary = [];
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            ary.push(arguments[i]);
+    //        }
+    //
+    //        //区别:我们自己写的代码用的是arguments,而内置代码用的是this ->如果我们让slice方法执行,并且让里面的this变为要操作的arguments,这样的话不就是把arguments转换为数组吗
+    //
+    //        return ary;
+    //    };
+    //    var newAry = ary.slice();
+
+
+    //    function avgFn() {
+    //        //让数组原型上的slice执行:Array.prototype.slice() [].slice() [].__proto__.slice() ...
+    //        var ary = Array.prototype.slice.call(arguments);//->借用数组的slice方法实现将类数组转换为数组 ->var ary=[].slice.call(arguments);
+    //        //ary = [].slice.call(arguments, 1); ->从arguments的第二项开始把内容复制一份一模一样的给数组
+    //
+    //        ary.sort(function (a, b) {
+    //            return a - b;
+    //        }).shift();
+    //        ary.pop();
+    //        return (eval(ary.join("+")) / ary.length).toFixed(2);
+    //    }
+    //    var res = avgFn(10, 8, 9, 6, 5, 7, 8, 9, 4, 8);
+    //    console.log(res);//->7.50
+
+    //不仅仅可以使用slice,由于类数组和数组太相似了,所以数组的其他的方法同样也可以让arguments借用操作
+    function avgFn() {
+        [].sort.call(arguments, function (a, b) {
+            return a - b;
+        });
+        [].shift.call(arguments);
+        [].pop.call(arguments);
+        return (eval([].join.call(arguments, "+")) / arguments.length).toFixed(2);
+    }
+    var res = avgFn(10, 8, 9, 6, 5, 7, 8, 9, 4, 8);
+    console.log(res);//->7.50
+</script>
+</body>
+</html>
